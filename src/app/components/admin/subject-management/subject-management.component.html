@@ -1,0 +1,175 @@
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <h2>NEET Prep</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active">
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+      </a>
+      <a routerLink="/admin/subjects" routerLinkActive="active">
+        <i class="fas fa-book"></i>
+        <span>Subjects</span>
+      </a>
+      <a routerLink="/admin/exams" routerLinkActive="active">
+        <i class="fas fa-file-alt"></i>
+        <span>Exams</span>
+      </a>
+      <a routerLink="/admin/performance" routerLinkActive="active">
+        <i class="fas fa-chart-bar"></i>
+        <span>Performance</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="user-details">
+          <span class="user-name">Admin User</span>
+          <span class="user-role">Administrator</span>
+        </div>
+      </div>
+      <button class="btn btn-logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="top-header">
+      <div class="header-left">
+        <h1>Subject Management</h1>
+        <p>Create and manage subjects and topics</p>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-primary" (click)="openSubjectModal()">
+          <i class="fas fa-plus"></i>
+          Add Subject
+        </button>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="subjects-grid">
+        <div class="subject-card" *ngFor="let subject of subjects" [style.--subject-color]="subject.color">
+          <div class="subject-header">
+            <div class="subject-icon" [style.background]="subject.color + '20'" [style.color]="subject.color">
+              <i class="fas {{ subject.icon }}"></i>
+            </div>
+            <div class="subject-actions">
+              <button class="icon-btn" (click)="editSubject(subject)" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <label class="toggle-switch small">
+                <input type="checkbox" [checked]="subject.isActive" (change)="toggleSubjectStatus(subject)">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <h3 class="subject-name">{{ subject.name }}</h3>
+          <p class="subject-description">{{ subject.description }}</p>
+          <div class="subject-stats">
+            <span><i class="fas fa-layer-group"></i> {{ subject.topics?.length || 0 }} Topics</span>
+          </div>
+          <div class="topics-section">
+            <div class="topics-header">
+              <h4>Topics</h4>
+              <button class="btn btn-sm btn-outline" (click)="openTopicModal(subject)">
+                <i class="fas fa-plus"></i> Add Topic
+              </button>
+            </div>
+            <div class="topics-list">
+              <div class="topic-item" *ngFor="let topic of subject.topics">
+                <div class="topic-info">
+                  <span class="topic-name">{{ topic.name }}</span>
+                  <span class="topic-desc">{{ topic.description }}</span>
+                </div>
+                <div class="topic-actions">
+                  <button class="icon-btn" (click)="editTopic(subject, topic)">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-btn danger" (click)="deleteTopic(subject.id, topic.id)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="empty-topics" *ngIf="!subject.topics?.length">
+                <p>No topics yet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="modal-overlay" *ngIf="showSubjectModal" (click)="closeSubjectModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ editingSubject ? 'Edit Subject' : 'Add New Subject' }}</h3>
+      <button class="close-btn" (click)="closeSubjectModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Subject Name</label>
+        <input type="text" class="input" [(ngModel)]="subjectForm.name" placeholder="e.g., Physics">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="input" [(ngModel)]="subjectForm.description" placeholder="Brief description"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Icon</label>
+        <div class="icon-picker">
+          <button *ngFor="let icon of icons" class="icon-option" [class.selected]="subjectForm.icon === icon" (click)="subjectForm.icon = icon">
+            <i class="fas {{ icon }}"></i>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Color</label>
+        <div class="color-picker">
+          <button *ngFor="let color of colors" class="color-option" [class.selected]="subjectForm.color === color" [style.background]="color" (click)="subjectForm.color = color"></button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeSubjectModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="saveSubject()">{{ editingSubject ? 'Update' : 'Create' }}</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" *ngIf="showTopicModal" (click)="closeTopicModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ editingTopic ? 'Edit Topic' : 'Add New Topic' }}</h3>
+      <button class="close-btn" (click)="closeTopicModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Topic Name</label>
+        <input type="text" class="input" [(ngModel)]="topicForm.name" placeholder="e.g., Laws of Motion">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="input" [(ngModel)]="topicForm.description" placeholder="Brief description"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeTopicModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="saveTopic()">{{ editingTopic ? 'Update' : 'Create' }}</button>
+    </div>
+  </div>
+</div>

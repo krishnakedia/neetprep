@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Prep - Angular Frontend Documentation</title>
+    <style>
+        :root {
+            --primary: #0d47a1;
+            --secondary: #1976d2;
+            --accent: #42a5f5;
+            --bg: #f5f7fa;
+            --text: #333;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --sidebar-bg: #0d47a1;
+            --sidebar-text: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            margin: 20px 0 10px;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a {
+            color: var(--sidebar-text);
+            text-decoration: none;
+            display: block;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px 60px;
+            max-width: 1200px;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin: 25px 0 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        code {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .command-block {
+            background: #263238;
+            color: #aed581;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Consolas', monospace;
+        }
+
+        .folder-structure {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .folder-structure .folder {
+            color: #ffc107;
+        }
+
+        .folder-structure .file {
+            color: #90caf9;
+        }
+
+        .folder-structure pre {
+            background: #f8f9fa;
+            color: #333;
+            padding: 15px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--accent);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>📚 Angular Docs</h1>
+            <h2>Getting Started</h2>
+            <a href="#introduction">Introduction</a>
+            <a href="#setup">Setup & Installation</a>
+            <a href="#project-structure">Project Structure</a>
+            
+            <h2>Core Concepts</h2>
+            <a href="#components">Components</a>
+            <a href="#services">Services</a>
+            <a href="#routing">Routing</a>
+            <a href="#guards">Guards</a>
+            <a href="#interceptors">Interceptors</a>
+            <a href="#models">Models</a>
+            
+            <h2>Features</h2>
+            <a href="#authentication">Authentication</a>
+            <a href="#admin-panel">Admin Panel</a>
+            <a href="#user-panel">User Panel</a>
+            
+            <h2>Build & Deploy</h2>
+            <a href="#build">Build Commands</a>
+            <a href="#troubleshooting">Troubleshooting</a>
+        </nav>
+
+        <main class="main-content">
+            <span class="header-badge">Angular 21</span>
+            <h1>Angular Frontend Documentation</h1>
+            
+            <div class="intro">
+                <p>Welcome to the NEET Prep Angular Frontend Documentation! This guide will help you understand how the frontend application works, its structure, and how to make changes to it.</p>
+                <p><strong>What is Angular?</strong> Angular is a TypeScript-based web application framework that helps you build interactive web applications. Think of it like building with Lego blocks - you create components (blocks) that fit together to make your app.</p>
+            </div>
+
+            <section id="introduction">
+                <h2>📖 Introduction</h2>
+                <p>The NEET Prep frontend is an Angular 21 application that provides:</p>
+                <ul>
+                    <li><strong>Admin Panel</strong> - For managing users, subjects, exams, and questions</li>
+                    <li><strong>User Panel</strong> - For students to take exams and view results</li>
+                    <li><strong>Login System</strong> - With role-based access (Admin vs Regular User)</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 What You'll Learn:</strong>
+                    <ul>
+                        <li>How the project is organized</li>
+                        <li>How components work</li>
+                        <li>How services communicate with the backend</li>
+                        <li>How routing protects pages</li>
+                        <li>How to add new features</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="setup">
+                <h2>🛠️ Setup & Installation</h2>
+                
+                <h3>Prerequisites</h3>
+                <p>Before you start, make sure you have:</p>
+                <ul>
+                    <li><strong>Node.js</strong> (version 18 or higher) - <a href="https://nodejs.org/">Download here</a></li>
+                    <li><strong>npm</strong> (comes with Node.js)</li>
+                    <li><strong>Angular CLI</strong> - Tool to create Angular projects</li>
+                </ul>
+
+                <h3>Step 1: Install Angular CLI</h3>
+                <div class="command-block">
+                    npm install -g @angular/cli
+                </div>
+                <p>The <code>-g</code> flag installs it globally so you can use it anywhere.</p>
+
+                <h3>Step 2: Install Dependencies</h3>
+                <div class="command-block">
+                    npm install
+                </div>
+                <p>This reads the <code>package.json</code> file and installs all required packages.</p>
+
+                <h3>Step 3: Start the Development Server</h3>
+                <div class="command-block">
+                    npm start
+                </div>
+                <p>or</p>
+                <div class="command-block">
+                    ng serve
+                </div>
+                <p>The app will be available at <code>http://localhost:4200</code></p>
+
+                <div class="tip-box">
+                    <strong>💡 Pro Tip:</strong> Use <code>npm start</code> for development. It has hot-reload, meaning changes to your code will automatically refresh the browser!
+                </div>
+            </section>
+
+            <section id="project-structure">
+                <h2>📁 Project Structure</h2>
+                <p>Here's how the project is organized:</p>
+
+                <div class="folder-structure">
+<pre>
+neetprep/                          <span class="folder">📁 Root folder</span>
+├── src/                          <span class="folder">📁 Source code</span>
+│   ├── app/                      <span class="folder">📁 Main application</span>
+│   │   ├── components/           <span class="folder">📁 UI Components</span>
+│   │   │   ├── admin/            <span class="folder">📁 Admin panel components</span>
+│   │   │   │   ├── admin-dashboard/
+│   │   │   │   ├── user-management/
+│   │   │   │   ├── subject-management/
+│   │   │   │   ├── exam-management/
+│   │   │   │   ├── question-management/
+│   │   │   │   ├── student-performance/
+│   │   │   │   └── student-details/
+│   │   │   ├── user/             <span class="folder">📁 User panel components</span>
+│   │   │   │   ├── user-dashboard/
+│   │   │   │   ├── exam/
+│   │   │   │   ├── questions/
+│   │   │   │   └── exam-result/
+│   │   │   └── login/            <span class="folder">📁 Login page</span>
+│   │   ├── guards/               <span class="folder">📁 Route protection</span>
+│   │   │   └── auth.guard.ts
+│   │   ├── interceptors/         <span class="folder">📁 HTTP interceptors</span>
+│   │   │   └── auth.interceptor.ts
+│   │   ├── services/             <span class="folder">📁 API services</span>
+│   │   │   ├── auth.service.ts
+│   │   │   ├── exam.service.ts
+│   │   │   ├── subject.service.ts
+│   │   │   └── bookmark.service.ts
+│   │   ├── models/               <span class="folder">📁 TypeScript interfaces</span>
+│   │   │   └── models.ts
+│   │   ├── app.component.ts      <span class="file">📄 Root component</span>
+│   │   ├── app.config.ts         <span class="file">📄 App configuration</span>
+│   │   └── app.routes.ts         <span class="file">📄 Route definitions</span>
+│   ├── styles.scss               <span class="file">📄 Global styles</span>
+│   ├── main.ts                   <span class="file">📄 Entry point</span>
+│   └── index.html                <span class="file">📄 HTML template</span>
+├── angular.json                  <span class="file">📄 Angular configuration</span>
+├── package.json                   <span class="file">📄 Dependencies</span>
+└── tsconfig.json                  <span class="file">📄 TypeScript config</span>
+</pre>
+                </div>
+            </section>
+
+            <section id="components">
+                <h2>🧩 Components</h2>
+                <p><strong>What is a Component?</strong> A component is a reusable piece of UI (User Interface). In Angular, everything you see on screen is a component!</p>
+
+                <h3>Component Anatomy</h3>
+                <p>Each component typically has:</p>
+                <ul>
+                    <li><strong>.ts file</strong> - The logic/behavior (TypeScript)</li>
+                    <li><strong>.html file</strong> - The template/markup (HTML)</li>
+                    <li><strong>.scss file</strong> - The styling (CSS)</li>
+                </ul>
+
+                <h3>How Components Work</h3>
+                <pre><code>import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',    // HTML tag to use this component
+  templateUrl: './my-component.component.html',  // HTML file
+  styleUrls: ['./my-component.component.scss']    // Styles
+})
+export class MyComponent {
+  // Your logic here
+}</code></pre>
+
+                <h3>Example: Login Component</h3>
+                <pre><code>// src/app/components/login/login.component.ts
+import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
+})
+export class LoginComponent {
+  email = '';
+  password = '';
+
+  constructor(private authService: AuthService) {}
+
+  onLogin() {
+    this.authService.login(this.email, this.password)
+      .subscribe({
+        next: (response) => {
+          // Handle successful login
+          console.log('Logged in!', response);
+        },
+        error: (error) => {
+          // Handle error
+          console.error('Login failed', error);
+        }
+      });
+  }
+}</code></pre>
+
+                <div class="info-box">
+                    <strong>📝 Note:</strong> Components use <code>inject()</code> or <code>constructor</code> to get services. The template (.html file) has access to the component's properties and methods.
+                </div>
+            </section>
+
+            <section id="services">
+                <h2>🔌 Services</h2>
+                <p><strong>What is a Service?</strong> A service is a reusable piece of code that provides functionality across your app. Services typically handle:</p>
+                <ul>
+                    <li>Communicating with the backend API</li>
+                    <li>Sharing data between components</li>
+                    <li>Business logic</li>
+                </ul>
+
+                <h3>Creating a Service</h3>
+                <pre><code>import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'  // Makes this service available app-wide
+})
+export class MyService {
+  private apiUrl = 'http://127.0.0.1:8000/api';
+
+  constructor(private http: HttpClient) {}
+
+  getData() {
+    return this.http.get(`${this.apiUrl}/data`);
+  }
+
+  postData(data: any) {
+    return this.http.post(`${this.apiUrl}/data`, data);
+  }
+}</code></pre>
+
+                <h3>Auth Service (Example)</h3>
+                <p>The AuthService handles all authentication-related tasks:</p>
+                <pre><code>// Key methods in AuthService:
+login(email: string, password: string)  // Login user
+logout()                                 // Logout user
+getToken()                               // Get JWT token
+getCurrentUser()                        // Get logged-in user
+isLoggedIn()                            // Check if user is logged in
+isAdmin()                               // Check if user is admin</code></pre>
+
+                <div class="tip-box">
+                    <strong>💡 Service Pattern:</strong> Services are singletons (one instance) when using <code>providedIn: 'root'</code>. This means the same data is shared across all components.
+                </div>
+            </section>
+
+            <section id="routing">
+                <h2>🧭 Routing</h2>
+                <p><strong>What is Routing?</strong> Routing determines which component to show based on the URL. It's like a map that tells Angular which page to display.</p>
+
+                <h3>Route Configuration</h3>
+                <pre><code>// src/app/app.routes.ts
+import { Routes } from '@angular/router';
+import { AuthGuard, AdminGuard } from './guards/auth.guard';
+
+export const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  
+  // Login page (no protection)
+  { 
+    path: 'login', 
+    loadComponent: () => import('./components/login/login.component')
+      .then(m => m.LoginComponent)
+  },
+  
+  // Admin routes (protected by AuthGuard AND AdminGuard)
+  { 
+    path: 'admin', 
+    canActivate: [AuthGuard, AdminGuard],
+    loadComponent: () => import('./components/admin/admin-dashboard/admin-dashboard.component')
+      .then(m => m.AdminDashboardComponent)
+  },
+  
+  // Regular user routes (protected by AuthGuard only)
+  { 
+    path: 'user', 
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./components/user/user-dashboard/user-dashboard.component')
+      .then(m => m.UserDashboardComponent)
+  },
+  
+  // Wildcard route (404)
+  { path: '**', redirectTo: '/login' }
+];</code></pre>
+
+                <h3>Route Parameters</h3>
+                <p>Some routes need dynamic values (like IDs):</p>
+                <pre><code>// Route with parameter (lazy loaded)
+{ 
+  path: 'user/exam/:examId', 
+  loadComponent: () => import('./components/user/exam/exam.component')
+    .then(m => m.ExamComponent)
+}
+
+// Accessing parameter in component
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) {
+  const examId = this.route.snapshot.paramMap.get('examId');
+}</code></pre>
+
+                <h3>Route URLs</h3>
+                <table>
+                    <tr>
+                        <th>URL</th>
+                        <th>Page</th>
+                        <th>Access</th>
+                    </tr>
+                    <tr>
+                        <td><code>/login</code></td>
+                        <td>Login Page</td>
+                        <td>Public</td>
+                    </tr>
+                    <tr>
+                        <td><code>/admin</code></td>
+                        <td>Admin Dashboard</td>
+                        <td>Admin Only</td>
+                    </tr>
+                    <tr>
+                        <td><code>/admin/users</code></td>
+                        <td>User Management</td>
+                        <td>Admin Only</td>
+                    </tr>
+                    <tr>
+                        <td><code>/admin/subjects</code></td>
+                        <td>Subject Management</td>
+                        <td>Admin Only</td>
+                    </tr>
+                    <tr>
+                        <td><code>/admin/exams</code></td>
+                        <td>Exam Management</td>
+                        <td>Admin Only</td>
+                    </tr>
+                    <tr>
+                        <td><code>/admin/performance</code></td>
+                        <td>Student Performance</td>
+                        <td>Admin Only</td>
+                    </tr>
+                    <tr>
+                        <td><code>/user</code></td>
+                        <td>User Dashboard</td>
+                        <td>Logged In Users</td>
+                    </tr>
+                    <tr>
+                        <td><code>/user/questions</code></td>
+                        <td>Questions Browser</td>
+                        <td>Logged In Users</td>
+                    </tr>
+                    <tr>
+                        <td><code>/user/exam/:examId</code></td>
+                        <td>Take Exam</td>
+                        <td>Logged In Users</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="guards">
+                <h2>🛡️ Guards</h2>
+                <p><strong>What is a Guard?</strong> A guard protects routes from unauthorized access. Think of it like a bouncer at a club.</p>
+
+                <h3>AuthGuard</h3>
+                <p>Ensures only logged-in users can access the route:</p>
+                <pre><code>// src/app/guards/auth.guard.ts
+import { inject } from '@angular/core';
+import { Router, CanActivateFn } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
+export const AuthGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isLoggedIn()) {
+    return true;  // Allow access
+  }
+
+  router.navigate(['/login']);  // Redirect to login
+  return false;  // Deny access
+};</code></pre>
+
+                <h3>AdminGuard</h3>
+                <p>Ensures only admins can access the route:</p>
+                <pre><code>// AdminGuard is in the same file: src/app/guards/auth.guard.ts
+export const AdminGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isAdmin()) {
+    return true;  // Allow access
+  }
+
+  router.navigate(['/user']);  // Redirect regular users
+  return false;
+};</code></pre>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong> Always use both <code>AuthGuard</code> AND <code>AdminGuard</code> for admin routes! AuthGuard checks if logged in, AdminGuard checks if admin.
+                </div>
+            </section>
+
+            <section id="interceptors">
+                <h2>🔄 Interceptors</h2>
+                <p><strong>What is an Interceptor?</strong> An interceptor intercepts all HTTP requests and can modify them. We use it to automatically add the JWT token to every request.</p>
+
+                <h3>Auth Interceptor</h3>
+                <pre><code>// src/app/interceptors/auth.interceptor.ts
+import { inject } from '@angular/core';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
+  const token = authService.getToken();
+
+  if (token) {
+    // Clone the request and add authorization header
+    const authReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return next(authReq);
+  }
+
+  return next(req);
+};</code></pre>
+
+                <div class="info-box">
+                    <strong>💡 How it Works:</strong> Every time the app makes an HTTP request, the interceptor automatically adds the JWT token. This happens behind the scenes - you don't need to do anything extra!
+                </div>
+            </section>
+
+            <section id="models">
+                <h2>📋 Models</h2>
+                <p><strong>What is a Model?</strong> A model defines the structure of data in your app. It's like a blueprint for objects.</p>
+
+                <h3>User Model</h3>
+                <pre><code>export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password?: string;      // Optional (shouldn't be exposed)
+  role: 'admin' | 'user';
+  isActive: boolean;
+  createdAt: Date;
+  notes?: string;
+}</code></pre>
+
+                <h3>Subject Model</h3>
+                <pre><code>export interface Subject {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  isActive: boolean;
+  createdAt: Date;
+  chapters?: Chapter[];    // Related chapters
+  topics?: Topic[];         // Related topics
+}</code></pre>
+
+                <h3>Exam Model</h3>
+                <pre><code>export interface Exam {
+  id: string;
+  title: string;
+  description: string;
+  subjectId: string;
+  chapterId?: string;       // Optional chapter association
+  topicIds: string[];
+  duration: number;          // In minutes
+  totalMarks: number;
+  passingMarks: number;
+  isActive: boolean;
+  createdAt: Date;
+  questions?: Question[];
+  questionCount?: number;
+}</code></pre>
+
+                <h3>Question Model</h3>
+                <pre><code>export interface Question {
+  id: string;
+  examId: string;
+  questionText: string;
+  optionA: string;
+  optionB: string;
+  optionC: string;
+  optionD: string;
+  correctAnswer: 'A' | 'B' | 'C' | 'D';
+  marks: number;
+  ncert?: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
+  year?: number;
+  questionType?: 'theory' | 'numerical' | 'diagram' | 
+                  'assertion_reason' | 'multiple_correct';
+}</code></pre>
+            </section>
+
+            <section id="authentication">
+                <h2>🔐 Authentication Flow</h2>
+                <p>Here's how the authentication system works:</p>
+
+                <h3>Login Flow</h3>
+                <ol>
+                    <li>User enters email and password on the login page</li>
+                    <li>Login component calls <code>AuthService.login()</code></li>
+                    <li>AuthService sends POST request to <code>/api/auth/login</code></li>
+                    <li>Backend validates credentials and returns JWT token</li>
+                    <li>AuthService stores token in localStorage</li>
+                    <li>AuthGuard allows navigation to protected routes</li>
+                </ol>
+
+                <h3>Making API Calls</h3>
+                <p>All authenticated API calls automatically include the JWT token:</p>
+                <pre><code>// No need to manually add headers!
+this.http.get('/api/protected-endpoint')
+  .subscribe(data => console.log(data));
+// The interceptor adds: Authorization: Bearer {token}</code></pre>
+
+                <h3>Logout Flow</h3>
+                <ol>
+                    <li>User clicks logout</li>
+                    <li>AuthService calls <code>/api/auth/logout</code></li>
+                    <li>Token is removed from localStorage</li>
+                    <li>User is redirected to login page</li>
+                </ol>
+            </section>
+
+            <section id="admin-panel">
+                <h2>👨‍💼 Admin Panel</h2>
+                <p>The admin panel allows administrators to manage the entire application:</p>
+
+                <h3>Dashboard</h3>
+                <p>Overview of system statistics and recent activities.</p>
+
+                <h3>User Management</h3>
+                <ul>
+                    <li>View all registered users</li>
+                    <li>Create new users</li>
+                    <li>Edit user details</li>
+                    <li>Enable/disable user accounts</li>
+                    <li>Add notes to user accounts</li>
+                    <li>Delete users</li>
+                </ul>
+
+                <h3>Subject Management</h3>
+                <ul>
+                    <li>Create subjects with custom icons and colors</li>
+                    <li>Edit subject details</li>
+                    <li>Enable/disable subjects</li>
+                    <li>Add topics to subjects</li>
+                </ul>
+
+                <h3>Exam Management</h3>
+                <ul>
+                    <li>Create exams and assign to subjects</li>
+                    <li>Set exam duration and marks</li>
+                    <li>Enable/disable exams</li>
+                    <li>Add questions to exams</li>
+                </ul>
+
+                <h3>Question Management</h3>
+                <ul>
+                    <li>Add questions with 4-option format (A, B, C, D)</li>
+                    <li>Mark correct answers</li>
+                    <li>Set marks per question</li>
+                </ul>
+
+                <h3>Student Performance</h3>
+                <ul>
+                    <li>View all student exam attempts</li>
+                    <li>Track student progress over time</li>
+                    <li>View detailed student profiles</li>
+                </ul>
+            </section>
+
+            <section id="user-panel">
+                <h2>👤 User Panel</h2>
+                <p>The user panel is for students to take exams:</p>
+
+                <h3>Dashboard</h3>
+                <ul>
+                    <li>View available subjects and exams</li>
+                    <li>See exam status (not started, in progress, completed)</li>
+                    <li>Quick access to recent exams</li>
+                </ul>
+
+                <h3>Take Exam</h3>
+                <ul>
+                    <li>Start timed exams with countdown timer</li>
+                    <li>Navigate between questions</li>
+                    <li>Mark questions for review</li>
+                    <li>Auto-submit when time expires</li>
+                    <li>Visual warning when time is low</li>
+                </ul>
+
+                <h3>View Results</h3>
+                <ul>
+                    <li>See scores after completing exams</li>
+                    <li>View correct/incorrect answers</li>
+                    <li>Add personal notes after each exam</li>
+                    <li>Track performance history</li>
+                </ul>
+
+                <h3>Questions Browser</h3>
+                <ul>
+                    <li>Browse all available questions</li>
+                    <li>Filter by difficulty, year, type</li>
+                    <li>Bookmark questions for later</li>
+                </ul>
+            </section>
+
+            <section id="build">
+                <h2>🔨 Build & Deploy</h2>
+
+                <h3>Development Build</h3>
+                <div class="command-block">
+                    npm start
+                </div>
+                <p>Starts development server at <code>http://localhost:4200</code> with hot-reload.</p>
+
+                <h3>Production Build</h3>
+                <div class="command-block">
+                    npm run build
+                </div>
+                <p>Creates optimized build in <code>dist/neet-prep</code> folder. This output can be deployed to any web server.</p>
+
+                <h3>Production Build Features:</h3>
+                <ul>
+                    <li>Minified code (smaller file sizes)</li>
+                    <li>Uglified JavaScript (harder to read, faster to execute)</li>
+                    <li>Tree-shaking (removes unused code)</li>
+                    <li>Source maps for debugging (optional)</li>
+                </ul>
+
+                <h3>Watch Mode (Development)</h3>
+                <div class="command-block">
+                    npm run watch
+                </div>
+                <p>Builds in development mode and watches for file changes.</p>
+
+                <h3>Run Tests</h3>
+                <div class="command-block">
+                    ng test
+                </div>
+                <p>Runs unit tests (if any exist).</p>
+            </section>
+
+            <section id="troubleshooting">
+                <h2>❓ Troubleshooting</h2>
+
+                <h3>Common Issues</h3>
+
+                <div class="warning-box">
+                    <strong>Error: Cannot find module './...'</strong>
+                    <p><strong>Solution:</strong> Run <code>npm install</code> to ensure all dependencies are installed.</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Error: Connection refused to localhost:8000</strong>
+                    <p><strong>Solution:</strong> Make sure the Laravel backend is running. Start it with <code>cd neetprep-laravel && php artisan serve</code></p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Error: JWT Token Expired</strong>
+                    <p><strong>Solution:</strong> Log out and log back in to get a fresh token. The backend JWT TTL is 60 minutes by default.</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Build errors</strong>
+                    <p><strong>Solution:</strong> Clear the Angular cache and rebuild:
+                        <br><code>rm -rf node_modules/.cache</code>
+                        <br><code>npm run build</code>
+                    </p>
+                </div>
+
+                <h3>Getting Help</h3>
+                <ul>
+                    <li>Check the browser console (F12) for error messages</li>
+                    <li>Check the Network tab to see API responses</li>
+                    <li>Run <code>ng serve --verbose</code> for detailed output</li>
+                </ul>
+            </section>
+
+            <div class="nav-buttons">
+                <span></span>
+                <a href="laravel-documentation.html" class="nav-btn">Laravel Documentation →</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header"><div class="logo"><i class="fas fa-graduation-cap"></i></div><h2>NEET Prep</h2></div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fas fa-home"></i><span>Dashboard</span></a>
+      <a routerLink="/admin/users" routerLinkActive="active"><i class="fas fa-users"></i><span>Users</span></a>
+      <a routerLink="/admin/subjects" routerLinkActive="active"><i class="fas fa-book"></i><span>Subjects</span></a>
+      <a routerLink="/admin/exams" routerLinkActive="active"><i class="fas fa-file-alt"></i><span>Exams</span></a>
+      <a routerLink="/admin/performance" routerLinkActive="active"><i class="fas fa-chart-bar"></i><span>Performance</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info"><div class="user-avatar"><i class="fas fa-user-shield"></i></div><div class="user-details"><span class="user-name">Admin User</span><span class="user-role">Administrator</span></div></div>
+      <button class="btn btn-logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="top-header">
+      <div class="header-left"><h1>Exam Management</h1><p>Create and manage examinations</p></div>
+      <div class="header-right"><button class="btn btn-primary" (click)="openExamModal()"><i class="fas fa-plus"></i>Create Exam</button></div>
+    </header>
+    <div class="page-content">
+      <div class="filters-bar">
+        <div class="search-box"><i class="fas fa-search"></i><input type="text" class="input" placeholder="Search exams..." [(ngModel)]="searchTerm" (input)="filterExams()"></div>
+        <select class="input filter-select" [(ngModel)]="filterSubject" (change)="filterExams()"><option value="">All Subjects</option><option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option></select>
+        <select class="input filter-select" [(ngModel)]="filterStatus" (change)="filterExams()"><option value="">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option></select>
+      </div>
+      <div class="card">
+        <div class="table-container">
+          <table>
+            <thead><tr><th>Exam Name</th><th>Subject</th><th>Duration</th><th>Marks</th><th>Questions</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr *ngFor="let exam of filteredExams">
+                <td><div class="exam-info"><span class="exam-title">{{ exam.title }}</span><span class="exam-desc">{{ exam.description | slice:0:50 }}...</span></div></td>
+                <td>{{ getSubjectName(exam.subjectId) }}</td>
+                <td>{{ exam.duration }} min</td>
+                <td>{{ exam.totalMarks }}</td>
+                <td>{{ exam.questionCount || 0 }}</td>
+                <td><span class="badge" [class.badge-success]="exam.isActive" [class.badge-warning]="!exam.isActive">{{ exam.isActive ? 'Active' : 'Inactive' }}</span></td>
+                <td>{{ exam.createdAt | date:'mediumDate' }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <a [routerLink]="['/admin/questions', exam.id]" class="btn btn-sm btn-outline" title="Manage Questions"><i class="fas fa-question-circle"></i></a>
+                    <button class="btn btn-sm btn-outline" (click)="editExam(exam)" title="Edit"><i class="fas fa-edit"></i></button>
+                    <label class="toggle-switch small"><input type="checkbox" [checked]="exam.isActive" (change)="toggleExamStatus(exam)"><span class="slider"></span></label>
+                    <button class="btn btn-sm btn-danger-outline" (click)="deleteExam(exam)" title="Delete"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="filteredExams.length === 0"><td colspan="8" class="text-center text-muted">No exams found</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="modal-overlay" *ngIf="showExamModal" (click)="closeExamModal()">
+  <div class="modal modal-lg" (click)="$event.stopPropagation()">
+    <div class="modal-header"><h3>{{ editingExam ? 'Edit Exam' : 'Create New Exam' }}</h3><button class="close-btn" (click)="closeExamModal()"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Exam Title</label><input type="text" class="input" [(ngModel)]="examForm.title" placeholder="e.g., Physics - Laws of Motion"></div>
+        <div class="form-group"><label>Subject</label><select class="input" [(ngModel)]="examForm.subjectId"><option value="">Select Subject</option><option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option></select></div>
+      </div>
+      <div class="form-group"><label>Description</label><textarea class="input" [(ngModel)]="examForm.description" placeholder="Brief description of the exam"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Duration (minutes)</label><input type="number" class="input" [(ngModel)]="examForm.duration" min="5" max="180"></div>
+        <div class="form-group"><label>Total Marks</label><input type="number" class="input" [(ngModel)]="examForm.totalMarks" min="10"></div>
+        <div class="form-group"><label>Passing Marks</label><input type="number" class="input" [(ngModel)]="examForm.passingMarks" min="1"></div>
+      </div>
+      <div class="form-group"><label>Topics (optional)</label>
+        <div class="topics-grid" *ngIf="selectedSubject?.topics?.length">
+          <label class="topic-checkbox" *ngFor="let topic of selectedSubject!.topics!"><input type="checkbox" [checked]="isTopicSelected(topic.id)" (change)="toggleTopic(topic.id)"><span>{{ topic.name }}</span></label>
+        </div>
+        <p *ngIf="!selectedSubject?.topics?.length" class="text-muted">Select a subject to see available topics</p>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" (click)="closeExamModal()">Cancel</button><button class="btn btn-primary" (click)="saveExam()" [disabled]="!examForm.title || !examForm.subjectId">{{ editingExam ? 'Update' : 'Create' }}</button></div>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Management - NEET Prep</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; }
+    .admin-layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 260px; background: linear-gradient(180deg, #1f2937 0%, #111827 100%); color: white; display: flex; flex-direction: column; position: fixed; height: 100vh; }
+    .sidebar-header { padding: 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .sidebar-header .logo { width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .sidebar-header .logo i { font-size: 20px; color: white; }
+    .sidebar-header h2 { font-size: 18px; font-weight: 600; }
+    .sidebar-nav { flex: 1; padding: 16px 0; }
+    .sidebar-nav a { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: rgba(255, 255, 255, 0.7); transition: all 0.2s; font-size: 14px; text-decoration: none; }
+    .sidebar-nav a:hover { background: rgba(255, 255, 255, 0.1); color: white; }
+    .sidebar-nav a.active { background: rgba(255, 255, 255, 0.1); color: white; border-left: 3px solid #667eea; padding-left: 21px; }
+    .sidebar-nav a i { width: 20px; text-align: center; }
+    .sidebar-footer { padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .sidebar-footer .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .sidebar-footer .user-avatar { width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .sidebar-footer .user-avatar i { color: rgba(255, 255, 255, 0.8); }
+    .sidebar-footer .user-details { display: flex; flex-direction: column; }
+    .sidebar-footer .user-name { font-size: 14px; font-weight: 500; }
+    .sidebar-footer .user-role { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+    .btn-logout { width: 100%; justify-content: center; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 10px; border-radius: 6px; cursor: pointer; }
+    .main-content { flex: 1; margin-left: 260px; background: #f9fafb; }
+    .top-header { background: white; padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e7eb; }
+    .top-header .header-left { display: flex; align-items: flex-start; gap: 16px; }
+    .back-link { width: 40px; height: 40px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #6b7280; text-decoration: none; transition: all 0.2s; }
+    .back-link:hover { background: #e5e7eb; color: #374151; }
+    .top-header h1 { font-size: 24px; font-weight: 600; color: #111827; margin-bottom: 4px; }
+    .top-header p { color: #6b7280; font-size: 14px; }
+    .top-header .header-right { display: flex; align-items: center; gap: 24px; }
+    .exam-stats { display: flex; gap: 20px; }
+    .exam-stats span { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #6b7280; }
+    .exam-stats i { color: #667eea; }
+    .page-content { padding: 32px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; border: none; }
+    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .questions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); gap: 20px; }
+    .question-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+    .question-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .question-number { background: #667eea; color: white; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+    .question-marks { font-size: 13px; color: #6b7280; }
+    .question-actions { margin-left: auto; display: flex; gap: 4px; }
+    .icon-btn { width: 32px; height: 32px; border: none; background: transparent; border-radius: 6px; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .icon-btn:hover { background: #e5e7eb; color: #374151; }
+    .icon-btn.danger:hover { background: #fee2e2; color: #dc2626; }
+    .question-text { font-size: 15px; color: #111827; line-height: 1.6; margin-bottom: 20px; }
+    .options-list { display: flex; flex-direction: column; gap: 8px; }
+    .option { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f9fafb; border-radius: 8px; border: 1px solid transparent; }
+    .option.correct { background: #d1fae5; border-color: #10b981; }
+    .option-label { width: 28px; height: 28px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #374151; }
+    .option.correct .option-label { background: #10b981; color: white; }
+    .option-text { flex: 1; font-size: 14px; color: #374151; }
+    .option i { color: #10b981; font-size: 16px; }
+    .empty-state { text-align: center; padding: 60px 20px; background: white; border-radius: 12px; }
+    .empty-state i { font-size: 48px; color: #d1d5db; margin-bottom: 16px; }
+    .empty-state h4 { font-size: 18px; color: #374151; margin-bottom: 8px; }
+    .empty-state p { color: #6b7280; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header"><div class="logo"><i class="fas fa-graduation-cap"></i></div><h2>NEET Prep</h2></div>
+      <nav class="sidebar-nav">
+        <a href="admin-dashboard.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+        <a href="02-user-management.html"><i class="fas fa-users"></i><span>Users</span></a>
+        <a href="03-subject-management.html"><i class="fas fa-book"></i><span>Subjects</span></a>
+        <a href="04-exam-management.html" class="active"><i class="fas fa-file-alt"></i><span>Exams</span></a>
+        <a href="05-student-performance.html"><i class="fas fa-chart-bar"></i><span>Performance</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info"><div class="user-avatar"><i class="fas fa-user-shield"></i></div><div class="user-details"><span class="user-name">Admin</span><span class="user-role">Administrator</span></div></div>
+        <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </aside>
+    
+    <main class="main-content">
+      <header class="top-header">
+        <div class="header-left">
+          <a href="04-exam-management.html" class="back-link"><i class="fas fa-arrow-left"></i></a>
+          <div><h1 id="examTitle">Questions</h1><p id="examDesc"></p></div>
+        </div>
+        <div class="header-right">
+          <div class="exam-stats">
+            <span><i class="fas fa-question-circle"></i> <span id="qCount">0</span> Questions</span>
+            <span><i class="fas fa-clock"></i> <span id="duration">0</span> min</span>
+            <span><i class="fas fa-star"></i> <span id="marks">0</span> Marks</span>
+          </div>
+          <button class="btn btn-primary" onclick="openQuestionModal()"><i class="fas fa-plus"></i> Add Question</button>
+        </div>
+      </header>
+      
+      <div class="page-content">
+        <div class="questions-grid" id="questionsGrid"><p style="text-align:center;color:#6b7280;padding:40px;">Loading...</p></div>
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <i class="fas fa-question-circle"></i>
+          <h4>No Questions Yet</h4>
+          <p>Start adding questions to this exam</p>
+          <button class="btn btn-primary" onclick="openQuestionModal()"><i class="fas fa-plus"></i> Add First Question</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const API_BASE = 'http://127.0.0.1:8000/api';
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = '01-login.html';
+    const urlParams = new URLSearchParams(window.location.search);
+    const examId = urlParams.get('examId');
+    if (!examId) window.location.href = '04-exam-management.html';
+
+    let exam = null, questions = [];
+
+    async function fetchAPI(url, options = {}) {
+      const headers = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
+      const response = await fetch(`${API_BASE}${url}`, { ...options, headers: { ...headers, ...options.headers } });
+      if (response.status === 401) { logout(); return null; }
+      return response.json();
+    }
+
+    async function loadData() {
+      const examData = await fetchAPI(`/exams/${examId}`);
+      const questionsData = await fetchAPI(`/exams/${examId}/questions`);
+      if (examData) { exam = examData; renderExamInfo(); }
+      if (questionsData) { questions = questionsData; renderQuestions(); }
+    }
+
+    function renderExamInfo() {
+      if (!exam) return;
+      document.getElementById('examTitle').textContent = exam.title;
+      document.getElementById('examDesc').textContent = exam.description || '';
+      document.getElementById('qCount').textContent = questions.length;
+      document.getElementById('duration').textContent = exam.duration;
+      document.getElementById('marks').textContent = exam.totalMarks;
+    }
+
+    function renderQuestions() {
+      const grid = document.getElementById('questionsGrid');
+      const empty = document.getElementById('emptyState');
+      if (!questions.length) { grid.style.display = 'none'; empty.style.display = 'block'; return; }
+      grid.style.display = 'grid'; empty.style.display = 'none';
+      grid.innerHTML = questions.map((q, i) => `
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">Q${i + 1}</span>
+            <span class="question-marks">${q.marks} marks</span>
+            <div class="question-actions">
+              <button class="icon-btn" onclick="editQuestion('${q.id}')"><i class="fas fa-edit"></i></button>
+              <button class="icon-btn danger" onclick="deleteQuestion('${q.id}')"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <p class="question-text">${q.questionText}</p>
+          <div class="options-list">
+            <div class="option ${q.correctAnswer === 'A' ? 'correct' : ''}"><span class="option-label">A</span><span class="option-text">${q.optionA}</span>${q.correctAnswer === 'A' ? '<i class="fas fa-check"></i>' : ''}</div>
+            <div class="option ${q.correctAnswer === 'B' ? 'correct' : ''}"><span class="option-label">B</span><span class="option-text">${q.optionB}</span>${q.correctAnswer === 'B' ? '<i class="fas fa-check"></i>' : ''}</div>
+            <div class="option ${q.correctAnswer === 'C' ? 'correct' : ''}"><span class="option-label">C</span><span class="option-text">${q.optionC}</span>${q.correctAnswer === 'C' ? '<i class="fas fa-check"></i>' : ''}</div>
+            <div class="option ${q.correctAnswer === 'D' ? 'correct' : ''}"><span class="option-label">D</span><span class="option-text">${q.optionD}</span>${q.correctAnswer === 'D' ? '<i class="fas fa-check"></i>' : ''}</div>
+          </div>
+        </div>`).join('');
+    }
+
+    async function deleteQuestion(id) { if (confirm('Delete this question?')) { await fetchAPI(`/admin/exams/${examId}/questions/${id}`, { method: 'DELETE' }); loadData(); } }
+    function editQuestion(id) { alert('Edit question: ' + id); }
+    function openQuestionModal() { alert('Add question modal'); }
+    function logout() { localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = '01-login.html'; }
+    loadData();
+  </script>
+</body>
+</html>

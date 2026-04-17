@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - NEET Prep</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; }
+    .login-container { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
+    .login-card { background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); padding: 48px; width: 100%; max-width: 440px; }
+    .login-header { text-align: center; margin-bottom: 40px; }
+    .login-header .logo { width: 72px; height: 72px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .login-header .logo i { font-size: 32px; color: white; }
+    .login-header h1 { font-size: 28px; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
+    .login-header p { color: #6b7280; font-size: 14px; }
+    .form-group { margin-bottom: 24px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #374151; font-size: 14px; }
+    .input-wrapper { position: relative; }
+    .input-wrapper i:first-child { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+    .input { width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: border-color 0.2s; }
+    .input:focus { outline: none; border-color: #667eea; }
+    .input-wrapper input { padding-left: 44px; padding-right: 44px; }
+    .toggle-password { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 6px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: none; }
+    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-lg { width: 100%; padding: 14px; font-size: 16px; }
+    .error-message { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; display: none; }
+    .error-message.show { display: flex; align-items: center; gap: 8px; }
+    .demo-credentials { margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5e7eb; }
+    .demo-credentials h4 { font-size: 12px; text-transform: uppercase; color: #9ca3af; text-align: center; margin-bottom: 16px; letter-spacing: 0.5px; }
+    .credentials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .credential-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; background: #f9fafb; cursor: pointer; transition: all 0.2s; font-size: 14px; font-weight: 500; color: #374151; }
+    .credential-btn:hover { border-color: #667eea; background: #eef2ff; color: #667eea; }
+    .login-footer { margin-top: 24px; text-align: center; }
+    .login-footer p { color: rgba(255, 255, 255, 0.7); font-size: 13px; }
+    .spinner { animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo"><i class="fas fa-graduation-cap"></i></div>
+        <h1>NEET Prep</h1>
+        <p>Online Examination Portal</p>
+      </div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Email Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" class="input" placeholder="Enter your email" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" class="input" placeholder="Enter your password" required>
+            <button type="button" class="toggle-password" onclick="togglePassword()">
+              <i class="fas fa-eye" id="eyeIcon"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="error-message" id="errorMsg">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="errorText"></span>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+          <i class="fas fa-sign-in-alt" id="btnIcon"></i>
+          <span id="btnText">Sign In</span>
+        </button>
+      </form>
+      
+      <div class="demo-credentials">
+        <h4>Demo Credentials</h4>
+        <div class="credentials-grid">
+          <button type="button" class="credential-btn" onclick="fillCredentials('admin@neetprep.com', 'password')">
+            <i class="fas fa-user-shield"></i>
+            <span>Admin</span>
+          </button>
+          <button type="button" class="credential-btn" onclick="fillCredentials('user@neetprep.com', 'password')">
+            <i class="fas fa-user"></i>
+            <span>User</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="login-footer">
+      <p>NEET Prep &copy; 2024 - All Rights Reserved</p>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://127.0.0.1:8000/api';
+
+    if (localStorage.getItem('token')) {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      window.location.href = user.role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html';
+    }
+
+    function fillCredentials(email, password) {
+      document.getElementById('email').value = email;
+      document.getElementById('password').value = password;
+      document.getElementById('errorMsg').classList.remove('show');
+    }
+
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const icon = document.getElementById('eyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+      }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const submitBtn = document.getElementById('submitBtn');
+      const btnIcon = document.getElementById('btnIcon');
+      const btnText = document.getElementById('btnText');
+      const errorMsg = document.getElementById('errorMsg');
+      const errorText = document.getElementById('errorText');
+
+      submitBtn.disabled = true;
+      btnIcon.className = 'fas fa-spinner spinner';
+      btnText.textContent = 'Signing in...';
+      errorMsg.classList.remove('show');
+
+      try {
+        const response = await fetch(`${API_BASE}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Login failed');
+        }
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        if (data.user.role === 'admin') {
+          window.location.href = 'admin-dashboard.html';
+        } else {
+          window.location.href = 'user-dashboard.html';
+        }
+      } catch (error) {
+        errorText.textContent = error.message;
+        errorMsg.classList.add('show');
+        submitBtn.disabled = false;
+        btnIcon.className = 'fas fa-sign-in-alt';
+        btnText.textContent = 'Sign In';
+      }
+    });
+  </script>
+</body>
+</html>

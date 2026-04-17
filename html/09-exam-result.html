@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Result - NEET Prep</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; }
+    .result-layout { min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .result-header { padding: 20px 32px; background: rgba(255, 255, 255, 0.1); }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo i { font-size: 32px; color: white; }
+    .logo span { font-size: 24px; font-weight: 700; color: white; }
+    .result-main { display: flex; justify-content: center; padding: 40px 20px; }
+    .result-card { background: white; border-radius: 20px; padding: 40px; max-width: 600px; width: 100%; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+    .result-header-section { text-align: center; margin-bottom: 32px; }
+    .result-header-section h1 { font-size: 28px; font-weight: 700; color: #111827; margin-bottom: 8px; }
+    .result-header-section p { color: #6b7280; font-size: 16px; }
+    .score-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 32px; }
+    .score-circle { width: 160px; height: 160px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 20px; border: 8px solid; }
+    .score-circle.excellent { border-color: #10b981; background: #d1fae5; }
+    .score-circle.good { border-color: #f59e0b; background: #fef3c7; }
+    .score-circle.poor { border-color: #ef4444; background: #fee2e2; }
+    .score-value { font-size: 42px; font-weight: 700; color: #111827; }
+    .score-label { font-size: 13px; color: #6b7280; }
+    .result-badge { display: flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 30px; font-weight: 600; font-size: 16px; }
+    .result-badge i { font-size: 20px; }
+    .result-badge.pass { background: #d1fae5; color: #065f46; }
+    .result-badge.fail { background: #fee2e2; color: #991b1b; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-item { display: flex; align-items: center; gap: 12px; padding: 16px; background: #f9fafb; border-radius: 12px; }
+    .stat-item i { font-size: 20px; color: #667eea; }
+    .stat-info { display: flex; flex-direction: column; }
+    .stat-value { font-size: 24px; font-weight: 700; color: #111827; }
+    .stat-label { font-size: 11px; color: #9ca3af; }
+    .notes-section { background: #fef3c7; padding: 20px; border-radius: 12px; margin-bottom: 24px; }
+    .notes-section h3 { font-size: 16px; font-weight: 600; color: #92400e; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .notes-section h3 i { color: #f59e0b; }
+    .notes-section p { font-size: 13px; color: #b45309; margin-bottom: 12px; }
+    .input { width: 100%; padding: 10px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: white; }
+    textarea.input { resize: vertical; min-height: 80px; margin-bottom: 12px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; border: none; }
+    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .btn-secondary { background: #e5e7eb; color: #374151; }
+    .action-buttons { display: flex; gap: 12px; }
+    .action-buttons .btn { flex: 1; justify-content: center; }
+    .loading { text-align: center; color: white; padding: 60px; }
+    .loading i { font-size: 48px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <div class="result-layout">
+    <header class="result-header">
+      <div class="logo"><i class="fas fa-graduation-cap"></i><span>NEET Prep</span></div>
+    </header>
+
+    <main class="result-main">
+      <div id="resultContent">
+        <div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Loading results...</p></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const API_BASE = 'http://127.0.0.1:8000/api';
+    const token = localStorage.getItem('token');
+    const urlParams = new URLSearchParams(window.location.search);
+    const attemptId = urlParams.get('attemptId');
+    if (!attemptId) window.location.href = 'user-dashboard.html';
+
+    let attempt = null;
+
+    async function fetchAPI(url, options = {}) {
+      const headers = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
+      return fetch(`${API_BASE}${url}`, { ...options, headers: { ...headers, ...options.headers } }).then(r => r.json());
+    }
+
+    async function loadResult() {
+      const data = await fetchAPI(`/exam-attempts/${attemptId}`);
+      if (data) {
+        attempt = data;
+        renderResult();
+      }
+    }
+
+    function renderResult() {
+      const scoreClass = attempt.percentage >= 75 ? 'excellent' : attempt.percentage >= 50 ? 'good' : 'poor';
+      const badgeClass = attempt.percentage >= 50 ? 'pass' : 'fail';
+      const badgeText = attempt.percentage >= 50 ? 'Congratulations! You Passed!' : 'Sorry, You Did Not Pass';
+      const badgeIcon = attempt.percentage >= 50 ? 'fa-check-circle' : 'fa-times-circle';
+      const wrong = attempt.totalMarks - attempt.score;
+
+      document.getElementById('resultContent').innerHTML = `
+        <div class="result-card">
+          <div class="result-header-section">
+            <h1>Exam Completed!</h1>
+            <p>${attempt.examTitle}</p>
+          </div>
+          <div class="score-section">
+            <div class="score-circle ${scoreClass}">
+              <span class="score-value">${attempt.percentage}%</span>
+              <span class="score-label">Your Score</span>
+            </div>
+            <div class="result-badge ${badgeClass}">
+              <i class="fas ${badgeIcon}"></i>
+              ${badgeText}
+            </div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item"><i class="fas fa-check"></i><div class="stat-info"><span class="stat-value">${attempt.score}</span><span class="stat-label">Correct Answers</span></div></div>
+            <div class="stat-item"><i class="fas fa-times"></i><div class="stat-info"><span class="stat-value">${wrong}</span><span class="stat-label">Wrong Answers</span></div></div>
+            <div class="stat-item"><i class="fas fa-star"></i><div class="stat-info"><span class="stat-value">${attempt.totalMarks}</span><span class="stat-label">Total Marks</span></div></div>
+          </div>
+          <div class="notes-section">
+            <h3><i class="fas fa-sticky-note"></i> Add Notes (Optional)</h3>
+            <p>Share your thoughts about this exam</p>
+            <textarea class="input" id="notes" placeholder="What did you learn? Any topics you want to review?" rows="3"></textarea>
+            <button class="btn btn-primary" onclick="saveNotes()"><i class="fas fa-save"></i> Save Notes</button>
+          </div>
+          <div class="action-buttons">
+            <a href="user-dashboard.html" class="btn btn-secondary"><i class="fas fa-home"></i> Go to Dashboard</a>
+            <button class="btn btn-primary" onclick="viewAnswers()"><i class="fas fa-eye"></i> View Answers</button>
+          </div>
+        </div>`;
+    }
+
+    async function saveNotes() {
+      const notes = document.getElementById('notes').value;
+      if (!notes) return;
+      await fetchAPI(`/exam-attempts/${attemptId}/submit`, { method: 'POST', body: JSON.stringify({ answers: attempt.answers || [], notes }) });
+      alert('Notes saved successfully!');
+    }
+
+    function viewAnswers() { alert('View answers for attempt: ' + attemptId); }
+
+    loadResult();
+  </script>
+</body>
+</html>

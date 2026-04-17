@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Prep - Laravel Backend Documentation</title>
+    <style>
+        :root {
+            --primary: #ff2d20;
+            --secondary: #e74c3c;
+            --accent: #ff6b5b;
+            --bg: #f8f9fa;
+            --text: #333;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --sidebar-bg: #ff2d20;
+            --sidebar-text: #fff;
+            --laravel-green: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            margin: 20px 0 10px;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a {
+            color: var(--sidebar-text);
+            text-decoration: none;
+            display: block;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px 60px;
+            max-width: 1200px;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--laravel-green);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin: 25px 0 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 4px solid var(--laravel-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        code {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .command-block {
+            background: #263238;
+            color: #aed581;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Consolas', monospace;
+        }
+
+        .folder-structure {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .folder-structure .folder {
+            color: #ffc107;
+        }
+
+        .folder-structure .file {
+            color: #90caf9;
+        }
+
+        .folder-structure pre {
+            background: #f8f9fa;
+            color: #333;
+            padding: 15px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--laravel-green);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .method-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .method-get {
+            background: #10b981;
+            color: white;
+        }
+
+        .method-post {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .method-put {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .method-patch {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .method-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>📚 Laravel Docs</h1>
+            <h2>Getting Started</h2>
+            <a href="#introduction">Introduction</a>
+            <a href="#setup">Setup & Installation</a>
+            <a href="#project-structure">Project Structure</a>
+            
+            <h2>Core Concepts</h2>
+            <a href="#architecture">Architecture</a>
+            <a href="#models">Models & Database</a>
+            <a href="#controllers">Controllers</a>
+            <a href="#routes">Routes & Middleware</a>
+            <a href="#authentication">Authentication</a>
+            
+            <h2>API Reference</h2>
+            <a href="#auth-endpoints">Auth Endpoints</a>
+            <a href="#public-endpoints">Public Endpoints</a>
+            <a href="#user-endpoints">User Endpoints</a>
+            <a href="#admin-endpoints">Admin Endpoints</a>
+            
+            <h2>Commands</h2>
+            <a href="#artisan-commands">Artisan Commands</a>
+            <a href="#troubleshooting">Troubleshooting</a>
+        </nav>
+
+        <main class="main-content">
+            <span class="header-badge">Laravel 11</span>
+            <h1>Laravel Backend Documentation</h1>
+            
+            <div class="intro">
+                <p>Welcome to the NEET Prep Laravel Backend Documentation! This guide will help you understand how the API works, how to set it up, and how to extend it.</p>
+                <p><strong>What is Laravel?</strong> Laravel is a PHP web application framework that provides the backend API for NEET Prep. It handles database operations, authentication, and business logic.</p>
+            </div>
+
+            <section id="introduction">
+                <h2>📖 Introduction</h2>
+                <p>The NEET Prep backend is a Laravel 11 REST API that provides:</p>
+                <ul>
+                    <li><strong>Authentication</strong> - JWT-based user login/register</li>
+                    <li><strong>Subjects & Topics</strong> - CRUD operations for study materials</li>
+                    <li><strong>Exams & Questions</strong> - Exam management and question banks</li>
+                    <li><strong>Exam Attempts</strong> - Track student progress</li>
+                    <li><strong>Admin Features</strong> - User and content management</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 What is an API?</strong>
+                    <p>An API (Application Programming Interface) is how the frontend and backend communicate. The frontend sends HTTP requests, and the backend responds with JSON data.</p>
+                </div>
+            </section>
+
+            <section id="setup">
+                <h2>🛠️ Setup & Installation</h2>
+                
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li><strong>PHP</strong> (version 8.2 or higher) - <a href="https://www.php.net/downloads.php">Download here</a></li>
+                    <li><strong>Composer</strong> - PHP package manager - <a href="https://getcomposer.org/download/">Download here</a></li>
+                    <li><strong>MySQL</strong> (version 5.7+) - Or use phpMyAdmin/XAMPP/MAMP</li>
+                </ul>
+
+                <h3>Step 1: Navigate to Backend Folder</h3>
+                <div class="command-block">
+                    cd neetprep-laravel
+                </div>
+
+                <h3>Step 2: Install Dependencies</h3>
+                <div class="command-block">
+                    composer install
+                </div>
+                <p>This installs all PHP packages defined in <code>composer.json</code>.</p>
+
+                <h3>Step 3: Configure Environment</h3>
+                <p>Copy the example environment file:</p>
+                <div class="command-block">
+                    cp .env.example .env
+                </div>
+                <p>Or duplicate <code>.env.example</code> and rename it to <code>.env</code>.</p>
+
+                <h3>Step 4: Create Database</h3>
+                <p>Option A - Using MySQL CLI:</p>
+                <div class="command-block">
+                    mysql -u root -p<br>
+                    CREATE DATABASE neetprep CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;<br>
+                    EXIT;
+                </div>
+
+                <p>Option B - Using phpMyAdmin:</p>
+                <ol>
+                    <li>Open phpMyAdmin in your browser</li>
+                    <li>Click "New" to create a database</li>
+                    <li>Name it <code>neetprep</code></li>
+                    <li>Select <code>utf8mb4_unicode_ci</code> as collation</li>
+                </ol>
+
+                <h3>Step 5: Update .env File</h3>
+                <pre><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=neetprep
+DB_USERNAME=root
+DB_PASSWORD=your_password_here</code></pre>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong> Replace <code>your_password_here</code> with your actual MySQL password. Leave empty if you have no password.
+                </div>
+
+                <h3>Step 6: Generate Keys</h3>
+                <div class="command-block">
+                    php artisan key:generate
+                </div>
+                <p>This generates an application key in your <code>.env</code> file.</p>
+
+                <div class="command-block">
+                    php artisan jwt:secret
+                </div>
+                <p>This generates a JWT secret key for authentication tokens.</p>
+
+                <h3>Step 7: Run Migrations</h3>
+                <div class="command-block">
+                    php artisan migrate
+                </div>
+                <p>This creates all the database tables.</p>
+
+                <h3>Step 8: Seed Demo Data</h3>
+                <div class="command-block">
+                    php artisan db:seed
+                </div>
+                <p>This creates demo users and sample data.</p>
+
+                <h3>Step 9: Start the Server</h3>
+                <div class="command-block">
+                    php artisan serve
+                </div>
+                <p>The API will be available at <code>http://localhost:8000</code></p>
+
+                <div class="tip-box">
+                    <strong>💡 Pro Tip:</strong> You can specify a different port:<br>
+                    <code>php artisan serve --port=8080</code>
+                </div>
+            </section>
+
+            <section id="project-structure">
+                <h2>📁 Project Structure</h2>
+
+                <div class="folder-structure">
+<pre>
+neetprep-laravel/                <span class="folder">📁 Laravel project root</span>
+├── app/                         <span class="folder">📁 Application code</span>
+│   ├── Http/
+│   │   ├── Controllers/Api/     <span class="folder">📁 API Controllers</span>
+│   │   │   ├── AuthController.php
+│   │   │   ├── SubjectController.php
+│   │   │   ├── ExamController.php
+│   │   │   ├── QuestionController.php
+│   │   │   └── ...
+│   │   └── Middleware/
+│   │       └── CheckRole.php    <span class="file">📄 Admin role check</span>
+│   ├── Models/                  <span class="folder">📁 Database models</span>
+│   │   ├── User.php
+│   │   ├── Subject.php
+│   │   ├── Topic.php
+│   │   ├── Chapter.php
+│   │   ├── Exam.php
+│   │   ├── Question.php
+│   │   └── ...
+│   └── Extensions/
+│       └── JWTGuard.php         <span class="file">📄 Custom JWT guard</span>
+├── bootstrap/                   <span class="folder">📁 App bootstrap</span>
+├── config/                      <span class="folder">📁 Laravel config files</span>
+├── database/
+│   ├── migrations/              <span class="folder">📁 Database schema</span>
+│   └── seeders/                 <span class="folder">📁 Demo data</span>
+├── routes/
+│   └── api.php                  <span class="file">📄 API routes</span>
+├── .env                         <span class="file">📄 Environment config</span>
+└── composer.json                <span class="file">📄 PHP dependencies</span>
+</pre>
+                </div>
+            </section>
+
+            <section id="architecture">
+                <h2>🏗️ Architecture</h2>
+                <p>Laravel follows the MVC (Model-View-Controller) pattern:</p>
+
+                <h3>How Requests Flow</h3>
+                <ol>
+                    <li><strong>Route</strong> - User makes HTTP request (e.g., POST /api/auth/login)</li>
+                    <li><strong>Middleware</strong> - Request is checked (auth, role, etc.)</li>
+                    <li><strong>Controller</strong> - Handles the request logic</li>
+                    <li><strong>Model</strong> - Interacts with database</li>
+                    <li><strong>Response</strong> - JSON data is sent back</li>
+                </ol>
+
+                <h3>Example Flow: User Login</h3>
+                <pre><code>1. Route: POST /api/auth/login
+   ↓
+2. Middleware: Check request format
+   ↓
+3. Controller: AuthController@login
+   ↓
+4. Model: Validate user credentials against User model
+   ↓
+5. Response: { success: true, user: {...}, token: "..." }</code></pre>
+            </section>
+
+            <section id="models">
+                <h2>📊 Models & Database</h2>
+                <p><strong>What is a Model?</strong> A model represents a database table and provides methods to interact with it.</p>
+
+                <h3>User Model</h3>
+                <pre><code>// app/Models/User.php
+class User extends Authenticatable
+{
+    protected $fillable = ['name', 'email', 'password', 'role', 'isActive', 'notes'];
+    
+    // Relationships
+    public function examAttempts()     // One user has many attempts
+    public function bookmarks()        // One user has many bookmarks
+}</code></pre>
+
+                <h3>Subject Model</h3>
+                <pre><code>// app/Models/Subject.php
+class Subject extends Model
+{
+    protected $fillable = ['name', 'description', 'icon', 'color', 'isActive'];
+    
+    // Relationships
+    public function chapters()         // One subject has many chapters
+    public function topics()          // One subject has many topics
+    public function exams()           // One subject has many exams
+}</code></pre>
+
+                <h3>Exam Model</h3>
+                <pre><code>// app/Models/Exam.php
+class Exam extends Model
+{
+    protected $fillable = [
+        'title', 'description', 'subject_id', 'chapter_id',
+        'duration', 'total_marks', 'passing_marks', 'isActive'
+    ];
+    
+    // Relationships
+    public function subject()         // Belongs to subject
+    public function chapter()         // Belongs to chapter (optional)
+    public function questions()       // Has many questions
+    public function attempts()        // Has many exam attempts
+}</code></pre>
+
+                <h3>Question Model</h3>
+                <pre><code>// app/Models/Question.php
+class Question extends Model
+{
+    protected $fillable = [
+        'exam_id', 'question_text', 'option_a', 'option_b',
+        'option_c', 'option_d', 'correct_answer', 'marks',
+        'ncert', 'difficulty', 'year', 'question_type'
+    ];
+    
+    // Relationships
+    public function exam()            // Belongs to exam
+    public function bookmarks()       // Has many bookmarks
+}</code></pre>
+
+                <h3>Database Tables</h3>
+                <table>
+                    <tr>
+                        <th>Table</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>users</td>
+                        <td>User accounts with role (admin/user)</td>
+                    </tr>
+                    <tr>
+                        <td>subjects</td>
+                        <td>Study subjects (Physics, Chemistry, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td>chapters</td>
+                        <td>Chapters within subjects</td>
+                    </tr>
+                    <tr>
+                        <td>topics</td>
+                        <td>Topics within chapters</td>
+                    </tr>
+                    <tr>
+                        <td>exams</td>
+                        <td>Exams with duration and marks</td>
+                    </tr>
+                    <tr>
+                        <td>questions</td>
+                        <td>Exam questions with options</td>
+                    </tr>
+                    <tr>
+                        <td>exam_attempts</td>
+                        <td>Student exam attempts and scores</td>
+                    </tr>
+                    <tr>
+                        <td>bookmarks</td>
+                        <td>User question bookmarks</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="controllers">
+                <h2>🎮 Controllers</h2>
+                <p><strong>What is a Controller?</strong> A controller handles the logic for processing requests. It's where you decide what happens when an API endpoint is called.</p>
+
+                <h3>AuthController Example</h3>
+                <pre><code>// app/Http/Controllers/Api/AuthController.php
+class AuthController extends Controller
+{
+    // POST /api/auth/login
+    public function login(Request $request)
+    {
+        // 1. Validate input
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        // 2. Try to authenticate
+        if (!$token = auth('api')->attempt($credentials)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        // 3. Return user and token
+        return response()->json([
+            'success' => true,
+            'user' => auth('api')->user(),
+            'token' => $token
+        ]);
+    }
+
+    // POST /api/auth/logout
+    public function logout()
+    {
+        auth('api')->logout();
+        return response()->json(['success' => true]);
+    }
+
+    // GET /api/auth/me
+    public function me()
+    {
+        return response()->json([
+            'success' => true,
+            'user' => auth('api')->user()
+        ]);
+    }
+}</code></pre>
+
+                <h3>ExamController Example</h3>
+                <pre><code>// app/Http/Controllers/Api/ExamController.php
+class ExamController extends Controller
+{
+    // GET /api/exams (public)
+    public function index()
+    {
+        $exams = Exam::all();
+        return response()->json(['success' => true, 'exams' => $exams]);
+    }
+
+    // GET /api/exams/active (public)
+    public function active()
+    {
+        $exams = Exam::where('isActive', true)->get();
+        return response()->json(['success' => true, 'exams' => $exams]);
+    }
+
+    // GET /api/exams/{id} (public)
+    public function show($id)
+    {
+        $exam = Exam::with(['subject', 'questions'])->find($id);
+        
+        if (!$exam) {
+            return response()->json(['error' => 'Exam not found'], 404);
+        }
+
+        return response()->json(['success' => true, 'exam' => $exam]);
+    }
+
+    // POST /api/admin/exams (admin only)
+    public function store(Request $request)
+    {
+        // Validate and create exam...
+    }
+}</code></pre>
+            </section>
+
+            <section id="routes">
+                <h2>🛤️ Routes & Middleware</h2>
+                <p><strong>What are Routes?</strong> Routes define which controller method handles each HTTP request.</p>
+
+                <h3>Route File</h3>
+                <pre><code>// routes/api.php
+
+// Public routes (no auth required)
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+
+// Public read-only routes
+Route::get('/subjects', [SubjectController::class, 'index']);
+Route::get('/exams', [ExamController::class, 'index']);
+
+// Protected routes (auth required)
+Route::middleware('auth:api')->group(function () {
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::get('/auth/me', [AuthController::class, 'me']);
+    
+    // User routes
+    Route::post('/exam-attempts/start', [ExamAttemptController::class, 'start']);
+    Route::post('/exam-attempts/{id}/submit', [ExamAttemptController::class, 'submit']);
+    
+    // Admin routes
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/admin/users', [UserController::class, 'index']);
+        Route::post('/admin/users', [UserController::class, 'store']);
+        Route::put('/admin/users/{id}', [UserController::class, 'update']);
+    });
+});</code></pre>
+
+                <h3>Middleware</h3>
+                <p><strong>What is Middleware?</strong> Middleware filters requests before they reach the controller.</p>
+
+                <h4>Auth Middleware</h4>
+                <p>Protects routes - only logged-in users can access:</p>
+                <pre><code>Route::middleware('auth:api')->group(function () {
+    // These routes require valid JWT token
+});</code></pre>
+
+                <h4>Role Middleware</h4>
+                <p>Protects routes - only admins can access:</p>
+                <pre><code>Route::middleware('role:admin')->group(function () {
+    // These routes require admin role
+});</code></pre>
+
+                <div class="info-box">
+                    <strong>💡 Middleware Order:</strong> Routes are checked in order. If a route has multiple middleware, they run from left to right. <code>auth:api</code> runs before <code>role:admin</code>.
+                </div>
+            </section>
+
+            <section id="authentication">
+                <h2>🔐 Authentication</h2>
+                <p>NEET Prep uses JWT (JSON Web Tokens) for authentication.</p>
+
+                <h3>How JWT Works</h3>
+                <ol>
+                    <li>User logs in with email/password</li>
+                    <li>Server validates and generates a token</li>
+                    <li>Token is sent back and stored by frontend</li>
+                    <li>Frontend includes token in all subsequent requests</li>
+                    <li>Server validates token on each request</li>
+                </ol>
+
+                <h3>Token Structure</h3>
+                <pre><code>// Login Response
+{
+    "success": true,
+    "user": {
+        "id": "1",
+        "name": "Admin User",
+        "email": "admin@neetprep.com",
+        "role": "admin"
+    },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</code></pre>
+
+                <h3>Using the Token</h3>
+                <p>The frontend must include the token in every API request:</p>
+                <pre><code>// Every request header should include:
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...</code></pre>
+
+                <div class="tip-box">
+                    <strong>💡 Tip:</strong> The Angular app automatically adds this header via an HTTP interceptor. You don't need to do it manually!
+                </div>
+
+                <h3>Token Expiration</h3>
+                <p>JWT tokens expire after a set time (default: 60 minutes). You can configure this in <code>.env</code>:</p>
+                <pre><code>JWT_TTL=60  # Token expires in 60 minutes</code></pre>
+
+                <h3>Custom JWT Guard</h3>
+                <p>The app uses a custom JWT guard configured in:</p>
+                <ul>
+                    <li><code>app/Extensions/JWTGuard.php</code> - Custom authentication guard</li>
+                    <li><code>app/Providers/JWTAuthServiceProvider.php</code> - JWT service provider</li>
+                    <li><code>config/auth.php</code> - Auth configuration</li>
+                </ul>
+            </section>
+
+            <section id="auth-endpoints">
+                <h2>🔑 Auth Endpoints</h2>
+
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                        <th>Auth Required</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/auth/login</code></td>
+                        <td>User login</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/auth/register</code></td>
+                        <td>User registration</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/auth/logout</code></td>
+                        <td>User logout</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/auth/me</code></td>
+                        <td>Get current user</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/auth/refresh</code></td>
+                        <td>Refresh JWT token</td>
+                        <td>Yes</td>
+                    </tr>
+                </table>
+
+                <h3>Login Example</h3>
+                <pre><code>// POST /api/auth/login
+// Request:
+{
+    "email": "admin@neetprep.com",
+    "password": "admin123"
+}
+
+// Response:
+{
+    "success": true,
+    "user": {
+        "id": 1,
+        "name": "Admin User",
+        "email": "admin@neetprep.com",
+        "role": "admin"
+    },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</code></pre>
+            </section>
+
+            <section id="public-endpoints">
+                <h2>🌐 Public Endpoints</h2>
+                <p>These endpoints don't require authentication:</p>
+
+                <h3>Subjects</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/subjects</code></td>
+                        <td>Get all subjects</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/subjects/active</code></td>
+                        <td>Get active subjects only</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/subjects/{id}</code></td>
+                        <td>Get subject by ID</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/subjects/{id}/topics</code></td>
+                        <td>Get topics for subject</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/chapters</code></td>
+                        <td>Get all chapters</td>
+                    </tr>
+                </table>
+
+                <h3>Exams</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exams</code></td>
+                        <td>Get all exams</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exams/active</code></td>
+                        <td>Get active exams only</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exams/subject/{id}</code></td>
+                        <td>Get exams for a subject</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exams/{id}</code></td>
+                        <td>Get exam by ID</td>
+                    </tr>
+                </table>
+
+                <h3>Questions</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exams/{id}/questions</code></td>
+                        <td>Get questions for exam</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exams/{id}/questions/{qid}</code></td>
+                        <td>Get specific question</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="user-endpoints">
+                <h2>👤 User Endpoints</h2>
+                <p>These endpoints require user authentication:</p>
+
+                <h3>Exam Attempts</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/exam-attempts/start</code></td>
+                        <td>Start an exam</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/exam-attempts/{id}/submit</code></td>
+                        <td>Submit exam answers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exam-attempts/{id}</code></td>
+                        <td>Get attempt details</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exam-attempts/my</code></td>
+                        <td>Get user's attempts</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/exam-attempts/my/performance</code></td>
+                        <td>Get performance stats</td>
+                    </tr>
+                </table>
+
+                <h3>Bookmarks</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/bookmarks</code></td>
+                        <td>Get user's bookmarks</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/bookmarks</code></td>
+                        <td>Add bookmark</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-delete">DELETE</span></td>
+                        <td><code>/api/bookmarks/{id}</code></td>
+                        <td>Remove bookmark</td>
+                    </tr>
+                </table>
+
+                <h3>Start Exam Example</h3>
+                <pre><code>// POST /api/exam-attempts/start
+// Request:
+{
+    "exam_id": 1
+}
+
+// Response:
+{
+    "success": true,
+    "attempt": {
+        "id": 5,
+        "user_id": 1,
+        "exam_id": 1,
+        "started_at": "2026-04-11T10:00:00Z",
+        "status": "in-progress"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "question_text": "What is the formula...",
+            "option_a": "...",
+            "option_b": "...",
+            "option_c": "...",
+            "option_d": "..."
+        }
+    ]
+}</code></pre>
+
+                <h3>Submit Exam Example</h3>
+                <pre><code>// POST /api/exam-attempts/5/submit
+// Request:
+{
+    "answers": [
+        { "question_id": 1, "selected_answer": "B" },
+        { "question_id": 2, "selected_answer": "A" },
+        { "question_id": 3, "selected_answer": "C" }
+    ]
+}
+
+// Response:
+{
+    "success": true,
+    "result": {
+        "score": 8,
+        "total_marks": 10,
+        "percentage": 80,
+        "status": "completed"
+    }
+}</code></pre>
+            </section>
+
+            <section id="admin-endpoints">
+                <h2>👨‍💼 Admin Endpoints</h2>
+                <p>These endpoints require admin authentication:</p>
+
+                <h3>User Management</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/admin/users</code></td>
+                        <td>Get all users</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/admin/users</code></td>
+                        <td>Create user</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/admin/users/{id}</code></td>
+                        <td>Get user by ID</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-put">PUT</span></td>
+                        <td><code>/api/admin/users/{id}</code></td>
+                        <td>Update user</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-patch">PATCH</span></td>
+                        <td><code>/api/admin/users/{id}/toggle-status</code></td>
+                        <td>Enable/disable user</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-delete">DELETE</span></td>
+                        <td><code>/api/admin/users/{id}</code></td>
+                        <td>Delete user</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-put">PUT</span></td>
+                        <td><code>/api/admin/users/{id}/notes</code></td>
+                        <td>Update user notes</td>
+                    </tr>
+                </table>
+
+                <h3>Subject Management</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/admin/subjects</code></td>
+                        <td>Create subject</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-put">PUT</span></td>
+                        <td><code>/api/admin/subjects/{id}</code></td>
+                        <td>Update subject</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-patch">PATCH</span></td>
+                        <td><code>/api/admin/subjects/{id}/toggle-status</code></td>
+                        <td>Toggle status</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-delete">DELETE</span></td>
+                        <td><code>/api/admin/subjects/{id}</code></td>
+                        <td>Delete subject</td>
+                    </tr>
+                </table>
+
+                <h3>Chapter & Topic Management</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/admin/subjects/{id}/chapters</code></td>
+                        <td>Create chapter</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-put">PUT</span></td>
+                        <td><code>/api/admin/chapters/{id}</code></td>
+                        <td>Update chapter</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/admin/subjects/{id}/topics</code></td>
+                        <td>Create topic</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-put">PUT</span></td>
+                        <td><code>/api/admin/topics/{id}</code></td>
+                        <td>Update topic</td>
+                    </tr>
+                </table>
+
+                <h3>Exam Management</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/admin/exams</code></td>
+                        <td>Create exam</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-put">PUT</span></td>
+                        <td><code>/api/admin/exams/{id}</code></td>
+                        <td>Update exam</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-patch">PATCH</span></td>
+                        <td><code>/api/admin/exams/{id}/toggle-status</code></td>
+                        <td>Toggle exam status</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-delete">DELETE</span></td>
+                        <td><code>/api/admin/exams/{id}</code></td>
+                        <td>Delete exam</td>
+                    </tr>
+                </table>
+
+                <h3>Question Management</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-post">POST</span></td>
+                        <td><code>/api/admin/exams/{id}/questions</code></td>
+                        <td>Create question</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-put">PUT</span></td>
+                        <td><code>/api/admin/exams/{id}/questions/{qid}</code></td>
+                        <td>Update question</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-delete">DELETE</span></td>
+                        <td><code>/api/admin/exams/{id}/questions/{qid}</code></td>
+                        <td>Delete question</td>
+                    </tr>
+                </table>
+
+                <h3>Performance Analytics</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/admin/performance</code></td>
+                        <td>Get all attempts</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-badge method-get">GET</span></td>
+                        <td><code>/api/admin/performance/student/{id}</code></td>
+                        <td>Get student performance</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="artisan-commands">
+                <h2>⌨️ Artisan Commands</h2>
+                <p><strong>What is Artisan?</strong> Artisan is Laravel's command-line tool. It helps with database operations, testing, and more.</p>
+
+                <h3>Common Commands</h3>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan serve</code></td>
+                        <td>Start development server</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan migrate</code></td>
+                        <td>Run database migrations</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan migrate:fresh</code></td>
+                        <td>Drop all tables and re-run migrations</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan migrate:fresh --seed</code></td>
+                        <td>Reset database and seed with demo data</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan db:seed</code></td>
+                        <td>Seed the database</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan key:generate</code></td>
+                        <td>Generate app key</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan jwt:secret</code></td>
+                        <td>Generate JWT secret</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan route:list</code></td>
+                        <td>List all routes</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan make:model ModelName</code></td>
+                        <td>Create a new model</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan make:controller NameController</code></td>
+                        <td>Create a new controller</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan make:migration create_table_name</code></td>
+                        <td>Create a new migration</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan config:clear</code></td>
+                        <td>Clear config cache</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan cache:clear</code></td>
+                        <td>Clear application cache</td>
+                    </tr>
+                </table>
+
+                <div class="tip-box">
+                    <strong>💡 Reset Database:</strong> To completely reset and reseed:
+                    <br><code>php artisan migrate:fresh --seed</code>
+                </div>
+            </section>
+
+            <section id="troubleshooting">
+                <h2>❓ Troubleshooting</h2>
+
+                <h3>Common Issues</h3>
+
+                <div class="warning-box">
+                    <strong>Error: "No such file or directory" when running artisan</strong>
+                    <p><strong>Solution:</strong> Make sure you're in the <code>neetprep-laravel</code> directory and run <code>composer install</code>.</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Error: "Access denied for user 'root'@'localhost'"</strong>
+                    <p><strong>Solution:</strong> Check your MySQL credentials in <code>.env</code> file. Make sure the password is correct.</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Error: "SQLSTATE[HY000] [2002] No such file or directory"</strong>
+                    <p><strong>Solution:</strong> Change <code>DB_HOST=127.0.0.1</code> instead of <code>localhost</code> in <code>.env</code>.</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Error: "JWT token is invalid"</strong>
+                    <p><strong>Solution:</strong> 
+                        <br>1. Run <code>php artisan jwt:secret</code>
+                        <br>2. Clear cache: <code>php artisan config:clear</code>
+                    </p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Error: "Table not found"</strong>
+                    <p><strong>Solution:</strong> Run <code>php artisan migrate</code> to create database tables.</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Frontend can't connect to API</strong>
+                    <p><strong>Solution:</strong> 
+                        <br>1. Make sure Laravel is running: <code>php artisan serve</code>
+                        <br>2. Check if it's on port 8000
+                        <br>3. Verify CORS settings allow localhost:4200
+                    </p>
+                </div>
+
+                <h3>Getting Help</h3>
+                <ul>
+                    <li>Run <code>php artisan route:list</code> to see all available routes</li>
+                    <li>Check <code>storage/logs/laravel.log</code> for detailed error messages</li>
+                    <li>Set <code>APP_DEBUG=true</code> in <code>.env</code> for detailed errors</li>
+                </ul>
+            </section>
+
+            <div class="nav-buttons">
+                <a href="angular-documentation.html" class="nav-btn">← Angular Documentation</a>
+                <span></span>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

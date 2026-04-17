@@ -1,0 +1,204 @@
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <h2>NEET Prep</h2>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active">
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+      </a>
+      <a routerLink="/admin/subjects" routerLinkActive="active">
+        <i class="fas fa-book"></i>
+        <span>Subjects</span>
+      </a>
+      <a routerLink="/admin/exams" routerLinkActive="active">
+        <i class="fas fa-file-alt"></i>
+        <span>Exams</span>
+      </a>
+      <a routerLink="/admin/performance" routerLinkActive="active">
+        <i class="fas fa-chart-bar"></i>
+        <span>Performance</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="user-details">
+          <span class="user-name">{{ currentUser?.name }}</span>
+          <span class="user-role">Administrator</span>
+        </div>
+      </div>
+      <button class="btn btn-logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+  </aside>
+  
+  <main class="main-content">
+    <header class="top-header">
+      <div class="header-left">
+        <h1>Dashboard</h1>
+        <p>Welcome back! Here's what's happening today.</p>
+      </div>
+      <div class="header-right">
+        <span class="current-date">{{ today | date:'fullDate' }}</span>
+      </div>
+    </header>
+    
+    <div class="dashboard-content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon primary">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.totalUsers }}</span>
+            <span class="stat-label">Total Users</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon success">
+            <i class="fas fa-user-check"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.activeUsers }}</span>
+            <span class="stat-label">Active Users</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon info">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.totalExams }}</span>
+            <span class="stat-label">Total Exams</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon warning">
+            <i class="fas fa-play-circle"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.activeExams }}</span>
+            <span class="stat-label">Active Exams</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Quick Actions</h3>
+          </div>
+          <div class="quick-actions">
+            <a routerLink="/admin/users" class="action-card">
+              <div class="action-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <span>Manage Users</span>
+            </a>
+            <a routerLink="/admin/subjects" class="action-card">
+              <div class="action-icon">
+                <i class="fas fa-plus-circle"></i>
+              </div>
+              <span>Add Subject</span>
+            </a>
+            <a routerLink="/admin/exams" class="action-card">
+              <div class="action-icon">
+                <i class="fas fa-plus-square"></i>
+              </div>
+              <span>Create Exam</span>
+            </a>
+            <a routerLink="/admin/performance" class="action-card">
+              <div class="action-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <span>View Reports</span>
+            </a>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h3>Recent Exam Attempts</h3>
+            <a routerLink="/admin/performance" class="btn btn-sm btn-outline">View All</a>
+          </div>
+          <div class="attempts-list">
+            <div *ngFor="let attempt of recentAttempts" class="attempt-item">
+              <div class="attempt-info">
+                <span class="attempt-user">{{ getUserName(attempt.userId) }}</span>
+                <span class="attempt-exam">{{ attempt.examTitle }}</span>
+              </div>
+              <div class="attempt-score" [class.pass]="attempt.percentage >= 50" [class.fail]="attempt.percentage < 50">
+                {{ attempt.percentage }}%
+              </div>
+            </div>
+            <div *ngIf="recentAttempts.length === 0" class="empty-state">
+              <i class="fas fa-clipboard-list"></i>
+              <p>No recent attempts</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h3>Active Exams</h3>
+          <a routerLink="/admin/exams" class="btn btn-sm btn-primary">Manage Exams</a>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Exam Name</th>
+                <th>Subject</th>
+                <th>Duration</th>
+                <th>Questions</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let exam of activeExams">
+                <td>{{ exam.title }}</td>
+                <td>{{ getSubjectName(exam.subjectId) }}</td>
+                <td>{{ exam.duration }} min</td>
+                <td>{{ exam.questionCount || 0 }}</td>
+                <td>
+                  <span class="badge" [class.badge-success]="exam.isActive" [class.badge-warning]="!exam.isActive">
+                    {{ exam.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td>
+                  <a [routerLink]="['/admin/questions', exam.id]" class="btn btn-sm btn-outline">
+                    <i class="fas fa-question-circle"></i>
+                    Questions
+                  </a>
+                </td>
+              </tr>
+              <tr *ngIf="activeExams.length === 0">
+                <td colspan="6" class="text-center text-muted">No active exams</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

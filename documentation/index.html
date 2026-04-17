@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Prep - Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 350px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .card ul {
+            text-align: left;
+            color: #555;
+            font-size: 0.95rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .card li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card li:last-child {
+            border-bottom: none;
+        }
+
+        .card li::before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .angular-card h2 {
+            color: #dd0031;
+        }
+
+        .laravel-card h2 {
+            color: #ff2d20;
+        }
+
+        .version {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .angular-card .version {
+            background: #eb002a;
+            color: white;
+        }
+
+        .laravel-card .version {
+            background: #ff2d20;
+            color: white;
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📚</div>
+        <h1>NEET Prep Documentation</h1>
+        <p class="subtitle">Complete guides for the Angular frontend and Laravel backend</p>
+
+        <div class="cards">
+            <a href="angular-documentation.html" class="card angular-card">
+                <div class="card-icon">⚡</div>
+                <h2>Angular Frontend</h2>
+                <p>Complete guide to the Angular 21 user interface</p>
+                <ul>
+                    <li>Setup & Installation</li>
+                    <li>Components & Services</li>
+                    <li>Routing & Guards</li>
+                    <li>Authentication Flow</li>
+                    <li>Admin & User Panels</li>
+                    <li>Build & Deployment</li>
+                </ul>
+                <span class="version">Angular 21</span>
+            </a>
+
+            <a href="laravel-documentation.html" class="card laravel-card">
+                <div class="card-icon">🔧</div>
+                <h2>Laravel Backend</h2>
+                <p>Complete guide to the Laravel 11 REST API</p>
+                <ul>
+                    <li>Setup & Installation</li>
+                    <li>Architecture & Models</li>
+                    <li>API Endpoints</li>
+                    <li>Authentication (JWT)</li>
+                    <li>Admin Features</li>
+                    <li>Troubleshooting</li>
+                </ul>
+                <span class="version">Laravel 11</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>NEET Prep - Online Examination Portal</p>
+            <p style="margin-top: 10px;">
+                Demo: <a href="mailto:admin@neetprep.com">admin@neetprep.com</a> / admin123
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<div class="exam-layout">
+  <header class="exam-header">
+    <div class="header-left"><h1>{{ exam?.title }}</h1><span class="question-progress">Question {{ currentIndex + 1 }} of {{ questions.length }}</span></div>
+    <div class="header-right"><div class="timer" [class.warning]="timeRemaining < 60"><i class="fas fa-clock"></i><span>{{ formatTime(timeRemaining) }}</span></div><button class="btn btn-outline" (click)="confirmExit()"><i class="fas fa-times"></i>Exit</button></div>
+  </header>
+  <div class="progress-bar"><div class="progress-fill" [style.width.%]="((currentIndex + 1) / questions.length) * 100"></div></div>
+  <main class="exam-main">
+    <div class="question-panel">
+      <div class="question-card" *ngIf="questions[currentIndex]">
+        <div class="question-header-row"><div class="question-number">Question {{ currentIndex + 1 }}</div><button class="bookmark-btn" [class.bookmarked]="isBookmarked" (click)="toggleBookmark()"><i class="fas" [class.fa-bookmark]="isBookmarked" [class.fa-regular]="!isBookmarked"></i>{{ isBookmarked ? 'Bookmarked' : 'Bookmark' }}</button></div>
+        <p class="question-text">{{ questions[currentIndex].questionText }}</p>
+        <div class="options-list">
+          <label class="option" [class.selected]="answers[currentIndex] === 'A'" (click)="selectAnswer('A')"><span class="option-marker">A</span><span class="option-text">{{ questions[currentIndex].optionA }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'A'"></i></label>
+          <label class="option" [class.selected]="answers[currentIndex] === 'B'" (click)="selectAnswer('B')"><span class="option-marker">B</span><span class="option-text">{{ questions[currentIndex].optionB }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'B'"></i></label>
+          <label class="option" [class.selected]="answers[currentIndex] === 'C'" (click)="selectAnswer('C')"><span class="option-marker">C</span><span class="option-text">{{ questions[currentIndex].optionC }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'C'"></i></label>
+          <label class="option" [class.selected]="answers[currentIndex] === 'D'" (click)="selectAnswer('D')"><span class="option-marker">D</span><span class="option-text">{{ questions[currentIndex].optionD }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'D'"></i></label>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-panel">
+      <div class="question-navigator"><h4>Question Navigator</h4><div class="nav-grid"><button *ngFor="let q of questions; let i = index" class="nav-btn" [class.current]="i === currentIndex" [class.answered]="answers[i]" [class.not-answered]="!answers[i]" [class.bookmarked]="bookmarkedQuestions.has(q.id)" (click)="goToQuestion(i)">{{ i + 1 }}</button></div><div class="nav-legend"><span><span class="legend-dot answered"></span> Answered</span><span><span class="legend-dot not-answered"></span> Not Answered</span><span><span class="legend-dot bookmarked"></span> Bookmarked</span></div></div>
+      <div class="nav-buttons"><button class="btn btn-secondary" (click)="previousQuestion()" [disabled]="currentIndex === 0"><i class="fas fa-chevron-left"></i>Previous</button><button *ngIf="currentIndex < questions.length - 1" class="btn btn-primary" (click)="nextQuestion()">Next<i class="fas fa-chevron-right"></i></button><button *ngIf="currentIndex === questions.length - 1" class="btn btn-success" (click)="confirmSubmit()"><i class="fas fa-check"></i>Submit Exam</button></div>
+    </div>
+  </main>
+  <div class="modal-overlay" *ngIf="showSubmitModal" (click)="showSubmitModal = false"><div class="modal" (click)="$event.stopPropagation()"><div class="modal-header"><h3>Submit Exam?</h3><button class="close-btn" (click)="showSubmitModal = false"><i class="fas fa-times"></i></button></div><div class="modal-body"><div class="submit-summary"><div class="summary-item"><i class="fas fa-question-circle"></i><span>Total Questions</span><strong>{{ questions.length }}</strong></div><div class="summary-item"><i class="fas fa-check-circle"></i><span>Answered</span><strong>{{ answeredCount }}</strong></div><div class="summary-item"><i class="fas fa-circle"></i><span>Not Answered</span><strong>{{ questions.length - answeredCount }}</strong></div></div><p class="warning-text" *ngIf="questions.length - answeredCount > 0"><i class="fas fa-exclamation-triangle"></i>You have {{ questions.length - answeredCount }} unanswered question(s)!</p></div><div class="modal-footer"><button class="btn btn-secondary" (click)="showSubmitModal = false">Review Answers</button><button class="btn btn-success" (click)="submitExam()"><i class="fas fa-check"></i>Submit Now</button></div></div></div>
+  <div class="modal-overlay" *ngIf="showExitModal" (click)="showExitModal = false"><div class="modal" (click)="$event.stopPropagation()"><div class="modal-header"><h3>Exit Exam?</h3><button class="close-btn" (click)="showExitModal = false"><i class="fas fa-times"></i></button></div><div class="modal-body"><p>Are you sure you want to exit? Your progress will be lost.</p></div><div class="modal-footer"><button class="btn btn-secondary" (click)="showExitModal = false">Continue Exam</button><button class="btn btn-danger" (click)="exitExam()"><i class="fas fa-sign-out-alt"></i>Exit</button></div></div></div>
+</div>

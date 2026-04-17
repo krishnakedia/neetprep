@@ -1,0 +1,125 @@
+<div class="user-layout">
+  <header class="user-header">
+    <div class="header-left">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>NEET Prep</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="user-info">
+        <span class="user-name">{{ currentUser?.name }}</span>
+        <span class="user-email">{{ currentUser?.email }}</span>
+      </div>
+      <button class="btn btn-logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </header>
+  
+  <main class="user-main">
+    <div class="welcome-section">
+      <h1>Welcome, {{ currentUser?.name }}!</h1>
+      <p>Choose a subject to start your practice</p>
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat-box">
+        <i class="fas fa-check-circle"></i>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.completed }}</span>
+          <span class="stat-label">Exams Completed</span>
+        </div>
+      </div>
+      <div class="stat-box">
+        <i class="fas fa-percentage"></i>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.average }}%</span>
+          <span class="stat-label">Average Score</span>
+        </div>
+      </div>
+      <div class="stat-box">
+        <i class="fas fa-fire"></i>
+        <div class="stat-content">
+          <span class="stat-value">{{ stats.best }}</span>
+          <span class="stat-label">Best Score</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="subjects-section">
+      <h2>Available Subjects</h2>
+      <div class="subjects-grid">
+        <div class="subject-card" *ngFor="let subject of subjects" [style.--accent]="subject.color">
+          <div class="subject-icon">
+            <i class="fas {{ subject.icon }}"></i>
+          </div>
+          <h3>{{ subject.name }}</h3>
+          <p>{{ subject.description | slice:0:80 }}...</p>
+          <div class="subject-exams">
+            <span><i class="fas fa-file-alt"></i> {{ getExamCount(subject.id) }} Exams</span>
+          </div>
+          <button class="btn btn-primary" (click)="selectSubject(subject)">
+            Start Practice
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="exams-section" *ngIf="selectedSubjectForExams">
+      <div class="section-header">
+        <h2>{{ selectedSubjectForExams.name }} - Available Exams</h2>
+        <button class="btn btn-sm btn-outline" (click)="selectedSubjectForExams = null">
+          <i class="fas fa-times"></i> Close
+        </button>
+      </div>
+      <div class="exams-grid">
+        <div class="exam-card" *ngFor="let exam of getExamsBySubject(selectedSubjectForExams.id)">
+          <div class="exam-header">
+            <h4>{{ exam.title }}</h4>
+            <span class="badge" [class.badge-success]="exam.isActive" [class.badge-warning]="!exam.isActive">
+              {{ exam.isActive ? 'Available' : 'Coming Soon' }}
+            </span>
+          </div>
+          <p class="exam-description">{{ exam.description }}</p>
+          <div class="exam-meta">
+            <span><i class="fas fa-clock"></i> {{ exam.duration }} min</span>
+            <span><i class="fas fa-question-circle"></i> {{ exam.questionCount || 0 }} Q</span>
+            <span><i class="fas fa-star"></i> {{ exam.totalMarks }} marks</span>
+          </div>
+          <div class="exam-actions">
+            <button *ngIf="exam.isActive && (exam.questionCount || 0) > 0" 
+              class="btn btn-primary" 
+              (click)="startExam(exam)">
+              <i class="fas fa-play"></i> Start Exam
+            </button>
+            <button *ngIf="!exam.isActive" class="btn btn-secondary" disabled>
+              <i class="fas fa-clock"></i> Not Available
+            </button>
+            <button *ngIf="exam.isActive && (exam.questionCount || 0) === 0" class="btn btn-secondary" disabled>
+              <i class="fas fa-info-circle"></i> No Questions
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="recent-section" *ngIf="recentAttempts.length > 0">
+      <h2>Recent Attempts</h2>
+      <div class="attempts-list">
+        <div class="attempt-item" *ngFor="let attempt of recentAttempts">
+          <div class="attempt-info">
+            <span class="attempt-exam">{{ attempt.examTitle }}</span>
+            <span class="attempt-date">{{ attempt.completedAt | date:'medium' }}</span>
+          </div>
+          <div class="attempt-result">
+            <div class="score-badge" [class.high]="attempt.percentage >= 75" [class.medium]="attempt.percentage >= 50 && attempt.percentage < 75" [class.low]="attempt.percentage < 50">
+              {{ attempt.percentage }}%
+            </div>
+            <span class="score-detail">{{ attempt.score }}/{{ attempt.totalMarks }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

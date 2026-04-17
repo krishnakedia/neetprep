@@ -1,0 +1,2 @@
+on session out user should logout.
+chapter is missing.

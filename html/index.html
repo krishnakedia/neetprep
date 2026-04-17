@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEET Prep - Static HTML Preview</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a1a; color: #e0e0e0; min-height: 100vh; }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 3rem; text-align: center; }
+    .header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+    .header p { opacity: 0.9; font-size: 1.2rem; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+    .info-box { background: #1a1a2e; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; border: 1px solid #333; }
+    .info-box h2 { color: #667eea; margin-bottom: 1rem; }
+    .info-box p { color: #aaa; line-height: 1.8; }
+    .info-box code { background: #2d2d44; padding: 2px 8px; border-radius: 4px; color: #f7b733; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background: #1a1a2e; border-radius: 12px; overflow: hidden; border: 1px solid #333; transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2); }
+    .card-header { padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .card-header.admin { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
+    .card-header.user { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+    .card-header.auth { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+    .card-header i { font-size: 1.5rem; }
+    .card-header h3 { font-size: 1.1rem; }
+    .card-body { padding: 1.5rem; }
+    .page-list { list-style: none; }
+    .page-list li { margin-bottom: 0.8rem; }
+    .page-list a { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1rem; background: #2d2d44; border-radius: 8px; color: #e0e0e0; text-decoration: none; transition: background 0.2s; }
+    .page-list a:hover { background: #3d3d5c; }
+    .page-list .page-num { background: #667eea; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
+    .tech-stack { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 1.5rem 0; }
+    .tech-badge { background: rgba(255,255,255,0.15); padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.9rem; }
+    .warning { background: #fef3c7; border-color: #f59e0b; }
+    .warning h2 { color: #d97706; }
+    .warning p { color: #92400e; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1><i class="fas fa-graduation-cap"></i> NEET Prep</h1>
+    <p>Static HTML Preview - Connected to Laravel API at 127.0.0.1:8000</p>
+    <div class="tech-stack">
+      <span class="tech-badge">Angular 21</span>
+      <span class="tech-badge">Laravel 11</span>
+      <span class="tech-badge">MySQL</span>
+      <span class="tech-badge">JWT Auth</span>
+      <span class="tech-badge">REST API</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="info-box warning">
+      <h2><i class="fas fa-exclamation-triangle"></i> Important Setup Instructions</h2>
+      <p>
+        1. Ensure Laravel is running at <code>http://127.0.0.1:8000</code><br>
+        2. Ensure MySQL database is running with the <code>neetprep</code> database created<br>
+        3. Run migrations: <code>php artisan migrate</code><br>
+        4. Run seeders: <code>php artisan db:seed</code> (optional, creates demo data)<br>
+        5. Start the Angular dev server: <code>npm start</code> (for live development)<br>
+        6. These HTML files can be used standalone with the Laravel API backend
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h2>Demo Credentials</h2>
+      <p>
+        <strong>Admin:</strong> admin@neetprep.com / password<br>
+        <strong>User:</strong> user@neetprep.com / password
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-header auth">
+          <i class="fas fa-lock"></i>
+          <h3>Authentication</h3>
+        </div>
+        <div class="card-body">
+          <ul class="page-list">
+            <li><a href="01-login.html"><span class="page-num">01</span> Login Page</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header admin">
+          <i class="fas fa-user-shield"></i>
+          <h3>Admin Pages</h3>
+        </div>
+        <div class="card-body">
+          <ul class="page-list">
+            <li><a href="admin-dashboard.html"><span class="page-num">-</span> Admin Dashboard</a></li>
+            <li><a href="02-user-management.html"><span class="page-num">02</span> User Management</a></li>
+            <li><a href="03-subject-management.html"><span class="page-num">03</span> Subject Management</a></li>
+            <li><a href="04-exam-management.html"><span class="page-num">04</span> Exam Management</a></li>
+            <li><a href="06-question-management.html"><span class="page-num">06</span> Question Management</a></li>
+            <li><a href="05-student-performance.html"><span class="page-num">05</span> Student Performance</a></li>
+            <li><a href="07-student-details.html"><span class="page-num">07</span> Student Details</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header user">
+          <i class="fas fa-user-graduate"></i>
+          <h3>User Pages</h3>
+        </div>
+        <div class="card-body">
+          <ul class="page-list">
+            <li><a href="user-dashboard.html"><span class="page-num">-</span> User Dashboard</a></li>
+            <li><a href="08-exam.html"><span class="page-num">08</span> Take Exam</a></li>
+            <li><a href="09-exam-result.html"><span class="page-num">09</span> Exam Result</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top: 2rem;">
+      <h2>Project Structure</h2>
+      <p>
+        <strong>Frontend:</strong> Angular 21 SPA in <code>src/</code> folder<br>
+        <strong>Backend:</strong> Laravel 11 API in <code>neetprep-laravel/</code> folder<br>
+        <strong>Static Preview:</strong> Pure HTML/CSS/JS in <code>html/</code> folder<br>
+        <strong>API Base URL:</strong> http://127.0.0.1:8000/api
+      </p>
+    </div>
+  </div>
+</body>
+</html>

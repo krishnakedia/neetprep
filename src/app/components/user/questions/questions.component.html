@@ -1,0 +1,30 @@
+<div class="user-layout">
+  <header class="user-header">
+    <div class="header-left"><div class="logo"><i class="fas fa-graduation-cap"></i></div><h1>NEET Prep</h1></div>
+    <nav class="header-nav"><a routerLink="/user" routerLinkActive="active">Dashboard</a><a routerLink="/user/questions" routerLinkActive="active">Questions</a></nav>
+    <div class="header-right"><button class="btn btn-logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i></button></div>
+  </header>
+  <main class="user-main">
+    <div class="questions-page">
+      <div class="page-header"><h1>Question Bank</h1><p>Practice questions with filters</p></div>
+      <div class="filters-section">
+        <div class="filter-group"><label>Subject</label><select class="input" [(ngModel)]="filters.subjectId" (change)="onSubjectChange()"><option value="">All Subjects</option><option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option></select></div>
+        <div class="filter-group"><label>Chapter</label><select class="input" [(ngModel)]="filters.chapterId" [disabled]="!filters.subjectId"><option value="">All Chapters</option><option *ngFor="let chapter of chapters" [value]="chapter.id">{{ chapter.name }}</option></select></div>
+        <div class="filter-group"><label>NCERT</label><select class="input" [(ngModel)]="filters.ncert"><option value="">All</option><option value="yes">NCERT</option><option value="no">Non-NCERT</option></select></div>
+        <div class="filter-group"><label>Difficulty</label><select class="input" [(ngModel)]="filters.difficulty"><option value="">All Levels</option><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></div>
+        <div class="filter-group"><label>Year</label><select class="input" [(ngModel)]="filters.year"><option value="">All Years</option><option *ngFor="let year of years" [value]="year">{{ year }}</option></select></div>
+        <div class="filter-group"><label>Question Type</label><select class="input" [(ngModel)]="filters.questionType"><option value="">All Types</option><option value="theory">Theory</option><option value="numerical">Numerical</option><option value="diagram">Diagram Based</option><option value="assertion_reason">Assertion Reason</option><option value="multiple_correct">Multiple Correct</option></select></div>
+        <button class="btn btn-primary" (click)="applyFilters()"><i class="fas fa-filter"></i>Apply Filters</button>
+      </div>
+      <div class="questions-list" *ngIf="filteredQuestions.length > 0">
+        <div class="question-item" *ngFor="let q of filteredQuestions; let i = index">
+          <div class="question-header"><span class="q-number">Q{{ i + 1 }}</span><div class="q-badges"><span class="badge" [class]="getDifficultyClass(q.difficulty)">{{ q.difficulty }}</span><span class="badge badge-info" *ngIf="q.ncert === 'yes'">NCERT</span><span class="badge badge-gray" *ngIf="q.year">{{ q.year }}</span></div></div>
+          <p class="q-text">{{ q.questionText }}</p>
+          <div class="q-options"><div class="q-option" [class.correct]="q.correctAnswer === 'A'">A: {{ q.optionA }}</div><div class="q-option" [class.correct]="q.correctAnswer === 'B'">B: {{ q.optionB }}</div><div class="q-option" [class.correct]="q.correctAnswer === 'C'">C: {{ q.optionC }}</div><div class="q-option" [class.correct]="q.correctAnswer === 'D'">D: {{ q.optionD }}</div></div>
+          <div class="q-footer"><span class="q-marks">{{ q.marks }} marks</span><span class="q-type">{{ q.questionType }}</span></div>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="filteredQuestions.length === 0"><i class="fas fa-search"></i><h4>No Questions Found</h4><p>Try adjusting your filters</p></div>
+    </div>
+  </main>
+</div>
