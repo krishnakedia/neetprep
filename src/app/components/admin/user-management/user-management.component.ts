@@ -22,6 +22,7 @@ export class UserManagementComponent implements OnInit {
     name: '',
     email: '',
     password: '',
+    is_active: false,
     role: 'user'
   };
 
@@ -60,7 +61,7 @@ export class UserManagementComponent implements OnInit {
   toggleUserStatus(user: User): void {
     this.authService.toggleUserStatus(user.id).subscribe({
       next: () => {
-        user.isActive = !user.isActive;
+        user.is_active = !user.is_active;
       },
       error: (err) => console.error('Error toggling user status:', err)
     });

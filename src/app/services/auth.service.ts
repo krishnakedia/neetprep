@@ -56,6 +56,10 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  handleUnauthorized(): void {
+    this.clearauth();
+  }
+
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }

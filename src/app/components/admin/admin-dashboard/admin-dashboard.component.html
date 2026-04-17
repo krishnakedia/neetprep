@@ -181,8 +181,8 @@
                 <td>{{ exam.duration }} min</td>
                 <td>{{ exam.questionCount || 0 }}</td>
                 <td>
-                  <span class="badge" [class.badge-success]="exam.isActive" [class.badge-warning]="!exam.isActive">
-                    {{ exam.isActive ? 'Active' : 'Inactive' }}
+                  <span class="badge" [class.badge-success]="exam.is_active" [class.badge-warning]="!exam.is_active">
+                    {{ exam.is_active ? 'Active' : 'Inactive' }}
                   </span>
                 </td>
                 <td>

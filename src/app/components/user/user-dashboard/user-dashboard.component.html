@@ -77,8 +77,8 @@
         <div class="exam-card" *ngFor="let exam of getExamsBySubject(selectedSubjectForExams.id)">
           <div class="exam-header">
             <h4>{{ exam.title }}</h4>
-            <span class="badge" [class.badge-success]="exam.isActive" [class.badge-warning]="!exam.isActive">
-              {{ exam.isActive ? 'Available' : 'Coming Soon' }}
+            <span class="badge" [class.badge-success]="exam.is_active" [class.badge-warning]="!exam.is_active">
+              {{ exam.is_active ? 'Available' : 'Coming Soon' }}
             </span>
           </div>
           <p class="exam-description">{{ exam.description }}</p>
@@ -88,15 +88,15 @@
             <span><i class="fas fa-star"></i> {{ exam.totalMarks }} marks</span>
           </div>
           <div class="exam-actions">
-            <button *ngIf="exam.isActive && (exam.questionCount || 0) > 0" 
+            <button *ngIf="exam.is_active && (exam.questionCount || 0) > 0" 
               class="btn btn-primary" 
               (click)="startExam(exam)">
               <i class="fas fa-play"></i> Start Exam
             </button>
-            <button *ngIf="!exam.isActive" class="btn btn-secondary" disabled>
+            <button *ngIf="!exam.is_active" class="btn btn-secondary" disabled>
               <i class="fas fa-clock"></i> Not Available
             </button>
-            <button *ngIf="exam.isActive && (exam.questionCount || 0) === 0" class="btn btn-secondary" disabled>
+            <button *ngIf="exam.is_active && (exam.questionCount || 0) === 0" class="btn btn-secondary" disabled>
               <i class="fas fa-info-circle"></i> No Questions
             </button>
           </div>

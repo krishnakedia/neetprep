@@ -73,8 +73,8 @@ export class ExamManagementComponent implements OnInit {
     }
     
     if (this.filterStatus) {
-      const isActive = this.filterStatus === 'active';
-      result = result.filter(e => e.isActive === isActive);
+      const is_active = this.filterStatus === 'active';
+      result = result.filter(e => e.is_active === is_active);
     }
     
     this.filteredExams = result;

@@ -103,16 +103,16 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge" [class.badge-success]="user.isActive"
-                                        [class.badge-danger]="!user.isActive">
-                                        {{ user.isActive ? 'Active' : 'Disabled' }}
+                                    <span class="badge" [class.badge-success]="user.is_active"
+                                        [class.badge-danger]="!user.is_active">
+                                        {{ user.is_active }}
                                     </span>
                                 </td>
                                 <td>{{ user.createdAt | date:'mediumDate' }}</td>
                                 <td>
                                     <div class="action-buttons">
                                         <label class="toggle-switch">
-                                            <input type="checkbox" [checked]="user.isActive"
+                                            <input type="checkbox" [checked]="user.is_active"
                                                 (change)="toggleUserStatus(user)">
                                             <span class="slider"></span>
                                         </label>

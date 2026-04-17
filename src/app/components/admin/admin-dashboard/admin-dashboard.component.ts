@@ -40,7 +40,7 @@ export class AdminDashboardComponent implements OnInit {
   loadStats(): void {
     this.authService.getAllUsers().subscribe(users => {
       this.stats.totalUsers = users.length;
-      this.stats.activeUsers = users.filter(u => u.isActive).length;
+      this.stats.activeUsers = users.filter(u => u.is_active).length;
       
       users.forEach(u => {
         this.userNames[u.id] = u.name;
@@ -49,8 +49,8 @@ export class AdminDashboardComponent implements OnInit {
 
     this.examService.getExams().subscribe(exams => {
       this.stats.totalExams = exams.length;
-      this.stats.activeExams = exams.filter(e => e.isActive).length;
-      this.activeExams = exams.filter(e => e.isActive).slice(0, 5);
+      this.stats.activeExams = exams.filter(e => e.is_active).length;
+      this.activeExams = exams.filter(e => e.is_active).slice(0, 5);
     });
 
     this.examService.getAllAttempts().subscribe(attempts => {

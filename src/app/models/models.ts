@@ -4,7 +4,7 @@ export interface User {
   email: string;
   password?: string;
   role: 'admin' | 'user';
-  isActive: boolean;
+  is_active: boolean;
   createdAt: Date;
   notes?: string;
 }
@@ -52,7 +52,7 @@ export interface Exam {
   duration: number;
   totalMarks: number;
   passingMarks: number;
-  isActive: boolean;
+  is_active: boolean;
   createdAt: Date;
   questions?: Question[];
   questionCount?: number;

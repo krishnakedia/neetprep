@@ -35,13 +35,13 @@
                 <td>{{ exam.duration }} min</td>
                 <td>{{ exam.totalMarks }}</td>
                 <td>{{ exam.questionCount || 0 }}</td>
-                <td><span class="badge" [class.badge-success]="exam.isActive" [class.badge-warning]="!exam.isActive">{{ exam.isActive ? 'Active' : 'Inactive' }}</span></td>
+                <td><span class="badge" [class.badge-success]="exam.is_active" [class.badge-warning]="!exam.is_active">{{ exam.is_active ? 'Active' : 'Inactive' }}</span></td>
                 <td>{{ exam.createdAt | date:'mediumDate' }}</td>
                 <td>
                   <div class="action-buttons">
                     <a [routerLink]="['/admin/questions', exam.id]" class="btn btn-sm btn-outline" title="Manage Questions"><i class="fas fa-question-circle"></i></a>
                     <button class="btn btn-sm btn-outline" (click)="editExam(exam)" title="Edit"><i class="fas fa-edit"></i></button>
-                    <label class="toggle-switch small"><input type="checkbox" [checked]="exam.isActive" (change)="toggleExamStatus(exam)"><span class="slider"></span></label>
+                    <label class="toggle-switch small"><input type="checkbox" [checked]="exam.is_active" (change)="toggleExamStatus(exam)"><span class="slider"></span></label>
                     <button class="btn btn-sm btn-danger-outline" (click)="deleteExam(exam)" title="Delete"><i class="fas fa-trash"></i></button>
                   </div>
                 </td>

@@ -65,7 +65,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   getExamCount(subjectId: string): number {
-    return this.exams.filter(e => e.subjectId === subjectId && e.isActive).length;
+    return this.exams.filter(e => e.subjectId === subjectId && e.is_active).length;
   }
 
   getExamsBySubject(subjectId: string): Exam[] {
