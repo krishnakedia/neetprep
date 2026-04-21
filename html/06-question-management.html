@@ -158,7 +158,7 @@
               <button class="icon-btn danger" onclick="deleteQuestion('${q.id}')"><i class="fas fa-trash"></i></button>
             </div>
           </div>
-          <p class="question-text">${q.questionText}</p>
+          <p class="question-text">${q.question_text}</p>
           <div class="options-list">
             <div class="option ${q.correctAnswer === 'A' ? 'correct' : ''}"><span class="option-label">A</span><span class="option-text">${q.optionA}</span>${q.correctAnswer === 'A' ? '<i class="fas fa-check"></i>' : ''}</div>
             <div class="option ${q.correctAnswer === 'B' ? 'correct' : ''}"><span class="option-label">B</span><span class="option-text">${q.optionB}</span>${q.correctAnswer === 'B' ? '<i class="fas fa-check"></i>' : ''}</div>

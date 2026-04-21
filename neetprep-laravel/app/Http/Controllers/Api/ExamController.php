@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\ExamAttempt;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -192,6 +193,96 @@ class ExamController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Exam deleted successfully'
+        ]);
+    }
+
+    public function getAssignedUsers(string $id): JsonResponse
+    {
+        $exam = Exam::find($id);
+
+        if (!$exam) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exam not found'
+            ], 404);
+        }
+
+        $users = $exam->assignedUsers()
+            ->select('users.id', 'users.name', 'users.email', 'users.role', 'users.is_active', 'exam_user.is_assigned', 'exam_user.assigned_at')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'users' => $users
+        ]);
+    }
+
+    public function assignUsers(Request $request, string $id): JsonResponse
+    {
+        $exam = Exam::find($id);
+
+        if (!$exam) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exam not found'
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'user_ids' => 'required|array',
+            'user_ids.*' => 'exists:users,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $syncData = [];
+        foreach ($request->user_ids as $userId) {
+            $syncData[$userId] = ['is_assigned' => true, 'assigned_at' => now()];
+        }
+        $exam->assignedUsers()->syncWithoutDetaching($syncData);
+
+        $users = $exam->assignedUsers()
+            ->select('users.id', 'users.name', 'users.email', 'users.role', 'users.is_active', 'exam_user.is_assigned', 'exam_user.assigned_at')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Users assigned successfully',
+            'users' => $users
+        ]);
+    }
+
+    public function removeUser(Request $request, string $id): JsonResponse
+    {
+        $exam = Exam::find($id);
+
+        if (!$exam) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exam not found'
+            ], 404);
+        }
+
+        $userId = $request->input('user_id');
+
+        if (!$userId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User ID is required'
+            ], 422);
+        }
+
+        $exam->assignedUsers()->detach($userId);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User removed from exam'
         ]);
     }
 }

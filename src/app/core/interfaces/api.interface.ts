@@ -73,7 +73,7 @@ export interface Exam extends BaseEntity {
 
 export interface Question extends BaseEntity {
   examId: string;
-  questionText: string;
+  question_text: string;
   optionA: string;
   optionB: string;
   optionC: string;
@@ -83,7 +83,7 @@ export interface Question extends BaseEntity {
   ncert?: string;
   difficulty?: 'easy' | 'medium' | 'hard';
   year?: number;
-  questionType?: 'theory' | 'numerical' | 'diagram' | 'assertion_reason' | 'multiple_correct';
+  question_type?: 'theory' | 'numerical' | 'diagram' | 'assertion_reason' | 'multiple_correct';
 }
 
 export interface ExamAttempt extends BaseEntity {

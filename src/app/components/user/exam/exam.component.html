@@ -8,12 +8,12 @@
     <div class="question-panel">
       <div class="question-card" *ngIf="questions[currentIndex]">
         <div class="question-header-row"><div class="question-number">Question {{ currentIndex + 1 }}</div><button class="bookmark-btn" [class.bookmarked]="isBookmarked" (click)="toggleBookmark()"><i class="fas" [class.fa-bookmark]="isBookmarked" [class.fa-regular]="!isBookmarked"></i>{{ isBookmarked ? 'Bookmarked' : 'Bookmark' }}</button></div>
-        <p class="question-text">{{ questions[currentIndex].questionText }}</p>
+        <p class="question-text">{{ questions[currentIndex].question_text }}</p>
         <div class="options-list">
-          <label class="option" [class.selected]="answers[currentIndex] === 'A'" (click)="selectAnswer('A')"><span class="option-marker">A</span><span class="option-text">{{ questions[currentIndex].optionA }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'A'"></i></label>
-          <label class="option" [class.selected]="answers[currentIndex] === 'B'" (click)="selectAnswer('B')"><span class="option-marker">B</span><span class="option-text">{{ questions[currentIndex].optionB }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'B'"></i></label>
-          <label class="option" [class.selected]="answers[currentIndex] === 'C'" (click)="selectAnswer('C')"><span class="option-marker">C</span><span class="option-text">{{ questions[currentIndex].optionC }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'C'"></i></label>
-          <label class="option" [class.selected]="answers[currentIndex] === 'D'" (click)="selectAnswer('D')"><span class="option-marker">D</span><span class="option-text">{{ questions[currentIndex].optionD }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'D'"></i></label>
+          <label class="option" [class.selected]="answers[currentIndex] === 'A'" (click)="selectAnswer('A')"><span class="option-marker">A</span><span class="option-text">{{ questions[currentIndex].option_a }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'A'"></i></label>
+          <label class="option" [class.selected]="answers[currentIndex] === 'B'" (click)="selectAnswer('B')"><span class="option-marker">B</span><span class="option-text">{{ questions[currentIndex].option_b }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'B'"></i></label>
+          <label class="option" [class.selected]="answers[currentIndex] === 'C'" (click)="selectAnswer('C')"><span class="option-marker">C</span><span class="option-text">{{ questions[currentIndex].option_c }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'C'"></i></label>
+          <label class="option" [class.selected]="answers[currentIndex] === 'D'" (click)="selectAnswer('D')"><span class="option-marker">D</span><span class="option-text">{{ questions[currentIndex].option_d }}</span><i class="fas fa-check" *ngIf="answers[currentIndex] === 'D'"></i></label>
         </div>
       </div>
     </div>

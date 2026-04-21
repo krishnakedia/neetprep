@@ -94,6 +94,9 @@ Route::middleware('auth:api')->group(function () {
         Route::put('/admin/exams/{id}', [ExamController::class, 'update']);
         Route::patch('/admin/exams/{id}/toggle-status', [ExamController::class, 'toggleStatus']);
         Route::delete('/admin/exams/{id}', [ExamController::class, 'destroy']);
+        Route::get('/admin/exams/{id}/users', [ExamController::class, 'getAssignedUsers']);
+        Route::post('/admin/exams/{id}/users', [ExamController::class, 'assignUsers']);
+        Route::delete('/admin/exams/{id}/users', [ExamController::class, 'removeUser']);
 
         // Questions management
         Route::post('/admin/exams/{examId}/questions', [QuestionController::class, 'store']);

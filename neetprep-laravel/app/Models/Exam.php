@@ -55,6 +55,11 @@ class Exam extends Model
         return $this->hasMany(ExamAttempt::class);
     }
 
+    public function assignedUsers()
+    {
+        return $this->belongsToMany(\App\Models\User::class, 'exam_user')->withPivot('is_assigned', 'assigned_at');
+    }
+
     public function getQuestionCountAttribute()
     {
         return $this->questions()->count();

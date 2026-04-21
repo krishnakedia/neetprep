@@ -1,56 +1,138 @@
 <div class="admin-layout">
   <aside class="sidebar">
-    <div class="sidebar-header"><div class="logo"><i class="fas fa-graduation-cap"></i></div><h2>NEET Prep</h2></div>
+    <div class="sidebar-header">
+      <div class="logo"><i class="fas fa-graduation-cap"></i></div>
+      <h2>NEET Prep</h2>
+    </div>
     <nav class="sidebar-nav">
-      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="fas fa-home"></i><span>Dashboard</span></a>
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i
+          class="fas fa-home"></i><span>Dashboard</span></a>
       <a routerLink="/admin/users" routerLinkActive="active"><i class="fas fa-users"></i><span>Users</span></a>
       <a routerLink="/admin/subjects" routerLinkActive="active"><i class="fas fa-book"></i><span>Subjects</span></a>
       <a routerLink="/admin/exams" routerLinkActive="active"><i class="fas fa-file-alt"></i><span>Exams</span></a>
-      <a routerLink="/admin/performance" routerLinkActive="active"><i class="fas fa-chart-bar"></i><span>Performance</span></a>
+      <a routerLink="/admin/performance" routerLinkActive="active"><i
+          class="fas fa-chart-bar"></i><span>Performance</span></a>
     </nav>
-    <div class="sidebar-footer"><div class="user-info"><div class="user-avatar"><i class="fas fa-user-shield"></i></div><div class="user-details"><span class="user-name">Admin User</span><span class="user-role">Administrator</span></div></div><button class="btn btn-logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button></div>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar"><i class="fas fa-user-shield"></i></div>
+        <div class="user-details"><span class="user-name">Admin User</span><span class="user-role">Administrator</span>
+        </div>
+      </div><button class="btn btn-logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button>
+    </div>
   </aside>
   <main class="main-content">
     <header class="top-header">
-      <div class="header-left"><a routerLink="/admin/exams" class="back-link"><i class="fas fa-arrow-left"></i></a><div><h1>{{ exam?.title || 'Questions' }}</h1><p>{{ exam?.description }}</p></div></div>
-      <div class="header-right"><div class="exam-stats"><span><i class="fas fa-question-circle"></i> {{ questions.length }} Questions</span><span><i class="fas fa-clock"></i> {{ exam?.duration }} min</span><span><i class="fas fa-star"></i> {{ exam?.totalMarks }} Marks</span></div><button class="btn btn-primary" (click)="openQuestionModal()"><i class="fas fa-plus"></i>Add Question</button></div>
+      <div class="header-left"><a routerLink="/admin/exams" class="back-link"><i class="fas fa-arrow-left"></i></a>
+        <div>
+          <h1>{{ exam?.title || 'Questions' }}</h1>
+          <p>{{ exam?.description }}</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="exam-stats"><span><i class="fas fa-question-circle"></i> {{ questions.length }}
+            Questions</span><span><i class="fas fa-clock"></i> {{ exam?.duration }} min</span><span><i
+              class="fas fa-star"></i> {{ exam?.totalMarks }} Marks</span></div><button class="btn btn-primary"
+          (click)="openQuestionModal()"><i class="fas fa-plus"></i>Add Question</button>
+      </div>
     </header>
     <div class="page-content">
       <div class="questions-grid" *ngIf="questions.length > 0">
         <div class="question-card" *ngFor="let question of questions; let i = index">
-          <div class="question-header"><span class="question-number">Q{{ i + 1 }}</span><span class="question-marks">{{ question.marks }} marks</span><div class="question-actions"><button class="icon-btn" (click)="editQuestion(question)" title="Edit"><i class="fas fa-edit"></i></button><button class="icon-btn danger" (click)="deleteQuestion(question)" title="Delete"><i class="fas fa-trash"></i></button></div></div>
-          <p class="question-text">{{ question.questionText }}</p>
+          <div class="question-header"><span class="question-number">Q{{ i + 1 }}</span>
+            <span class="question-text"> {{ question.question_text }}</span>
+            <span class="question-marks"> {{ question.marks }} marks</span>
+            <div class="question-actions">
+              <button class="icon-btn" (click)="editQuestion(question)" title="Edit"><i
+                  class="fas fa-edit"></i></button>
+              <button class="icon-btn danger" (click)="deleteQuestion(question)" title="Delete"><i
+                  class="fas fa-trash"></i></button>
+            </div>
+          </div>
+
           <div class="options-list">
-            <div class="option" [class.correct]="question.correctAnswer === 'A'"><span class="option-label">A</span><span class="option-text">{{ question.optionA }}</span><i class="fas fa-check" *ngIf="question.correctAnswer === 'A'"></i></div>
-            <div class="option" [class.correct]="question.correctAnswer === 'B'"><span class="option-label">B</span><span class="option-text">{{ question.optionB }}</span><i class="fas fa-check" *ngIf="question.correctAnswer === 'B'"></i></div>
-            <div class="option" [class.correct]="question.correctAnswer === 'C'"><span class="option-label">C</span><span class="option-text">{{ question.optionC }}</span><i class="fas fa-check" *ngIf="question.correctAnswer === 'C'"></i></div>
-            <div class="option" [class.correct]="question.correctAnswer === 'D'"><span class="option-label">D</span><span class="option-text">{{ question.optionD }}</span><i class="fas fa-check" *ngIf="question.correctAnswer === 'D'"></i></div>
+            <div class="option" [class.correct]="question.correct_answer === 'A'"><span
+                class="option-label">A</span><span class="option-text">{{ question.option_a }}</span><i
+                class="fas fa-check" *ngIf="question.correct_answer === 'A'"></i></div>
+            <div class="option" [class.correct]="question.correct_answer === 'B'"><span
+                class="option-label">B</span><span class="option-text">{{ question.option_b }}</span><i
+                class="fas fa-check" *ngIf="question.correct_answer === 'B'"></i></div>
+            <div class="option" [class.correct]="question.correct_answer === 'C'"><span
+                class="option-label">C</span><span class="option-text">{{ question.option_c }}</span><i
+                class="fas fa-check" *ngIf="question.correct_answer === 'C'"></i></div>
+            <div class="option" [class.correct]="question.correct_answer === 'D'"><span
+                class="option-label">D</span><span class="option-text">{{ question.option_d }}</span><i
+                class="fas fa-check" *ngIf="question.correct_answer === 'D'"></i></div>
           </div>
         </div>
       </div>
-      <div class="empty-state" *ngIf="questions.length === 0"><i class="fas fa-question-circle"></i><h4>No Questions Yet</h4><p>Start adding questions to this exam</p><button class="btn btn-primary" (click)="openQuestionModal()"><i class="fas fa-plus"></i>Add First Question</button></div>
+      <div class="empty-state" *ngIf="questions.length === 0"><i class="fas fa-question-circle"></i>
+        <h4>No Questions Yet</h4>
+        <p>Start adding questions to this exam</p><button class="btn btn-primary" (click)="openQuestionModal()"><i
+            class="fas fa-plus"></i>Add First Question</button>
+      </div>
     </div>
   </main>
 </div>
 <div class="modal-overlay" *ngIf="showQuestionModal" (click)="closeQuestionModal()">
   <div class="modal modal-xl" (click)="$event.stopPropagation()">
-    <div class="modal-header"><h3>{{ editingQuestion ? 'Edit Question' : 'Add New Question' }}</h3><button class="close-btn" (click)="closeQuestionModal()"><i class="fas fa-times"></i></button></div>
+    <div class="modal-header">
+      <h3>{{ editingQuestion ? 'Edit Question' : 'Add New Question' }}</h3><button class="close-btn"
+        (click)="closeQuestionModal()"><i class="fas fa-times"></i></button>
+    </div>
     <div class="modal-body">
-      <div class="form-group"><label>Question Text</label><textarea class="input question-input" [(ngModel)]="questionForm.questionText" placeholder="Enter your question here..."></textarea></div>
-      <div class="options-section"><h4>Options (Select the correct answer)</h4>
-        <div class="option-form" [class.selected]="questionForm.correctAnswer === 'A'"><label class="option-radio"><input type="radio" name="correctAnswer" value="A" [(ngModel)]="questionForm.correctAnswer"><span class="radio-mark">A</span></label><input type="text" class="input" [(ngModel)]="questionForm.optionA" placeholder="Option A"><i class="fas fa-check correct-icon" *ngIf="questionForm.correctAnswer === 'A'"></i></div>
-        <div class="option-form" [class.selected]="questionForm.correctAnswer === 'B'"><label class="option-radio"><input type="radio" name="correctAnswer" value="B" [(ngModel)]="questionForm.correctAnswer"><span class="radio-mark">B</span></label><input type="text" class="input" [(ngModel)]="questionForm.optionB" placeholder="Option B"><i class="fas fa-check correct-icon" *ngIf="questionForm.correctAnswer === 'B'"></i></div>
-        <div class="option-form" [class.selected]="questionForm.correctAnswer === 'C'"><label class="option-radio"><input type="radio" name="correctAnswer" value="C" [(ngModel)]="questionForm.correctAnswer"><span class="radio-mark">C</span></label><input type="text" class="input" [(ngModel)]="questionForm.optionC" placeholder="Option C"><i class="fas fa-check correct-icon" *ngIf="questionForm.correctAnswer === 'C'"></i></div>
-        <div class="option-form" [class.selected]="questionForm.correctAnswer === 'D'"><label class="option-radio"><input type="radio" name="correctAnswer" value="D" [(ngModel)]="questionForm.correctAnswer"><span class="radio-mark">D</span></label><input type="text" class="input" [(ngModel)]="questionForm.optionD" placeholder="Option D"><i class="fas fa-check correct-icon" *ngIf="questionForm.correctAnswer === 'D'"></i></div>
+      <div class="form-group"><label>Question Text</label><textarea class="input question-input"
+          [(ngModel)]="questionForm.question_text" placeholder="Enter your question here..."></textarea></div>
+      <div class="options-section">
+        <h4>Options (Select the correct answer)</h4>
+        <div class="option-form" [class.selected]="questionForm.correct_answer === 'A'"><label
+            class="option-radio"><input type="radio" name="correctAnswer" value="A"
+              [(ngModel)]="questionForm.correct_answer"><span class="radio-mark">A</span></label><input type="text"
+            class="input" [(ngModel)]="questionForm.option_a" placeholder="Option A"><i
+            class="fas fa-check correct-icon" *ngIf="questionForm.correct_answer === 'A'"></i></div>
+        <div class="option-form" [class.selected]="questionForm.correct_answer === 'B'"><label
+            class="option-radio"><input type="radio" name="correctAnswer" value="B"
+              [(ngModel)]="questionForm.correct_answer"><span class="radio-mark">B</span></label><input type="text"
+            class="input" [(ngModel)]="questionForm.option_b" placeholder="Option B"><i
+            class="fas fa-check correct-icon" *ngIf="questionForm.correct_answer === 'B'"></i></div>
+        <div class="option-form" [class.selected]="questionForm.correct_answer === 'C'"><label
+            class="option-radio"><input type="radio" name="correctAnswer" value="C"
+              [(ngModel)]="questionForm.correct_answer"><span class="radio-mark">C</span></label><input type="text"
+            class="input" [(ngModel)]="questionForm.option_c" placeholder="Option C"><i
+            class="fas fa-check correct-icon" *ngIf="questionForm.correct_answer === 'C'"></i></div>
+        <div class="option-form" [class.selected]="questionForm.correct_answer === 'D'"><label
+            class="option-radio"><input type="radio" name="correctAnswer" value="D"
+              [(ngModel)]="questionForm.correct_answer"><span class="radio-mark">D</span></label><input type="text"
+            class="input" [(ngModel)]="questionForm.option_d" placeholder="Option D"><i
+            class="fas fa-check correct-icon" *ngIf="questionForm.correct_answer === 'D'"></i></div>
       </div>
-      <div class="form-group marks-input"><label>Marks for this question</label><input type="number" class="input" [(ngModel)]="questionForm.marks" min="1" max="10"></div>
+      <div class="form-group marks-input"><label>Marks for this question</label><input type="number" class="input"
+          [(ngModel)]="questionForm.marks" min="1" max="10"></div>
       <div class="question-meta">
-        <div class="form-group"><label>NCERT Question?</label><select class="input" [(ngModel)]="questionForm.ncert"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
-        <div class="form-group"><label>Difficulty</label><select class="input" [(ngModel)]="questionForm.difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></div>
-        <div class="form-group"><label>Year</label><input type="number" class="input" [(ngModel)]="questionForm.year" placeholder="e.g., 2024" min="2000" max="2030"></div>
-        <div class="form-group"><label>Question Type</label><select class="input" [(ngModel)]="questionForm.questionType"><option value="theory">Theory</option><option value="numerical">Numerical</option><option value="diagram">Diagram Based</option><option value="assertion_reason">Assertion Reason</option><option value="multiple_correct">Multiple Correct</option></select></div>
+        <div class="form-group"><label>NCERT Question?</label><select class="input" [(ngModel)]="questionForm.ncert">
+            <option value="">Select</option>
+            <option [class.selected]="questionForm.ncert == 'yes'" value="yes">Yes</option>
+            <option [class.selected]="questionForm.ncert == 'no'" value="no">No</option>
+          </select></div>
+        <div class="form-group"><label>Difficulty</label><select class="input" [(ngModel)]="questionForm.difficulty">
+            <option [class.selected]="questionForm.difficulty === 'easy'" value="easy">Easy</option>
+            <option [class.selected]="questionForm.difficulty === 'medium'" value="medium">Medium</option>
+            <option [class.selected]="questionForm.difficulty === 'hard'" value="hard">Hard</option>
+          </select></div>
+        <div class="form-group"><label>Year</label><input type="number" class="input" [(ngModel)]="questionForm.year"
+            placeholder="e.g., 2024" min="2000" max="2030"></div>
+        <div class="form-group"><label>Question Type</label>
+          <select class="input" [(ngModel)]="questionForm.question_type">
+            <!-- <option value="theory">Theory</option>
+            <option value="numerical">Numerical</option>
+            <option value="diagram">Diagram Based</option>
+            <option value="assertion_reason">Assertion Reason</option> -->
+            <option value="multiple_correct">Multiple Correct</option>
+          </select></div>
       </div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" (click)="closeQuestionModal()">Cancel</button><button class="btn btn-primary" (click)="saveQuestion()" [disabled]="!isQuestionValid()">{{ editingQuestion ? 'Update' : 'Add Question' }}</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" (click)="closeQuestionModal()">Cancel</button><button
+        class="btn btn-primary" (click)="saveQuestion()" [disabled]="!isQuestionValid()">{{ editingQuestion ? 'Update' :
+        'Add Question' }}</button></div>
   </div>
 </div>

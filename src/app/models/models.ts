@@ -7,6 +7,8 @@ export interface User {
   is_active: boolean;
   createdAt: Date;
   notes?: string;
+  is_assigned?: boolean;
+  assigned_at?: Date;
 }
 
 export interface Subject {
@@ -63,17 +65,17 @@ export interface Exam {
 export interface Question {
   id: string;
   examId: string;
-  questionText: string;
-  optionA: string;
-  optionB: string;
-  optionC: string;
-  optionD: string;
-  correctAnswer: 'A' | 'B' | 'C' | 'D';
+  question_text: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_answer: 'A' | 'B' | 'C' | 'D';
   marks: number;
   ncert?: string;
   difficulty?: 'easy' | 'medium' | 'hard';
   year?: number;
-  questionType?: 'theory' | 'numerical' | 'diagram' | 'assertion_reason' | 'multiple_correct';
+  question_type?: 'theory' | 'numerical' | 'diagram' | 'assertion_reason' | 'multiple_correct';
   createdAt: Date;
 }
 

@@ -11,15 +11,15 @@ class Question extends Model
 
     protected $fillable = [
         'exam_id',
-        'question_text',
+        'correct_answer',
+        'difficulty',
+        'marks',
+        'ncert',
         'option_a',
         'option_b',
         'option_c',
         'option_d',
-        'correct_answer',
-        'marks',
-        'ncert',
-        'difficulty',
+        'question_text',
         'year',
         'question_type'
     ];

@@ -1,0 +1,91 @@
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo"><i class="fas fa-graduation-cap"></i></div>
+      <h2>NEET Prep</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i
+          class="fas fa-home"></i><span>Dashboard</span></a>
+      <a routerLink="/admin/users" routerLinkActive="active"><i class="fas fa-users"></i><span>Users</span></a>
+      <a routerLink="/admin/subjects" routerLinkActive="active"><i class="fas fa-book"></i><span>Subjects</span></a>
+      <a routerLink="/admin/exams" routerLinkActive="active"><i class="fas fa-file-alt"></i><span>Exams</span></a>
+      <a routerLink="/admin/performance" routerLinkActive="active"><i
+          class="fas fa-chart-bar"></i><span>Performance</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar"><i class="fas fa-user-shield"></i></div>
+        <div class="user-details"><span class="user-name">Admin User</span><span class="user-role">Administrator</span>
+        </div>
+      </div>
+      <button class="btn btn-logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="top-header">
+      <div class="header-left">
+        <a routerLink="/admin/exams" class="back-link"><i class="fas fa-arrow-left"></i>Back to Exams</a>
+        <h1>Assign Users to Exam</h1>
+        <p *ngIf="exam">{{ exam.title }}</p>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="split-view" *ngIf="!loading">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Assigned Users ({{ assignedUsers.length }})</h2>
+          </div>
+          <div class="panel-body">
+            <div class="user-list" *ngIf="assignedUsers.length > 0">
+              <div class="user-card" *ngFor="let user of assignedUsers">
+                <div class="user-info">
+                  <div class="user-avatar"><i class="fas fa-user"></i></div>
+                  <div class="user-details">
+                    <span class="user-name">{{ user.name }}</span>
+                    <span class="user-email">{{ user.email }}</span>
+                  </div>
+                </div>
+                <button class="btn btn-sm btn-danger-outline" (click)="removeUser(user)" title="Remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <p *ngIf="assignedUsers.length === 0" class="text-muted text-center">No users assigned yet</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Available Users</h2>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" class="input" placeholder="Search users..." [(ngModel)]="searchTerm">
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="user-list" *ngIf="filteredAvailableUsers.length > 0">
+              <ng-container *ngFor="let user of filteredAvailableUsers">
+                <div class="user-card" *ngIf="user.is_active === true">
+                  <div class="user-info">
+                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                    <div class="user-details">
+                      <span class="user-name">{{ user.name }}</span>
+                      <span class="user-email">{{ user.email }}</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-sm btn-outline" (click)="assignUser(user)" title="Assign">
+                    <i class="fas fa-plus"></i> Assign
+                  </button>
+                </div>
+              </ng-container>
+            </div>
+            <p *ngIf="filteredAvailableUsers.length === 0" class="text-muted text-center">No available users</p>
+          </div>
+        </div>
+      </div>
+      <div class="loading" *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading...
+      </div>
+    </div>
+  </main>
+</div>

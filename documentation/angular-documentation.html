@@ -774,7 +774,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
                 <pre><code>export interface Question {
   id: string;
   examId: string;
-  questionText: string;
+  question_text: string;
   optionA: string;
   optionB: string;
   optionC: string;
@@ -784,7 +784,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   ncert?: string;
   difficulty?: 'easy' | 'medium' | 'hard';
   year?: number;
-  questionType?: 'theory' | 'numerical' | 'diagram' | 
+  question_type?: 'theory' | 'numerical' | 'diagram' | 
                   'assertion_reason' | 'multiple_correct';
 }</code></pre>
             </section>

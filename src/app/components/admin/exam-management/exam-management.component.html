@@ -39,6 +39,7 @@
                 <td>{{ exam.createdAt | date:'mediumDate' }}</td>
                 <td>
                   <div class="action-buttons">
+                    <a [routerLink]="['/admin/exams', exam.id, 'users']" class="btn btn-sm btn-outline" title="Assign Users"><i class="fas fa-user-plus"></i></a>
                     <a [routerLink]="['/admin/questions', exam.id]" class="btn btn-sm btn-outline" title="Manage Questions"><i class="fas fa-question-circle"></i></a>
                     <button class="btn btn-sm btn-outline" (click)="editExam(exam)" title="Edit"><i class="fas fa-edit"></i></button>
                     <label class="toggle-switch small"><input type="checkbox" [checked]="exam.is_active" (change)="toggleExamStatus(exam)"><span class="slider"></span></label>

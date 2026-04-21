@@ -94,7 +94,7 @@
             <span class="question-number" id="questionNumber">Question 1</span>
             <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()"><i class="far fa-bookmark"></i> Bookmark</button>
           </div>
-          <p class="question-text" id="questionText">Loading question...</p>
+          <p class="question-text" id="question_text">Loading question...</p>
           <div class="options-list" id="optionsList"></div>
         </div>
       </div>
@@ -185,7 +185,7 @@
       const q = questions[currentIndex];
       document.getElementById('currentQ').textContent = currentIndex + 1;
       document.getElementById('questionNumber').textContent = `Question ${currentIndex + 1}`;
-      document.getElementById('questionText').textContent = q.questionText;
+      document.getElementById('question_text').textContent = q.question_text;
       document.getElementById('progressFill').style.width = `${((currentIndex + 1) / questions.length) * 100}%`;
       document.getElementById('prevBtn').disabled = currentIndex === 0;
       document.getElementById('nextBtn').style.display = currentIndex < questions.length - 1 ? 'flex' : 'none';

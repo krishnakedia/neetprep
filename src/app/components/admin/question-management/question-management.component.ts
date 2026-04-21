@@ -18,35 +18,36 @@ export class QuestionManagementComponent implements OnInit {
   questions: Question[] = [];
   showQuestionModal = false;
   editingQuestion: Question | null = null;
-  
-  questionForm: Partial<Question> & { correctAnswer: 'A' | 'B' | 'C' | 'D' } = {
-    questionText: '',
-    optionA: '',
-    optionB: '',
-    optionC: '',
-    optionD: '',
-    correctAnswer: 'A',
+
+  questionForm: Partial<Question> & { correct_answer: 'A' | 'B' | 'C' | 'D' } = {
+    question_text: '',
+    option_a: '',
+    option_b: '',
+    option_c: '',
+    option_d: '',
+    correct_answer: 'A',
     marks: 5,
     ncert: '',
     difficulty: 'medium',
-    questionType: 'theory'
+    question_type: 'theory'
   };
 
   constructor(
     private examService: ExamService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.examId = this.route.snapshot.paramMap.get('examId') || '';
     this.loadExam();
-    this.loadQuestions();
+    // this.loadQuestions();
   }
 
   loadExam(): void {
     this.examService.getExamById(this.examId).subscribe(exam => {
       this.exam = exam || null;
+      this.questions = exam?.questions || [];
     });
   }
 
@@ -59,12 +60,12 @@ export class QuestionManagementComponent implements OnInit {
   openQuestionModal(): void {
     this.editingQuestion = null;
     this.questionForm = {
-      questionText: '',
-      optionA: '',
-      optionB: '',
-      optionC: '',
-      optionD: '',
-      correctAnswer: 'A',
+      question_text: '',
+      option_a: '',
+      option_b: '',
+      option_c: '',
+      option_d: '',
+      correct_answer: 'A',
       marks: 5
     };
     this.showQuestionModal = true;
@@ -73,12 +74,16 @@ export class QuestionManagementComponent implements OnInit {
   editQuestion(question: Question): void {
     this.editingQuestion = question;
     this.questionForm = {
-      questionText: question.questionText,
-      optionA: question.optionA,
-      optionB: question.optionB,
-      optionC: question.optionC,
-      optionD: question.optionD,
-      correctAnswer: question.correctAnswer,
+      question_text: question.question_text,
+      option_a: question.option_a,
+      option_b: question.option_b,
+      option_c: question.option_c,
+      option_d: question.option_d,
+      correct_answer: question.correct_answer,
+      ncert: question.ncert,
+      difficulty: question.difficulty,
+      year: question.year,
+      question_type: question.question_type,
       marks: question.marks
     };
     this.showQuestionModal = true;
@@ -91,12 +96,12 @@ export class QuestionManagementComponent implements OnInit {
 
   isQuestionValid(): boolean {
     return !!(
-      this.questionForm.questionText &&
-      this.questionForm.optionA &&
-      this.questionForm.optionB &&
-      this.questionForm.optionC &&
-      this.questionForm.optionD &&
-      this.questionForm.correctAnswer
+      this.questionForm.question_text &&
+      this.questionForm.option_a &&
+      this.questionForm.option_b &&
+      this.questionForm.option_c &&
+      this.questionForm.option_d &&
+      this.questionForm.correct_answer
     );
   }
 
@@ -105,17 +110,17 @@ export class QuestionManagementComponent implements OnInit {
 
     if (this.editingQuestion) {
       this.examService.updateQuestion(this.editingQuestion.id, this.examId, {
-        questionText: this.questionForm.questionText,
-        optionA: this.questionForm.optionA,
-        optionB: this.questionForm.optionB,
-        optionC: this.questionForm.optionC,
-        optionD: this.questionForm.optionD,
-        correctAnswer: this.questionForm.correctAnswer,
+        question_text: this.questionForm.question_text,
+        option_a: this.questionForm.option_a,
+        option_b: this.questionForm.option_b,
+        option_c: this.questionForm.option_c,
+        option_d: this.questionForm.option_d,
+        correct_answer: this.questionForm.correct_answer,
         marks: this.questionForm.marks,
         ncert: this.questionForm.ncert,
         difficulty: this.questionForm.difficulty,
         year: this.questionForm.year,
-        questionType: this.questionForm.questionType
+        question_type: this.questionForm.question_type
       } as Partial<Question>).subscribe(() => {
         this.loadQuestions();
         this.loadExam();
@@ -123,17 +128,17 @@ export class QuestionManagementComponent implements OnInit {
       });
     } else {
       this.examService.createQuestion(this.examId, {
-        questionText: this.questionForm.questionText,
-        optionA: this.questionForm.optionA,
-        optionB: this.questionForm.optionB,
-        optionC: this.questionForm.optionC,
-        optionD: this.questionForm.optionD,
-        correctAnswer: this.questionForm.correctAnswer,
+        question_text: this.questionForm.question_text,
+        option_a: this.questionForm.option_a,
+        option_b: this.questionForm.option_b,
+        option_c: this.questionForm.option_c,
+        option_d: this.questionForm.option_d,
+        correct_answer: this.questionForm.correct_answer,
         marks: this.questionForm.marks,
         ncert: this.questionForm.ncert,
         difficulty: this.questionForm.difficulty,
         year: this.questionForm.year,
-        questionType: this.questionForm.questionType
+        question_type: this.questionForm.question_type
       } as Partial<Question>).subscribe(() => {
         this.loadQuestions();
         this.loadExam();

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { Exam, Question, ExamAttempt, ExamAnswer, PerformanceStats } from '../models/models';
+import { Exam, Question, ExamAttempt, ExamAnswer, PerformanceStats, User } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -159,6 +159,26 @@ export class ExamService {
   getStudentPerformance(userId: string): Observable<{ attempts: ExamAttempt[]; notes: string[] }> {
     return this.http.get<{ success: boolean; attempts: ExamAttempt[]; notes: string[] }>(`${this.apiUrl}/admin/performance/student/${userId}`).pipe(
       map(res => ({ attempts: res.attempts || [], notes: res.notes || [] }))
+    );
+  }
+
+  getAssignedUsers(examId: string): Observable<User[]> {
+    return this.http.get<{ success: boolean; users: User[] }>(`${this.apiUrl}/admin/exams/${examId}/users`).pipe(
+      map(res => res.users || [])
+    );
+  }
+
+  assignUsers(examId: string, userIds: string[]): Observable<User[]> {
+    return this.http.post<{ success: boolean; users: User[] }>(`${this.apiUrl}/admin/exams/${examId}/users`, { user_ids: userIds }).pipe(
+      map(res => res.users || [])
+    );
+  }
+
+  removeUserFromExam(examId: string, userId: string): Observable<void> {
+    return this.http.delete<{ success: boolean }>(`${this.apiUrl}/admin/exams/${examId}/users`, {
+      body: { user_id: userId }
+    }).pipe(
+      map(() => void 0)
     );
   }
 }

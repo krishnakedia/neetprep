@@ -25,7 +25,7 @@ export class QuestionsPageComponent implements OnInit {
     ncert: '',
     difficulty: '',
     year: '',
-    questionType: ''
+    question_type: ''
   };
 
   years: number[] = [];
@@ -77,7 +77,7 @@ export class QuestionsPageComponent implements OnInit {
       ncert: this.filters.ncert || undefined,
       difficulty: this.filters.difficulty || undefined,
       year: this.filters.year || undefined,
-      question_type: this.filters.questionType || undefined
+      question_type: this.filters.question_type || undefined
     }).subscribe(res => {
       this.filteredQuestions = res.data;
     });

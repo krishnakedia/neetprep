@@ -28,6 +28,11 @@ export const routes: Routes = [
     loadComponent: () => import('./components/admin/exam-management/exam-management.component').then(m => m.ExamManagementComponent)
   },
   {
+    path: 'admin/exams/:examId/users',
+    canActivate: [AuthGuard, AdminGuard],
+    loadComponent: () => import('./components/admin/exam-assign-users/exam-assign-users.component').then(m => m.ExamAssignUsersComponent)
+  },
+  {
     path: 'admin/questions/:examId',
     canActivate: [AuthGuard, AdminGuard],
     loadComponent: () => import('./components/admin/question-management/question-management.component').then(m => m.QuestionManagementComponent)

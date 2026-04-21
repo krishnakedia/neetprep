@@ -59,4 +59,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->is_active;
     }
+
+    public function assignedExams()
+    {
+        return $this->belongsToMany(\App\Models\Exam::class, 'exam_user')->withPivot('is_assigned', 'assigned_at');
+    }
 }
