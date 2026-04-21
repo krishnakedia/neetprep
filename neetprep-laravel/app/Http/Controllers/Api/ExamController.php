@@ -24,8 +24,11 @@ class ExamController extends Controller
 
     public function active(): JsonResponse
     {
+        $user = auth('api')->user();
         $exams = Exam::with(['subject', 'questions'])
-            ->where('is_active', true)
+            ->join('exam_user', 'exams.id','=','exam_user.exam_id')
+            ->where('exams.is_active', true)
+            ->where('exam_user.user_id', $user->id)
             ->get();
 
         return response()->json([
@@ -258,31 +261,30 @@ class ExamController extends Controller
         ]);
     }
 
-    public function removeUser(Request $request, string $id): JsonResponse
+public function removeUser(Request $request, string $id): JsonResponse
     {
-        $exam = Exam::find($id);
-
-        if (!$exam) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Exam not found'
-            ], 404);
-        }
-
+        $exam = Exam::findOrFail($id);
         $userId = $request->input('user_id');
-
-        if (!$userId) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User ID is required'
-            ], 422);
-        }
 
         $exam->assignedUsers()->detach($userId);
 
         return response()->json([
             'success' => true,
             'message' => 'User removed from exam'
+        ]);
+    }
+
+    public function myAssignedExams(): JsonResponse
+    {
+        $user = auth()->user();
+        $exams = $user->assignedExams()
+            ->with(['subject', 'questions'])
+            ->where('is_active', true)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'exams' => $exams
         ]);
     }
 }

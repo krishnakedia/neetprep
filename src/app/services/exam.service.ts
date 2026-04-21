@@ -34,8 +34,8 @@ export class ExamService {
     );
   }
 
-  getExamsBySubject(subjectId: string): Observable<Exam[]> {
-    return this.http.get<{ success: boolean; exams: Exam[] }>(`${this.apiUrl}/exams/subject/${subjectId}`).pipe(
+  getExamsBySubject(subject_id: string): Observable<Exam[]> {
+    return this.http.get<{ success: boolean; exams: Exam[] }>(`${this.apiUrl}/exams/subject/${subject_id}`).pipe(
       map(res => res.exams || [])
     );
   }
@@ -179,6 +179,12 @@ export class ExamService {
       body: { user_id: userId }
     }).pipe(
       map(() => void 0)
+    );
+  }
+
+  getMyAssignedExams(): Observable<Exam[]> {
+    return this.http.get<{ success: boolean; exams: Exam[] }>(`${this.apiUrl}/exams/assigned/my`).pipe(
+      map(res => res.exams || [])
     );
   }
 }

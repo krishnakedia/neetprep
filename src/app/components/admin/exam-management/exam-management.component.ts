@@ -29,7 +29,7 @@ export class ExamManagementComponent implements OnInit {
   examForm: Partial<Exam> = {
     title: '',
     description: '',
-    subjectId: '',
+    subject_id: '',
     topicIds: [],
     duration: 30,
     totalMarks: 50,
@@ -69,7 +69,7 @@ export class ExamManagementComponent implements OnInit {
     }
     
     if (this.filterSubject) {
-      result = result.filter(e => e.subjectId === this.filterSubject);
+      result = result.filter(e => e.subject_id === this.filterSubject);
     }
     
     if (this.filterStatus) {
@@ -80,8 +80,8 @@ export class ExamManagementComponent implements OnInit {
     this.filteredExams = result;
   }
 
-  getSubjectName(subjectId: string): string {
-    const subject = this.subjects.find(s => s.id === subjectId);
+  getSubjectName(subject_id: string): string {
+    const subject = this.subjects.find(s => s.id === subject_id);
     return subject?.name || 'Unknown';
   }
 
@@ -90,7 +90,7 @@ export class ExamManagementComponent implements OnInit {
     this.examForm = {
       title: '',
       description: '',
-      subjectId: '',
+      subject_id: '',
       topicIds: [],
       duration: 30,
       totalMarks: 50,
@@ -103,7 +103,7 @@ export class ExamManagementComponent implements OnInit {
   editExam(exam: Exam): void {
     this.editingExam = exam;
     this.examForm = { ...exam };
-    this.selectedSubject = this.subjects.find(s => s.id === exam.subjectId) || null;
+    this.selectedSubject = this.subjects.find(s => s.id === exam.subject_id) || null;
     this.showExamModal = true;
   }
 

@@ -42,6 +42,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/exams/active', [ExamController::class, 'active']);
     Route::get('/exams/subject/{subjectId}', [ExamController::class, 'bySubject']);
     Route::get('/exams/{id}', [ExamController::class, 'show']);
+    Route::get('/exams/assigned/my', [ExamController::class, 'myAssignedExams']);
 
     // Questions (public access - but admin can manage)
     Route::get('/exams/{examId}/questions', [QuestionController::class, 'index']);

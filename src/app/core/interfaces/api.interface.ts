@@ -39,7 +39,7 @@ export interface Subject extends BaseEntity {
 }
 
 export interface Chapter extends BaseEntity {
-  subjectId: string;
+  subject_id: string;
   name: string;
   description: string;
   order: number;
@@ -48,7 +48,7 @@ export interface Chapter extends BaseEntity {
 }
 
 export interface Topic extends BaseEntity {
-  subjectId: string;
+  subject_id: string;
   chapterId?: string;
   name: string;
   description: string;
@@ -58,7 +58,7 @@ export interface Topic extends BaseEntity {
 export interface Exam extends BaseEntity {
   title: string;
   description: string;
-  subjectId: string;
+  subject_id: string;
   chapterId?: string;
   topicIds: string[];
   duration: number;

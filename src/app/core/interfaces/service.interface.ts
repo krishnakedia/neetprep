@@ -16,7 +16,7 @@ export interface IExamService {
   getExams(): any;
   getActiveExams(): any;
   getExamById(id: string): any;
-  getExamsBySubject(subjectId: string): any;
+  getExamsBySubject(subject_id: string): any;
   createExam(exam: any): any;
   updateExam(id: string, updates: any): any;
   toggleExamStatus(id: string): any;
@@ -43,8 +43,8 @@ export interface ISubjectService {
   updateSubject(id: string, updates: any): any;
   deleteSubject(id: string): any;
   toggleSubjectStatus(id: string): any;
-  getChaptersBySubject(subjectId: string): any;
-  getTopicsBySubject(subjectId: string): any;
+  getChaptersBySubject(subject_id: string): any;
+  getTopicsBySubject(subject_id: string): any;
   getTopicsByChapter(chapterId: string): any;
 }
 

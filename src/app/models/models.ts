@@ -17,7 +17,7 @@ export interface Subject {
   description: string;
   icon: string;
   color: string;
-  isActive: boolean;
+  is_active: boolean;
   createdAt: Date;
   chapters?: Chapter[];
   topics?: Topic[];
@@ -25,7 +25,7 @@ export interface Subject {
 
 export interface Chapter {
   id: string;
-  subjectId: string;
+  subject_id: string;
   name: string;
   description: string;
   order: number;
@@ -36,7 +36,7 @@ export interface Chapter {
 
 export interface Topic {
   id: string;
-  subjectId: string;
+  subject_id: string;
   chapterId?: string;
   name: string;
   description: string;
@@ -48,7 +48,7 @@ export interface Exam {
   id: string;
   title: string;
   description: string;
-  subjectId: string;
+  subject_id: string;
   chapterId?: string;
   topicIds: string[];
   duration: number;
@@ -89,10 +89,11 @@ export interface ExamAttempt {
   score: number;
   totalMarks: number;
   percentage: number;
-  status: 'in-progress' | 'completed';
+  status: string;
   answers?: ExamAnswer[];
   notes?: string;
 }
+// status: 'in-progress' | 'completed';
 
 export interface ExamAnswer {
   questionId: string;

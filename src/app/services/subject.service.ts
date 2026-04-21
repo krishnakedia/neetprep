@@ -58,14 +58,14 @@ export class SubjectService {
     );
   }
 
-  getChaptersBySubject(subjectId: string): Observable<Chapter[]> {
-    return this.http.get<{ success: boolean; chapters: Chapter[] }>(`${this.apiUrl}/subjects/${subjectId}/chapters`).pipe(
+  getChaptersBySubject(subject_id: string): Observable<Chapter[]> {
+    return this.http.get<{ success: boolean; chapters: Chapter[] }>(`${this.apiUrl}/subjects/${subject_id}/chapters`).pipe(
       map(res => res.chapters || [])
     );
   }
 
-  createChapter(subjectId: string, chapter: Partial<Chapter>): Observable<Chapter> {
-    return this.http.post<{ success: boolean; chapter: Chapter }>(`${this.apiUrl}/admin/subjects/${subjectId}/chapters`, chapter).pipe(
+  createChapter(subject_id: string, chapter: Partial<Chapter>): Observable<Chapter> {
+    return this.http.post<{ success: boolean; chapter: Chapter }>(`${this.apiUrl}/admin/subjects/${subject_id}/chapters`, chapter).pipe(
       map(res => res.chapter)
     );
   }
@@ -88,32 +88,32 @@ export class SubjectService {
     );
   }
 
-  getTopicsBySubject(subjectId: string): Observable<Topic[]> {
-    return this.http.get<{ success: boolean; topics: Topic[] }>(`${this.apiUrl}/subjects/${subjectId}/topics`).pipe(
+  getTopicsBySubject(subject_id: string): Observable<Topic[]> {
+    return this.http.get<{ success: boolean; topics: Topic[] }>(`${this.apiUrl}/subjects/${subject_id}/topics`).pipe(
       map(res => res.topics || [])
     );
   }
 
-  getTopicById(subjectId: string, id: string): Observable<Topic> {
-    return this.http.get<{ success: boolean; topic: Topic }>(`${this.apiUrl}/subjects/${subjectId}/topics/${id}`).pipe(
+  getTopicById(subject_id: string, id: string): Observable<Topic> {
+    return this.http.get<{ success: boolean; topic: Topic }>(`${this.apiUrl}/subjects/${subject_id}/topics/${id}`).pipe(
       map(res => res.topic)
     );
   }
 
-  createTopic(subjectId: string, topic: Partial<Topic>): Observable<Topic> {
-    return this.http.post<{ success: boolean; topic: Topic }>(`${this.apiUrl}/admin/subjects/${subjectId}/topics`, topic).pipe(
+  createTopic(subject_id: string, topic: Partial<Topic>): Observable<Topic> {
+    return this.http.post<{ success: boolean; topic: Topic }>(`${this.apiUrl}/admin/subjects/${subject_id}/topics`, topic).pipe(
       map(res => res.topic)
     );
   }
 
-  updateTopic(subjectId: string, id: string, updates: Partial<Topic>): Observable<Topic> {
-    return this.http.put<{ success: boolean; topic: Topic }>(`${this.apiUrl}/admin/subjects/${subjectId}/topics/${id}`, updates).pipe(
+  updateTopic(subject_id: string, id: string, updates: Partial<Topic>): Observable<Topic> {
+    return this.http.put<{ success: boolean; topic: Topic }>(`${this.apiUrl}/admin/subjects/${subject_id}/topics/${id}`, updates).pipe(
       map(res => res.topic)
     );
   }
 
-  deleteTopic(subjectId: string, id: string): Observable<void> {
-    return this.http.delete<{ success: boolean }>(`${this.apiUrl}/admin/subjects/${subjectId}/topics/${id}`).pipe(
+  deleteTopic(subject_id: string, id: string): Observable<void> {
+    return this.http.delete<{ success: boolean }>(`${this.apiUrl}/admin/subjects/${subject_id}/topics/${id}`).pipe(
       map(() => void 0)
     );
   }

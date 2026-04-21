@@ -8,8 +8,8 @@
     <div class="questions-page">
       <div class="page-header"><h1>Question Bank</h1><p>Practice questions with filters</p></div>
       <div class="filters-section">
-        <div class="filter-group"><label>Subject</label><select class="input" [(ngModel)]="filters.subjectId" (change)="onSubjectChange()"><option value="">All Subjects</option><option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option></select></div>
-        <div class="filter-group"><label>Chapter</label><select class="input" [(ngModel)]="filters.chapterId" [disabled]="!filters.subjectId"><option value="">All Chapters</option><option *ngFor="let chapter of chapters" [value]="chapter.id">{{ chapter.name }}</option></select></div>
+        <div class="filter-group"><label>Subject</label><select class="input" [(ngModel)]="filters.subject_id" (change)="onSubjectChange()"><option value="">All Subjects</option><option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option></select></div>
+        <div class="filter-group"><label>Chapter</label><select class="input" [(ngModel)]="filters.chapterId" [disabled]="!filters.subject_id"><option value="">All Chapters</option><option *ngFor="let chapter of chapters" [value]="chapter.id">{{ chapter.name }}</option></select></div>
         <div class="filter-group"><label>NCERT</label><select class="input" [(ngModel)]="filters.ncert"><option value="">All</option><option value="yes">NCERT</option><option value="no">Non-NCERT</option></select></div>
         <div class="filter-group"><label>Difficulty</label><select class="input" [(ngModel)]="filters.difficulty"><option value="">All Levels</option><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></div>
         <div class="filter-group"><label>Year</label><select class="input" [(ngModel)]="filters.year"><option value="">All Years</option><option *ngFor="let year of years" [value]="year">{{ year }}</option></select></div>

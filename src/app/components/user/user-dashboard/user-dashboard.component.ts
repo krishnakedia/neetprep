@@ -16,6 +16,7 @@ export class UserDashboardComponent implements OnInit {
   currentUser: User | null = null;
   subjects: Subject[] = [];
   exams: Exam[] = [];
+  assignedExams: Exam[] = [];
   recentAttempts: ExamAttempt[] = [];
   selectedSubjectForExams: Subject | null = null;
   
@@ -39,14 +40,18 @@ export class UserDashboardComponent implements OnInit {
 
   loadData(): void {
     this.subjectService.getSubjects().subscribe(subjects => {
-      this.subjects = subjects.filter(s => s.isActive);
+      this.subjects = subjects.filter(s => s.is_active);
     });
 
     this.examService.getActiveExams().subscribe(exams => {
       this.exams = exams;
     });
 
-    if (this.currentUser) {
+    this.examService.getMyAssignedExams().subscribe(exams => {
+      this.assignedExams = exams;
+    });
+
+    /*if (this.currentUser) {
       this.examService.getUserAttempts().subscribe(attempts => {
         const completed = attempts.filter(a => a.status === 'completed');
         this.recentAttempts = completed.sort(
@@ -61,15 +66,15 @@ export class UserDashboardComponent implements OnInit {
           this.stats.best = Math.max(...completed.map(a => a.percentage));
         }
       });
-    }
+    } */
   }
 
-  getExamCount(subjectId: string): number {
-    return this.exams.filter(e => e.subjectId === subjectId && e.is_active).length;
+  getExamCount(subject_id: string): number {
+    return this.exams.filter(e => e.subject_id === subject_id && e.is_active).length;
   }
 
-  getExamsBySubject(subjectId: string): Exam[] {
-    return this.exams.filter(e => e.subjectId === subjectId);
+  getExamsBySubject(subject_id: string): Exam[] {
+    return this.exams.filter(e => e.subject_id === subject_id);
   }
 
   selectSubject(subject: Subject): void {

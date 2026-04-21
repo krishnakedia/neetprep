@@ -128,9 +128,9 @@ export class SubjectManagementComponent implements OnInit {
     }
   }
 
-  deleteTopic(subjectId: string, topicId: string): void {
+  deleteTopic(subject_id: string, topicId: string): void {
     if (confirm('Are you sure you want to delete this topic?')) {
-      this.subjectService.deleteTopic(subjectId, topicId).subscribe(() => {
+      this.subjectService.deleteTopic(subject_id, topicId).subscribe(() => {
         this.loadSubjects();
       });
     }

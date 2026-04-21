@@ -132,17 +132,37 @@
 
 .subjects-section,
 .exams-section,
-.recent-section {
+.recent-section,
+.assigned-section {
   margin-bottom: 48px;
 }
 
 .subjects-section h2,
 .exams-section h2,
-.recent-section h2 {
+.recent-section h2,
+.assigned-section h2 {
   font-size: 20px;
   font-weight: 600;
   color: #111827;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.assigned-section h2 i {
+  color: #667eea;
+}
+
+.assigned-section .section-subtitle {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-top: -12px;
+  margin-bottom: 24px;
+}
+
+.exam-card.assigned {
+  border-left: 4px solid #667eea;
 }
 
 .section-header {
@@ -273,6 +293,29 @@
 
 .exam-card .exam-actions .btn {
   width: 100%;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-info {
+  background: #dbeafe;
+  color: #1e40af;
 }
 
 .attempts-list {

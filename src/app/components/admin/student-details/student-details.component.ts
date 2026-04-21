@@ -45,7 +45,8 @@ export class StudentDetailsComponent implements OnInit {
       }
     });
 
-    this.examService.getUserAttemptsById(this.userId).subscribe(attempts => {
+    this.examService.getUserAttemptsById(this.userId).subscribe(attempts => {      
+      // console.log(attempts);
       this.attempts = attempts.filter(a => a.status === 'completed').sort(
         (a, b) => new Date(b.completedAt!).getTime() - new Date(a.completedAt!).getTime()
       );

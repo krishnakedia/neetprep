@@ -20,7 +20,7 @@ export class QuestionsPageComponent implements OnInit {
   filteredQuestions: Question[] = [];
 
   filters = {
-    subjectId: '',
+    subject_id: '',
     chapterId: '',
     ncert: '',
     difficulty: '',
@@ -60,8 +60,8 @@ export class QuestionsPageComponent implements OnInit {
   }
 
   onSubjectChange(): void {
-    if (this.filters.subjectId) {
-      this.subjectService.getChaptersBySubject(this.filters.subjectId).subscribe(chapters => {
+    if (this.filters.subject_id) {
+      this.subjectService.getChaptersBySubject(this.filters.subject_id).subscribe(chapters => {
         this.chapters = chapters;
       });
     } else {
@@ -72,7 +72,7 @@ export class QuestionsPageComponent implements OnInit {
 
   applyFilters(): void {
     this.examService.getAllQuestions({
-      subject_id: this.filters.subjectId || undefined,
+      subject_id: this.filters.subject_id || undefined,
       chapter_id: this.filters.chapterId || undefined,
       ncert: this.filters.ncert || undefined,
       difficulty: this.filters.difficulty || undefined,
