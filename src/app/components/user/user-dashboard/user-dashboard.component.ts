@@ -42,16 +42,17 @@ export class UserDashboardComponent implements OnInit {
     this.subjectService.getSubjects().subscribe(subjects => {
       this.subjects = subjects.filter(s => s.is_active);
     });
-
-    this.examService.getActiveExams().subscribe(exams => {
-      this.exams = exams;
-    });
-
+    
     this.examService.getMyAssignedExams().subscribe(exams => {
       this.assignedExams = exams;
+      this.exams = exams;
     });
-
-    /*if (this.currentUser) {
+    
+    /*
+        // this.examService.getActiveExams().subscribe(exams => {
+        //   this.exams = exams;
+        // });
+    if (this.currentUser) {
       this.examService.getUserAttempts().subscribe(attempts => {
         const completed = attempts.filter(a => a.status === 'completed');
         this.recentAttempts = completed.sort(

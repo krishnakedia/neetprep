@@ -138,7 +138,7 @@
         return `<tr>
           <td><div class="exam-info"><span class="exam-title">${e.title}</span><span class="exam-desc">${(e.description || '').substring(0, 50)}...</span></div></td>
           <td>${subject?.name || '-'}</td>
-          <td>${e.duration} min</td><td>${e.totalMarks}</td><td>${e.questionCount || 0}</td>
+          <td>${e.duration} min</td><td>${e.total_marks}</td><td>${e.questionCount || 0}</td>
           <td><span class="badge badge-${e.isActive ? 'success' : 'warning'}">${e.isActive ? 'Active' : 'Inactive'}</span></td>
           <td>${new Date(e.createdAt).toLocaleDateString()}</td>
           <td><div class="action-buttons">

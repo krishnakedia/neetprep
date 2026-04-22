@@ -9,8 +9,8 @@
       </div>
       <div class="stats-grid">
         <div class="stat-item"><i class="fas fa-check"></i><div class="stat-info"><span class="stat-value">{{ attempt.score }}</span><span class="stat-label">Correct Answers</span></div></div>
-        <div class="stat-item"><i class="fas fa-times"></i><div class="stat-info"><span class="stat-value">{{ attempt.totalMarks - attempt.score }}</span><span class="stat-label">Wrong Answers</span></div></div>
-        <div class="stat-item"><i class="fas fa-star"></i><div class="stat-info"><span class="stat-value">{{ attempt.totalMarks }}</span><span class="stat-label">Total Marks</span></div></div>
+        <div class="stat-item"><i class="fas fa-times"></i><div class="stat-info"><span class="stat-value">{{ attempt.total_marks - attempt.score }}</span><span class="stat-label">Wrong Answers</span></div></div>
+        <div class="stat-item"><i class="fas fa-star"></i><div class="stat-info"><span class="stat-value">{{ attempt.total_marks }}</span><span class="stat-label">Total Marks</span></div></div>
       </div>
       <div class="notes-section"><h3><i class="fas fa-sticky-note"></i> Add Notes (Optional)</h3><p>Share your thoughts about this exam</p><textarea class="input" [(ngModel)]="notes" placeholder="What did you learn? Any topics you want to review?" rows="3"></textarea><button class="btn btn-primary" (click)="saveNotes()" [disabled]="saving"><i class="fas fa-save"></i>{{ saving ? 'Saving...' : 'Save Notes' }}</button></div>
       <div class="action-buttons"><button class="btn btn-secondary" routerLink="/user"><i class="fas fa-home"></i>Go to Dashboard</button><button class="btn btn-primary" (click)="viewAnswers()"><i class="fas fa-eye"></i>View Answers</button></div>

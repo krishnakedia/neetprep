@@ -60,7 +60,7 @@
           <div class="exam-meta">
             <span><i class="fas fa-clock"></i> {{ exam.duration }} min</span>
             <span><i class="fas fa-question-circle"></i> {{ exam.questionCount || 0 }} Q</span>
-            <span><i class="fas fa-star"></i> {{ exam.totalMarks }} marks</span>
+            <span><i class="fas fa-star"></i> {{ exam.total_marks }} marks</span>
           </div>
           <div class="exam-actions">
             <button *ngIf="exam.is_active && (exam.questionCount || 0) > 0" 
@@ -114,7 +114,7 @@
           <div class="exam-meta">
             <span><i class="fas fa-clock"></i> {{ exam.duration }} min</span>
             <span><i class="fas fa-question-circle"></i> {{ exam.questionCount || 0 }} Q</span>
-            <span><i class="fas fa-star"></i> {{ exam.totalMarks }} marks</span>
+            <span><i class="fas fa-star"></i> {{ exam.total_marks }} marks</span>
           </div>
           <div class="exam-actions">
             <button *ngIf="exam.is_active && (exam.questionCount || 0) > 0" 
@@ -145,7 +145,7 @@
             <div class="score-badge" [class.high]="attempt.percentage >= 75" [class.medium]="attempt.percentage >= 50 && attempt.percentage < 75" [class.low]="attempt.percentage < 50">
               {{ attempt.percentage }}%
             </div>
-            <span class="score-detail">{{ attempt.score }}/{{ attempt.totalMarks }}</span>
+            <span class="score-detail">{{ attempt.score }}/{{ attempt.total_marks }}</span>
           </div>
         </div>
       </div>

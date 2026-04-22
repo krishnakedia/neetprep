@@ -32,7 +32,7 @@ export class ExamManagementComponent implements OnInit {
     subject_id: '',
     topicIds: [],
     duration: 30,
-    totalMarks: 50,
+    total_marks: 50,
     passingMarks: 25
   };
 
@@ -93,7 +93,7 @@ export class ExamManagementComponent implements OnInit {
       subject_id: '',
       topicIds: [],
       duration: 30,
-      totalMarks: 50,
+      total_marks: 50,
       passingMarks: 25
     };
     this.selectedSubject = null;

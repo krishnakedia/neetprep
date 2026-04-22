@@ -62,7 +62,7 @@ export interface Exam extends BaseEntity {
   chapterId?: string;
   topicIds: string[];
   duration: number;
-  totalMarks: number;
+  total_marks: number;
   passingMarks: number;
   isActive: boolean;
   questions?: Question[];
@@ -93,7 +93,7 @@ export interface ExamAttempt extends BaseEntity {
   startedAt: Date;
   completedAt?: Date;
   score: number;
-  totalMarks: number;
+  total_marks: number;
   percentage: number;
   status: 'in-progress' | 'completed';
   answers?: ExamAnswer[];

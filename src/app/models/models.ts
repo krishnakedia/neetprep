@@ -52,7 +52,7 @@ export interface Exam {
   chapterId?: string;
   topicIds: string[];
   duration: number;
-  totalMarks: number;
+  total_marks: number;
   passingMarks: number;
   is_active: boolean;
   createdAt: Date;
@@ -87,7 +87,7 @@ export interface ExamAttempt {
   startedAt: Date;
   completedAt?: Date;
   score: number;
-  totalMarks: number;
+  total_marks: number;
   percentage: number;
   status: string;
   answers?: ExamAnswer[];

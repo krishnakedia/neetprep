@@ -190,7 +190,7 @@
       c.innerHTML = completed.map(a => `
         <div class="exam-item">
           <div class="exam-info"><span class="exam-title">${a.examTitle}</span><span class="exam-date">${new Date(a.completedAt).toLocaleDateString()}</span></div>
-          <div style="text-align:center;"><div class="score-ring ${a.percentage >= 75 ? 'high' : a.percentage >= 50 ? 'medium' : 'low'}">${a.percentage}%</div><span class="score-detail">${a.score}/${a.totalMarks}</span></div>
+          <div style="text-align:center;"><div class="score-ring ${a.percentage >= 75 ? 'high' : a.percentage >= 50 ? 'medium' : 'low'}">${a.percentage}%</div><span class="score-detail">${a.score}/${a.total_marks}</span></div>
         </div>`).join('');
     }
 

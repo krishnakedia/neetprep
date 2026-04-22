@@ -197,7 +197,7 @@
             <div class="attempt-student"><div class="student-avatar-small"><i class="fas fa-user"></i></div><div><span class="student-name">${user?.name || 'User'}</span><span class="attempt-date">${new Date(a.completedAt).toLocaleDateString()}</span></div></div>
             <div class="attempt-score ${a.percentage >= 50 ? 'pass' : 'fail'}">${a.percentage}%</div>
           </div>
-          <div class="attempt-body"><span class="exam-title">${a.examTitle}</span><span class="score-detail">Score: ${a.score}/${a.totalMarks}</span></div>
+          <div class="attempt-body"><span class="exam-title">${a.examTitle}</span><span class="score-detail">Score: ${a.score}/${a.total_marks}</span></div>
         </div>`;
       }).join('');
     }

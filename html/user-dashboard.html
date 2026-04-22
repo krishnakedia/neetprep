@@ -167,7 +167,7 @@
         <div class="exam-card">
           <div class="exam-header"><h4>${e.title}</h4><span class="badge ${e.isActive ? 'badge-success' : 'badge-warning'}">${e.isActive ? 'Available' : 'Coming Soon'}</span></div>
           <p class="exam-description">${e.description || ''}</p>
-          <div class="exam-meta"><span><i class="fas fa-clock"></i> ${e.duration} min</span><span><i class="fas fa-question-circle"></i> ${e.questionCount || 0} Q</span><span><i class="fas fa-star"></i> ${e.totalMarks} marks</span></div>
+          <div class="exam-meta"><span><i class="fas fa-clock"></i> ${e.duration} min</span><span><i class="fas fa-question-circle"></i> ${e.questionCount || 0} Q</span><span><i class="fas fa-star"></i> ${e.total_marks} marks</span></div>
           <div class="exam-actions">
             ${e.isActive && (e.questionCount || 0) > 0 ? `<a href="08-exam.html?examId=${e.id}" class="btn btn-primary"><i class="fas fa-play"></i> Start Exam</a>` : 
             e.isActive ? '<button class="btn btn-secondary" disabled><i class="fas fa-info-circle"></i> No Questions</button>' : '<button class="btn btn-secondary" disabled><i class="fas fa-clock"></i> Not Available</button>'}
@@ -200,7 +200,7 @@
           <div class="attempt-info"><span class="attempt-exam">${a.examTitle}</span><span class="attempt-date">${new Date(a.completedAt).toLocaleDateString()}</span></div>
           <div style="display:flex;align-items:center;gap:12px;">
             <span class="score-badge ${a.percentage >= 75 ? 'high' : a.percentage >= 50 ? 'medium' : 'low'}">${a.percentage}%</span>
-            <span class="score-detail">${a.score}/${a.totalMarks}</span>
+            <span class="score-detail">${a.score}/${a.total_marks}</span>
           </div>
         </div>`).join('');
     }
