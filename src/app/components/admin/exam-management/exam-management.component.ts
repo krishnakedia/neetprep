@@ -30,10 +30,10 @@ export class ExamManagementComponent implements OnInit {
     title: '',
     description: '',
     subject_id: '',
-    topicIds: [],
+    topic_ids: [],
     duration: 30,
     total_marks: 50,
-    passingMarks: 25
+    passing_marks: 25
   };
 
   constructor(
@@ -91,10 +91,10 @@ export class ExamManagementComponent implements OnInit {
       title: '',
       description: '',
       subject_id: '',
-      topicIds: [],
+      topic_ids: [],
       duration: 30,
       total_marks: 50,
-      passingMarks: 25
+      passing_marks: 25
     };
     this.selectedSubject = null;
     this.showExamModal = true;
@@ -113,20 +113,20 @@ export class ExamManagementComponent implements OnInit {
   }
 
   toggleTopic(topicId: string): void {
-    if (!this.examForm.topicIds) {
-      this.examForm.topicIds = [];
+    if (!this.examForm.topic_ids) {
+      this.examForm.topic_ids = [];
     }
     
-    const index = this.examForm.topicIds.indexOf(topicId);
+    const index = this.examForm.topic_ids.indexOf(topicId);
     if (index === -1) {
-      this.examForm.topicIds.push(topicId);
+      this.examForm.topic_ids.push(topicId);
     } else {
-      this.examForm.topicIds.splice(index, 1);
+      this.examForm.topic_ids.splice(index, 1);
     }
   }
 
   isTopicSelected(topicId: string): boolean {
-    return this.examForm.topicIds?.includes(topicId) || false;
+    return this.examForm.topic_ids?.includes(topicId) || false;
   }
 
   saveExam(): void {

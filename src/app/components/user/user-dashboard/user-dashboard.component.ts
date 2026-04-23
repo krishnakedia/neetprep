@@ -18,40 +18,34 @@ export class UserDashboardComponent implements OnInit {
   exams: Exam[] = [];
   assignedExams: Exam[] = [];
   recentAttempts: ExamAttempt[] = [];
-  selectedSubjectForExams: Subject | null = null;
-  
+  selectedSubjectForExams: Subject | null = null;  
   stats = {
     completed: 0,
     average: 0,
     best: 0
   };
-
   constructor(
     private authService: AuthService,
     private examService: ExamService,
     private subjectService: SubjectService,
     private router: Router
   ) {}
-
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     this.loadData();
   }
-
   loadData(): void {
     this.subjectService.getSubjects().subscribe(subjects => {
       this.subjects = subjects.filter(s => s.is_active);
-    });
-    
+    });    
     this.examService.getMyAssignedExams().subscribe(exams => {
-      this.assignedExams = exams;
+      // this.assignedExams = exams;
+      this.exams = exams;
+    });    
+    /*
+    this.examService.getActiveExams().subscribe(exams => {
       this.exams = exams;
     });
-    
-    /*
-        // this.examService.getActiveExams().subscribe(exams => {
-        //   this.exams = exams;
-        // });
     if (this.currentUser) {
       this.examService.getUserAttempts().subscribe(attempts => {
         const completed = attempts.filter(a => a.status === 'completed');

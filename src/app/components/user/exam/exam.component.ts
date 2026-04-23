@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
 import { AuthService } from '../../../services/auth.service';
 import { BookmarkService } from '../../../services/bookmark.service';
-import { Exam, Question, ExamAttempt, ExamAnswer } from '../../../models/models';
+import { Exam, Question, ExamAnswer } from '../../../models/models';
 
 @Component({
   selector: 'app-exam',
@@ -33,6 +33,7 @@ export class ExamComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private bookmarkService: BookmarkService,
     private route: ActivatedRoute,
+    private cd: ChangeDetectorRef,
     private router: Router
   ) {}
 
@@ -73,9 +74,11 @@ export class ExamComponent implements OnInit, OnDestroy {
   startTimer(): void {
     this.timer = setInterval(() => {
       this.timeRemaining--;
+      console.log(this.timeRemaining);
       if (this.timeRemaining <= 0) {
         this.submitExam();
       }
+      this.cd.detectChanges();
     }, 1000);
   }
 

@@ -16,13 +16,13 @@
       </button>
     </div>
   </header>
-  
+
   <main class="user-main">
     <div class="welcome-section">
       <h1>Welcome, {{ currentUser?.name }}!</h1>
       <p>Choose a subject to start your practice</p>
     </div>
-    
+
     <div class="stats-row">
       <div class="stat-box">
         <i class="fas fa-check-circle"></i>
@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- <div class="assigned-section" *ngIf="assignedExams.length > 0">
       <h2><i class="fas fa-user-check"></i> Assigned Exams</h2>
       <p class="section-subtitle">Exams assigned by your instructor</p>
@@ -75,7 +75,7 @@
         </div>
       </div>
     </div> -->
-    
+
     <div class="subjects-section">
       <h2>Available Subjects</h2>
       <div class="subjects-grid">
@@ -94,7 +94,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="exams-section" *ngIf="selectedSubjectForExams">
       <div class="section-header">
         <h2>{{ selectedSubjectForExams.name }} - Available Exams</h2>
@@ -113,26 +113,24 @@
           <p class="exam-description">{{ exam.description }}</p>
           <div class="exam-meta">
             <span><i class="fas fa-clock"></i> {{ exam.duration }} min</span>
-            <span><i class="fas fa-question-circle"></i> {{ exam.questionCount || 0 }} Q</span>
+            <span><i class="fas fa-question-circle"></i> {{ exam.total_questions }} Q</span>
             <span><i class="fas fa-star"></i> {{ exam.total_marks }} marks</span>
           </div>
           <div class="exam-actions">
-            <button *ngIf="exam.is_active && (exam.questionCount || 0) > 0" 
-              class="btn btn-primary" 
-              (click)="startExam(exam)">
+            <button *ngIf="exam?.is_active && (exam?.total_questions || 0) > 0; else otherState" class="btn btn-primary" (click)="startExam(exam)">
               <i class="fas fa-play"></i> Start Exam
             </button>
-            <button *ngIf="!exam.is_active" class="btn btn-secondary" disabled>
-              <i class="fas fa-clock"></i> Not Available
-            </button>
-            <button *ngIf="exam.is_active && (exam.questionCount || 0) === 0" class="btn btn-secondary" disabled>
-              <i class="fas fa-info-circle"></i> No Questions
-            </button>
+            <ng-template #otherState>
+              <button class="btn btn-secondary" disabled>
+                <i class="fas fa-info-circle"></i>
+                {{ !exam?.is_active  ? 'Not Available' : 'No Questions' }}
+              </button>
+            </ng-template>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="recent-section" *ngIf="recentAttempts.length > 0">
       <h2>Recent Attempts</h2>
       <div class="attempts-list">
@@ -142,7 +140,9 @@
             <span class="attempt-date">{{ attempt.completedAt | date:'medium' }}</span>
           </div>
           <div class="attempt-result">
-            <div class="score-badge" [class.high]="attempt.percentage >= 75" [class.medium]="attempt.percentage >= 50 && attempt.percentage < 75" [class.low]="attempt.percentage < 50">
+            <div class="score-badge" [class.high]="attempt.percentage >= 75"
+              [class.medium]="attempt.percentage >= 50 && attempt.percentage < 75"
+              [class.low]="attempt.percentage < 50">
               {{ attempt.percentage }}%
             </div>
             <span class="score-detail">{{ attempt.score }}/{{ attempt.total_marks }}</span>

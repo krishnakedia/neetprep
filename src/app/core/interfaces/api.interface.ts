@@ -60,10 +60,10 @@ export interface Exam extends BaseEntity {
   description: string;
   subject_id: string;
   chapterId?: string;
-  topicIds: string[];
+  topic_ids: string[];
   duration: number;
   total_marks: number;
-  passingMarks: number;
+  passing_marks: number;
   isActive: boolean;
   questions?: Question[];
   questionCount?: number;

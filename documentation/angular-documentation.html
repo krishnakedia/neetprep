@@ -760,10 +760,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   description: string;
   subjectId: string;
   chapterId?: string;       // Optional chapter association
-  topicIds: string[];
+  topic_ids: string[];
   duration: number;          // In minutes
   total_marks: number;
-  passingMarks: number;
+  passing_marks: number;
   isActive: boolean;
   createdAt: Date;
   questions?: Question[];

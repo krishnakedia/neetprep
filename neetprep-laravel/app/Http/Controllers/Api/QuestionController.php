@@ -12,7 +12,7 @@ class QuestionController extends Controller
 {
     public function index(string $examId): JsonResponse
     {
-        $questions = Question::where('exam_id', $examId)->get();
+        $questions = Question::where('exam_id', $examId)->get(['difficulty','exam_id','id','marks','ncert','option_a','option_b','option_c','option_d','question_text','question_type','year']);
 
         return response()->json([
             'success' => true,

@@ -50,13 +50,14 @@ export interface Exam {
   description: string;
   subject_id: string;
   chapterId?: string;
-  topicIds: string[];
+  topic_ids: string[];
   duration: number;
   total_marks: number;
-  passingMarks: number;
+  passing_marks: number;
   is_active: boolean;
   createdAt: Date;
   questions?: Question[];
+  total_questions: number;
   questionCount?: number;
   subject?: Subject;
   chapter?: Chapter;
