@@ -34,7 +34,7 @@
                 <td>{{ getSubjectName(exam.subject_id) }}</td>
                 <td>{{ exam.duration }} min</td>
                 <td>{{ exam.total_marks }}</td>
-                <td>{{ exam.questionCount || 0 }}</td>
+                <td>{{ exam.total_questions || 0 }}</td>
                 <td><span class="badge" [class.badge-success]="exam.is_active" [class.badge-warning]="!exam.is_active">{{ exam.is_active ? 'Active' : 'Inactive' }}</span></td>
                 <td>{{ exam.createdAt | date:'mediumDate' }}</td>
                 <td>

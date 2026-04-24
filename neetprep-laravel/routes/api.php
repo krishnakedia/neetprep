@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
+Route::get('/', [AuthController::class, 'demo']);
 Route::get('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);

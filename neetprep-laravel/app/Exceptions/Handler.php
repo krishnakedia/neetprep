@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthenticated. Please login.'
+                'message' => 'AA Unauthenticated. Please login.'
             ], 401);
         }
 

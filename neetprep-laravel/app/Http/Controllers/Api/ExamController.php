@@ -14,7 +14,7 @@ class ExamController extends Controller
 {
     public function index(): JsonResponse
     {
-        $exams = Exam::get();
+        $exams = Exam::with(['topics:name'])->withCount(['questions as total_questions'])->get();
 
         return response()->json([
             'success' => true,
@@ -97,7 +97,7 @@ class ExamController extends Controller
 
     public function show(string $id): JsonResponse
     {
-        $exam = Exam::with([ 'topics'])->find($id);
+        $exam = Exam::with([ 'topics','questions'])->find($id);
 
         if (!$exam) {
             return response()->json([

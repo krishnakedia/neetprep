@@ -47,7 +47,7 @@ class Exam extends Model
 
     public function topics()
     {
-        return $this->belongsToMany(Topic::class, 'exam_topic');
+        return $this->belongsToMany(Topic::class, 'exam_topic', 'exam_id', 'topic_id');
     }
 
     public function attempts()

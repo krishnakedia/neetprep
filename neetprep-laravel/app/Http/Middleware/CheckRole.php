@@ -15,6 +15,7 @@ class CheckRole
         if (!$user) {
             return response()->json([
                 'success' => false,
+                'user' => $user,
                 'message' => 'Unauthenticated'
             ], 401);
         }

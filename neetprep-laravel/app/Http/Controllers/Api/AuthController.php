@@ -6,12 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    public function demo(): JsonResponse
+    {
+        Artisan::call('optimize:clear');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Optimization cache cleared successfully',
+            'output' => Artisan::output()
+        ]);
+    }
     public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
