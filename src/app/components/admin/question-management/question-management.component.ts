@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
 import { Exam, Question } from '../../../models/models';
+import { SidebarComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-question-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './question-management.component.html',
   styleUrls: ['./question-management.component.css']
 })

@@ -1,26 +1,5 @@
 <div class="admin-layout">
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="logo"><i class="fas fa-graduation-cap"></i></div>
-      <h2>NEET Prep</h2>
-    </div>
-    <nav class="sidebar-nav">
-      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i
-          class="fas fa-home"></i><span>Dashboard</span></a>
-      <a routerLink="/admin/users" routerLinkActive="active"><i class="fas fa-users"></i><span>Users</span></a>
-      <a routerLink="/admin/subjects" routerLinkActive="active"><i class="fas fa-book"></i><span>Subjects</span></a>
-      <a routerLink="/admin/exams" routerLinkActive="active"><i class="fas fa-file-alt"></i><span>Exams</span></a>
-      <a routerLink="/admin/performance" routerLinkActive="active"><i
-          class="fas fa-chart-bar"></i><span>Performance</span></a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="user-info">
-        <div class="user-avatar"><i class="fas fa-user-shield"></i></div>
-        <div class="user-details"><span class="user-name">Admin User</span><span class="user-role">Administrator</span>
-        </div>
-      </div><button class="btn btn-logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button>
-    </div>
-  </aside>
+  <app-sidebar></app-sidebar>
   <main class="main-content">
     <header class="top-header">
       <div class="header-left"><a routerLink="/admin/exams" class="back-link"><i class="fas fa-arrow-left"></i></a>
@@ -123,10 +102,6 @@
             placeholder="e.g., 2024" min="2000" max="2030"></div>
         <div class="form-group"><label>Question Type</label>
           <select class="input" [(ngModel)]="questionForm.question_type">
-            <!-- <option value="theory">Theory</option>
-            <option value="numerical">Numerical</option>
-            <option value="diagram">Diagram Based</option>
-            <option value="assertion_reason">Assertion Reason</option> -->
             <option value="multiple_correct">Multiple Correct</option>
           </select></div>
       </div>

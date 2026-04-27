@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { SubjectService } from '../../../services/subject.service';
 import { Subject, Topic } from '../../../models/models';
+import { SidebarComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-subject-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './subject-management.component.html',
   styleUrls: ['./subject-management.component.css']
 })

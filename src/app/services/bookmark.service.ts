@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Question } from '../models/models';
+import { environment } from '../../environments/environment';
 
 export interface Bookmark {
   id: string;
@@ -15,7 +16,7 @@ export interface Bookmark {
 })
 export class BookmarkService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private apiUrl = environment.apiUrl;
 
   getBookmarks(): Observable<Bookmark[]> {
     return this.http.get<{ success: boolean; bookmarks: Bookmark[] }>(`${this.apiUrl}/bookmarks`).pipe(

@@ -1,0 +1,108 @@
+.user-header {
+  background: white;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.user-header.gradient-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+.user-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.user-header .header-left .logo {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-header .header-left .logo i {
+  font-size: 20px;
+  color: white;
+}
+.user-header .header-left .logo-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+.user-header .header-left h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+.user-header .header-nav {
+  display: flex;
+  gap: 8px;
+}
+.user-header .header-nav a {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.user-header .header-nav a:hover, 
+.user-header .header-nav a.active {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+.user-header .header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.user-header .header-right .user-info {
+  text-align: right;
+}
+.user-header .header-right .user-name {
+  display: block;
+  font-weight: 500;
+  color: #111827;
+}
+.user-header .header-right .user-email {
+  font-size: 12px;
+  color: #9ca3af;
+}
+.user-header .btn-logout {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-header .btn-logout:hover {
+  background: #fecaca;
+}
+.gradient-header .btn-logout {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+.gradient-header .btn-logout:hover {
+  background: rgba(255,255,255,0.3);
+}
+.gradient-header .user-name,
+.gradient-header .user-email {
+  color: white;
+}
+.gradient-header .header-right .user-info .user-name {
+  color: white;
+}

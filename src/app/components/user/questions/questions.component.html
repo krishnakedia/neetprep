@@ -1,9 +1,5 @@
 <div class="user-layout">
-  <header class="user-header">
-    <div class="header-left"><div class="logo"><i class="fas fa-graduation-cap"></i></div><h1>NEET Prep</h1></div>
-    <nav class="header-nav"><a routerLink="/user" routerLinkActive="active">Dashboard</a><a routerLink="/user/questions" routerLinkActive="active">Questions</a></nav>
-    <div class="header-right"><button class="btn btn-logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i></button></div>
-  </header>
+  <app-header [showNav]="true" [useGradient]="true"></app-header>
   <main class="user-main">
     <div class="questions-page">
       <div class="page-header"><h1>Question Bank</h1><p>Practice questions with filters</p></div>

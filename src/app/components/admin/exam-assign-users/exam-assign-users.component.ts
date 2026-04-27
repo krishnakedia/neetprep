@@ -5,11 +5,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
 import { AuthService } from '../../../services/auth.service';
 import { Exam, User } from '../../../models/models';
+import { SidebarComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-exam-assign-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './exam-assign-users.component.html',
   styleUrls: ['./exam-assign-users.component.css']
 })

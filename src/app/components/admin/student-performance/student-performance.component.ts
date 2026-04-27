@@ -5,11 +5,12 @@ import { Router, RouterModule } from '@angular/router';
 import { ExamService } from '../../../services/exam.service';
 import { AuthService } from '../../../services/auth.service';
 import { ExamAttempt, User } from '../../../models/models';
+import { SidebarComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-student-performance',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './student-performance.component.html',
   styleUrls: ['./student-performance.component.css']
 })

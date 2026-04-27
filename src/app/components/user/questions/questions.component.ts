@@ -5,11 +5,12 @@ import { Router, RouterModule } from '@angular/router';
 import { SubjectService } from '../../../services/subject.service';
 import { ExamService } from '../../../services/exam.service';
 import { Subject, Chapter, Question } from '../../../models/models';
+import { HeaderComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-questions-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, HeaderComponent],
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css']
 })

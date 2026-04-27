@@ -1,0 +1,17 @@
+.sidebar { width: 260px; background: linear-gradient(180deg, #1f2937 0%, #111827 100%); color: white; display: flex; flex-direction: column; position: fixed; height: 100vh; }
+.sidebar-header { padding: 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.sidebar-header .logo { width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.sidebar-header .logo i { font-size: 20px; color: white; }
+.sidebar-header h2 { font-size: 18px; font-weight: 600; margin: 0; }
+.sidebar-nav { flex: 1; padding: 16px 0; }
+.sidebar-nav a { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: rgba(255, 255, 255, 0.7); transition: all 0.2s; font-size: 14px; text-decoration: none; }
+.sidebar-nav a:hover { background: rgba(255, 255, 255, 0.1); color: white; }
+.sidebar-nav a.active { background: rgba(255, 255, 255, 0.1); color: white; border-left: 3px solid #667eea; padding-left: 21px; }
+.sidebar-nav a i { width: 20px; text-align: center; }
+.sidebar-footer { padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.sidebar-footer .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.sidebar-footer .user-avatar { width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.sidebar-footer .user-avatar i { color: rgba(255, 255, 255, 0.8); }
+.sidebar-footer .user-details { display: flex; flex-direction: column; }
+.sidebar-footer .user-name { font-size: 14px; font-weight: 500; }
+.sidebar-footer .user-role { font-size: 12px; color: rgba(255, 255, 255, 0.5); }

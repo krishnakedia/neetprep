@@ -5,10 +5,12 @@ import { AuthService } from '../../../services/auth.service';
 import { ExamService } from '../../../services/exam.service';
 import { SubjectService } from '../../../services/subject.service';
 import { Exam, Subject, ExamAttempt, User } from '../../../models/models';
+import { HeaderComponent } from '../../../shared/components';
+
 @Component({
   selector: 'app-user-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HeaderComponent],
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.css']
 })

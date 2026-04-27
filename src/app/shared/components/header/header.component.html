@@ -1,0 +1,28 @@
+<header class="user-header" [class.gradient-header]="useGradient">
+  <div class="header-left">
+    <div class="logo">
+      <i class="fas fa-graduation-cap"></i>
+    </div>
+    <ng-container *ngIf="!showNav">
+      <span class="logo-text">NEET Prep</span>
+    </ng-container>
+    <ng-container *ngIf="showNav">
+      <h1>NEET Prep</h1>
+    </ng-container>
+  </div>
+  
+  <nav class="header-nav" *ngIf="showNav">
+    <a routerLink="/user" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/user/questions" routerLinkActive="active">Questions</a>
+  </nav>
+  
+  <div class="header-right">
+    <div class="user-info" *ngIf="!showNav">
+      <span class="user-name">{{ currentUser?.name }}</span>
+      <span class="user-email">{{ currentUser?.email }}</span>
+    </div>
+    <button class="btn btn-logout" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+</header>
