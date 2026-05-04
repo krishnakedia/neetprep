@@ -2,7 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./neet-prep/app",
-    "types": []
+    "types": [],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
   "files": ["src/main.ts"],
   "include": ["src/**/*.d.ts"]

@@ -181,7 +181,7 @@ export class PublicHomeComponent implements OnInit {
 
   selectAnswer(questionId: string, answer: string): void {
     if (!this.isLoggedIn) {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: '/questions' } });
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/' } });
       return;
     }
     this.selectedAnswer[questionId] = answer;

@@ -2,8 +2,9 @@ import { Routes } from '@angular/router';
 import { AuthGuard, AdminGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
+  { path: '', redirectTo: '/questions', pathMatch: 'full' },
   {
-    path: '',
+    path: 'questions',
     loadComponent: () => import('./components/public/home/home.component').then(m => m.PublicHomeComponent)
   },
   {
