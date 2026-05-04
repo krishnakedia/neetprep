@@ -95,6 +95,12 @@ export class SubjectService {
     );
   }
 
+  getTopicsByChapter(chapter_id: string): Observable<Topic[]> {
+    return this.http.get<{ success: boolean; topics: Topic[] }>(`${this.apiUrl}/chapters/${chapter_id}/topics`).pipe(
+      map(res => res.topics || [])
+    );
+  }
+
   getTopicById(subject_id: string, id: string): Observable<Topic> {
     return this.http.get<{ success: boolean; topic: Topic }>(`${this.apiUrl}/subjects/${subject_id}/topics/${id}`).pipe(
       map(res => res.topic)

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
@@ -19,7 +19,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   fillCredentials(email: string, password: string): void {
@@ -40,7 +41,10 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
         this.loading = false;
-        if (response.user.role === 'admin') {
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || null;
+        if (returnUrl) {
+          this.router.navigateByUrl(returnUrl);
+        } else if (response.user.role === 'admin') {
           this.router.navigate(['/admin']);
         } else {
           this.router.navigate(['/user']);

@@ -80,6 +80,30 @@ export interface Question {
   createdAt: Date;
 }
 
+export interface PublicQuestion {
+  id: string;
+  subject_id: string;
+  chapter_id?: string;
+  topic_id?: string;
+  question_text: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_answer: 'A' | 'B' | 'C' | 'D';
+  explanation?: string;
+  marks: number;
+  ncert?: 'yes' | 'no';
+  difficulty?: 'easy' | 'medium' | 'hard';
+  year?: number;
+  question_type?: 'theory' | 'numerical' | 'diagram' | 'assertion_reason' | 'multiple_correct';
+  is_active: boolean;
+  createdAt: Date;
+  subject?: Subject;
+  chapter?: Chapter;
+  topic?: Topic;
+}
+
 export interface ExamAttempt {
   id: string;
   userId: string;
@@ -116,4 +140,25 @@ export interface PerformanceStats {
 export interface AuthResponse {
   user: User;
   token: string;
+}
+
+export interface PublicQuestionFilter {
+  subject_id?: string;
+  chapter_id?: string;
+  topic_id?: string;
+  ncert?: string;
+  difficulty?: string;
+  year?: number | string;
+  question_type?: string;
+  search?: string;
+  page?: number;
+  per_page?: number;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
 }

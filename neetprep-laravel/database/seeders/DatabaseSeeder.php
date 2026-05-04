@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Chapter;
 use App\Models\Exam;
 use App\Models\Question;
 use App\Models\Subject;
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin User',
             'email' => 'admin@neetprep.com',
             'password' => Hash::make('admin123'),
+            'vpass' => 'admin123',
             'role' => 'admin',
             'is_active' => true,
         ]);
@@ -28,6 +30,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'John Student',
             'email' => 'john@neetprep.com',
             'password' => Hash::make('user123'),
+            'vpass' => 'user123',
             'role' => 'user',
             'is_active' => true,
         ]);
@@ -36,6 +39,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Jane Doe',
             'email' => 'jane@neetprep.com',
             'password' => Hash::make('user123'),
+            'vpass' => 'user123',
             'role' => 'user',
             'is_active' => false,
         ]);
@@ -44,6 +48,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Alex Smith',
             'email' => 'alex@neetprep.com',
             'password' => Hash::make('user123'),
+            'vpass' => 'user123',
             'role' => 'user',
             'is_active' => true,
         ]);

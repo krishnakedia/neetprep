@@ -2,15 +2,29 @@ import { Routes } from '@angular/router';
 import { AuthGuard, AdminGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/questions', pathMatch: 'full' },
+  {
+    path: 'questions',
+    loadComponent: () => import('./components/public/home/home.component').then(m => m.PublicHomeComponent)
+  },
   {
     path: 'login',
     loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
   },
   {
+    path: 'questions',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./components/public/home/home.component').then(m => m.PublicHomeComponent)
+  },
+  {
     path: 'admin',
     canActivate: [AuthGuard, AdminGuard],
     loadComponent: () => import('./components/admin/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
+  },
+  {
+    path: 'admin/public-questions',
+    canActivate: [AuthGuard, AdminGuard],
+    loadComponent: () => import('./components/admin/public-questions/public-questions.component').then(m => m.PublicQuestionsComponent)
   },
   {
     path: 'admin/users',

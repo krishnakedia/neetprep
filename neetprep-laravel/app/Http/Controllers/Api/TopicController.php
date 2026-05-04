@@ -20,6 +20,16 @@ class TopicController extends Controller
         ]);
     }
 
+    public function byChapter(string $chapterId): JsonResponse
+    {
+        $topics = Topic::where('chapter_id', $chapterId)->where('is_active', true)->get();
+
+        return response()->json([
+            'success' => true,
+            'topics' => $topics
+        ]);
+    }
+
     public function store(Request $request, string $subjectId): JsonResponse
     {
         $validator = Validator::make($request->all(), [

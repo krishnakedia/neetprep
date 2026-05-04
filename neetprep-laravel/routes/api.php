@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ChapterController;
 use App\Http\Controllers\Api\ExamAttemptController;
 use App\Http\Controllers\Api\ExamController;
 use App\Http\Controllers\Api\QuestionController;
+use App\Http\Controllers\Api\PublicQuestionController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
@@ -16,6 +17,27 @@ Route::get('/', [AuthController::class, 'demo']);
 Route::get('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
+
+// Public Questions - accessible to all
+Route::get('/public-questions', [PublicQuestionController::class, 'index']);
+Route::get('/public-questions/{id}', [PublicQuestionController::class, 'show']);
+Route::post('/public-questions', [PublicQuestionController::class, 'store']);
+Route::put('/public-questions/{id}', [PublicQuestionController::class, 'update']);
+
+// Subjects - public access
+Route::get('/subjects', [SubjectController::class, 'index']);
+Route::get('/subjects/active', [SubjectController::class, 'active']);
+Route::get('/subjects/{id}', [SubjectController::class, 'show']);
+
+// Chapters - public access
+Route::get('/chapters', [ChapterController::class, 'all']);
+Route::get('/subjects/{subjectId}/chapters', [ChapterController::class, 'index']);
+Route::get('/chapters/{id}', [ChapterController::class, 'show']);
+
+// Topics - public access
+Route::get('/subjects/{subjectId}/topics', [TopicController::class, 'index']);
+Route::get('/subjects/{subjectId}/topics/{id}', [TopicController::class, 'show']);
+Route::get('/chapters/{chapterId}/topics', [TopicController::class, 'byChapter']);
 
 // Protected routes
 Route::middleware('auth:api')->group(function () {
@@ -108,5 +130,11 @@ Route::middleware('auth:api')->group(function () {
         // Performance
         Route::get('/admin/performance', [ExamAttemptController::class, 'allAttempts']);
         Route::get('/admin/performance/student/{userId}', [ExamAttemptController::class, 'studentPerformance']);
+
+        // Public Questions management
+        Route::post('/admin/public-questions', [PublicQuestionController::class, 'store']);
+        Route::put('/admin/public-questions/{id}', [PublicQuestionController::class, 'update']);
+        Route::delete('/admin/public-questions/{id}', [PublicQuestionController::class, 'destroy']);
+        Route::post('/admin/public-questions/{id}/toggle', [PublicQuestionController::class, 'toggleStatus']);
     });
 });

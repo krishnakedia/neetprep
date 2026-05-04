@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://demo.kashiad.com/neet-prep/neetprep-laravel/api'
+  apiUrl: 'https://official.janch.co.in/neetprep/neetprep-laravel/api'
 };
