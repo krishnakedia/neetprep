@@ -1,4 +1,4 @@
--- MySQL Database Setup for NEET Prep
+-- MySQL Database Setup for Gyan Vikash
 -- Run this in MySQL command line or phpMyAdmin
 
 -- Create database

@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Project Overview
-Laravel 11 REST API for NEET Prep Online Examination Portal.
+Laravel 11 REST API for Gyan Vikash Online Examination Portal.
 
 ## Setup Commands
 ```bash

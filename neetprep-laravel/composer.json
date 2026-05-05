@@ -1,7 +1,7 @@
 {
     "name": "neetprep/backend",
     "type": "project",
-    "description": "NEET Prep Backend API",
+    "description": "Gyan Vikash Backend API",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {

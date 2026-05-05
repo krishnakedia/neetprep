@@ -1,6 +1,6 @@
-# NEET Prep Backend API (MySQL)
+# Gyan Vikash Backend API (MySQL)
 
-Laravel-based REST API for the NEET Prep Online Examination Portal.
+Laravel-based REST API for the Gyan Vikash Online Examination Portal.
 
 ## Requirements
 

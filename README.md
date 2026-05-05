@@ -1,6 +1,6 @@
-# NEET Prep - Online Examination Portal
+# Gyan Vikash - Online Examination Portal
 
-A comprehensive Angular-based online examination system for NEET preparation.
+A comprehensive Angular-based online examination system for Gyan Vikasharation.
 
 ## Features
 

@@ -13,10 +13,8 @@ import { User } from '../../../models/models';
 })
 export class HeaderComponent {
   @Input() showNav: boolean = false;
-  @Input() useGradient: boolean = false;
-  
+  @Input() useGradient: boolean = false;  
   currentUser: User | null = null;
-
   constructor(
     private authService: AuthService,
     private router: Router

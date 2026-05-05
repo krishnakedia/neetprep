@@ -1,36 +1,10 @@
 <div class="public-layout">
-  <header class="public-header">
-    <div class="header-container">
-      <a routerLink="/questions" class="logo">
-        <i class="fas fa-graduation-cap"></i>
-        <span>NEET Prep</span>
-      </a>
-      <nav class="header-nav">
-        <a routerLink="/questions" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Questions</a>
-        <a routerLink="/questions/practice" routerLinkActive="active">Practice</a>
-        <a routerLink="/questions/mock-tests" routerLinkActive="active">Mock Tests</a>
-      </nav>
-      <div class="user-menu" *ngIf="currentUser">
-        <div class="user-info">
-          <span class="user-name">{{ currentUser.name }}</span>
-          <span class="user-email">{{ currentUser.email }}</span>
-        </div>
-        <button class="btn btn-outline btn-sm" (click)="logout()">Logout</button>
-      </div>
-      <a *ngIf="!currentUser" routerLink="/login" class="btn btn-primary btn-sm">Login</a>
-    </div>
-  </header>
+  <app-header [showNav]="true" [useGradient]="true"></app-header>
 
   <main class="public-main">
     <div class="hero-section">
       <h1>NEET PYQs & Practice Questions</h1>
       <p>Practice thousands of questions from previous year exams</p>
-      
-      <!-- <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" [(ngModel)]="filters.search" (keyup.enter)="applyFilters()" placeholder="Search questions...">
-        <button class="btn btn-primary" (click)="applyFilters()">Search</button>
-      </div> -->
     </div>
 
     <div class="content-wrapper">
@@ -39,15 +13,11 @@
           <h3>Filters</h3>
           <button class="btn btn-sm btn-outline" (click)="resetFilters()">Reset All</button>
         </div>
-        <button class="close-filters" (click)="toggleFilters()">
-          <i class="fas fa-times"></i>
-        </button>
-
         <div class="filter-section">
           <h4>Subject</h4>
           <select class="input" [(ngModel)]="filters.subject_id" (change)="onSubjectChange()">
             <option value="">All Subjects</option>
-            <option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option>
+            <option *ngFor="let subject of subjects" [value]="subject.id"> {{ subject.name }}</option>
           </select>
         </div>
 
@@ -62,8 +32,8 @@
         <div class="filter-section">
           <h4>NCERT</h4>
           <label class="checkbox-label">
-            <input type="checkbox" [(ngModel)]="filters.ncert" [value]="'yes'" (change)="applyFilters()">
-            <span>NCERT Questions Only</span>
+            <input type="checkbox" [(ngModel)]="filters.ncert" [value]="'yes'" (change)="applyFilters()"> &nbsp; 
+            <span> NCERT Questions Only</span>
           </label>
         </div>
 
@@ -72,19 +42,19 @@
           <div class="difficulty-filters">
             <label class="radio-label">
               <input type="radio" name="difficulty" [(ngModel)]="filters.difficulty" value="" (change)="applyFilters()">
-              <span>All</span>
-            </label>
+               <span> All</span>
+            </label> &nbsp;
             <label class="radio-label">
               <input type="radio" name="difficulty" [(ngModel)]="filters.difficulty" value="easy" (change)="applyFilters()">
-              <span class="badge badge-easy">Easy</span>
-            </label>
+              <span class="badge badge-easy"> Easy</span>
+            </label> &nbsp;
             <label class="radio-label">
               <input type="radio" name="difficulty" [(ngModel)]="filters.difficulty" value="medium" (change)="applyFilters()">
-              <span class="badge badge-medium">Medium</span>
-            </label>
+              <span class="badge badge-medium"> Medium</span>
+            </label> &nbsp;
             <label class="radio-label">
               <input type="radio" name="difficulty" [(ngModel)]="filters.difficulty" value="hard" (change)="applyFilters()">
-              <span class="badge badge-hard">Hard</span>
+              <span class="badge badge-hard"> Hard</span>
             </label>
           </div>
         </div>
@@ -109,9 +79,6 @@
       <div class="questions-section">
         <div class="results-header">
           <span class="results-count">{{ totalQuestions }} Questions Found</span>
-          <button class="btn btn-sm btn-outline mobile-filter-btn" (click)="toggleFilters()">
-            <i class="fas fa-filter"></i> Filters
-          </button>
         </div>
 
         <div class="questions-list" *ngIf="questions.length > 0">
@@ -119,14 +86,12 @@
             <div class="question-header">
               <span class="question-number">Q{{ (currentPage - 1) * perPage + i + 1 }}</span>
               <div class="question-badges">
-                <span class="badge" [class]="getDifficultyClass(question.difficulty)">{{ question.difficulty }}</span>
-                <span class="badge badge-info" *ngIf="question.ncert === 'yes'">NCERT</span>
+                <span class="badge" [class]="getDifficultyClass(question.difficulty)"> {{ question.difficulty }}</span> &nbsp;
+                <span class="badge badge-info" *ngIf="question.ncert === 'yes'"> NCERT</span> &nbsp;
                 <span class="badge badge-gray" *ngIf="question.year">{{ question.year }}</span>
               </div>
-            </div>
-            
-            <p class="question-text">{{ question.question_text }}</p>
-            
+            </div>            
+            <p class="question-text">{{ question.question_text }}</p>            
             <div class="options-list">
               <button 
                 class="option-btn" 
@@ -216,6 +181,6 @@
   </main>
 
   <footer class="public-footer">
-    <p>&copy; 2026 NEET Prep. All rights reserved.</p>
+    <p>&copy; 2026 Gyan Vikash. All rights reserved.</p>
   </footer>
 </div>

@@ -1,28 +1,21 @@
-<header class="user-header" [class.gradient-header]="useGradient">
-  <div class="header-left">
-    <div class="logo">
-      <i class="fas fa-graduation-cap"></i>
+<header class="public-header">
+    <div class="header-container">
+      <a routerLink="/questions" class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Gyan Vikash</span>
+      </a>
+      <nav class="header-nav">
+        <a routerLink="/questions" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Practice</a>
+        <!-- <a routerLink="/questions/practice" routerLinkActive="active">Questions</a> -->
+        <a routerLink="/user" routerLinkActive="active">Mock Tests</a>
+      </nav>
+      <div class="user-menu" *ngIf="currentUser">
+        <div class="user-info">
+          <span class="user-name">{{ currentUser.name }}</span>
+          <span class="user-email">{{ currentUser.email }}</span>
+        </div>
+        <button class="btn btn-outline btn-sm" (click)="logout()">Logout</button>
+      </div>
+      <a *ngIf="!currentUser" routerLink="/login" class="btn btn-primary btn-sm">Login</a>
     </div>
-    <ng-container *ngIf="!showNav">
-      <span class="logo-text">NEET Prep</span>
-    </ng-container>
-    <ng-container *ngIf="showNav">
-      <h1>NEET Prep</h1>
-    </ng-container>
-  </div>
-  
-  <nav class="header-nav" *ngIf="showNav">
-    <a routerLink="/user" routerLinkActive="active">Dashboard</a>
-    <a routerLink="/user/questions" routerLinkActive="active">Questions</a>
-  </nav>
-  
-  <div class="header-right">
-    <div class="user-info" *ngIf="!showNav">
-      <span class="user-name">{{ currentUser?.name }}</span>
-      <span class="user-email">{{ currentUser?.email }}</span>
-    </div>
-    <button class="btn btn-logout" (click)="logout()">
-      <i class="fas fa-sign-out-alt"></i>
-    </button>
-  </div>
-</header>
+  </header>

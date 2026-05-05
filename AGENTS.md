@@ -1,4 +1,4 @@
-# NEET Prep
+# Gyan Vikash
 
 Angular 21 frontend + Laravel 11 backend (monorepo).
 

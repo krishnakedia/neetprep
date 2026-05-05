@@ -6,11 +6,12 @@ import { PublicQuestionService } from '../../../services/public-question.service
 import { SubjectService } from '../../../services/subject.service';
 import { AuthService } from '../../../services/auth.service';
 import { PublicQuestion, Subject, Chapter, PublicQuestionFilter, PaginatedResponse, User } from '../../../models/models';
+import { HeaderComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-public-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, HeaderComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
